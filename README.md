@@ -24,7 +24,10 @@ in to a personal calendar.
   - API request failures
 
 Possible additional constraints:
-- Accessibility (e.g. ARIA)
+- Accessibility
+  - [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA)
+    - "No ARIA is better than bad ARIA."
+    - [The first rule of ARIA](https://www.w3.org/TR/using-aria/#rule1)
 
 
 ## Ideas
@@ -34,7 +37,7 @@ How does it change if we use an approach like [HTMX](https://htmx.org/)?
 
 What about using Elm or some other frontend framework like React?
 
-What if we use a service worker?
+What if we use a service worker? For example if a server worker does all of the fetch requests and only ever gives the browser fully rendered HTML, what does that mean for latency, browser expectations, caching, etc?
 
 What if we store the user's session locally in the browser?
 
