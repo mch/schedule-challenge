@@ -13,6 +13,7 @@ in to a personal calendar.
   - Overlapping sessions are allowed
   - If the session is already on the personal schedule, the button instead removes the session from the user's personal schedule
 - View personal schedule, including overlapping sessions
+- Responsive: all functionality above works on both desktop and mobile browsers
 
 
 ## Constraints
