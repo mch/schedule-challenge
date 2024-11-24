@@ -14,5 +14,12 @@
 	// Beware: features are not supported on all platforms and may have unintended side-effects.
 	"features": {
         "ghcr.io/devcontainers/features/docker-in-docker:2": {}
-    }
+    },
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"elm-land.elm-land"
+			]
+		}
+	}
 }
