@@ -11,4 +11,4 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 ENV PATH=$PATH:/opt/node/bin
 
 # Install Elm and friends
-RUN npm install -g elm-land elm-test-rs elm
+RUN npm install -g elm-land elm-test-rs elm elm-format
