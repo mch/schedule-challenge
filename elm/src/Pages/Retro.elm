@@ -1,7 +1,7 @@
 module Pages.Retro exposing (Model, Msg, page)
 
 import Effect exposing (Effect)
-import Html exposing (Html, h1, h2, li, text, ul)
+import Html exposing (Html, div, h1, h2, h3, li, text, ul)
 import Page exposing (Page)
 import Route exposing (Route)
 import Shared
@@ -68,12 +68,21 @@ view model =
     { title = "Pages.Retro"
     , body =
         [ h1 [] [ text "Retro" ]
-        , h2 [] [ text "What Went Well?" ]
-        , ul [] whatWentWellItems
-        , h2 [] [ text "What Went Less Well?" ]
-        , ul [] whatWentLessWellItems
+        , retro20241129
+        , retro20241206
         ]
     }
+
+
+retroDay : String -> List (Html msg) -> List (Html msg) -> Html msg
+retroDay date wentWellItems wentLessWellItems =
+    div []
+        [ h2 [] [ text date ]
+        , h3 [] [ text "What Went Well?" ]
+        , ul [] wentWellItems
+        , h3 [] [ text "What Went Less Well?" ]
+        , ul [] wentLessWellItems
+        ]
 
 
 retroItem : String -> Html msg
@@ -81,27 +90,50 @@ retroItem text =
     li [] [ Html.text text ]
 
 
-whatWentWellItems : List (Html msg)
-whatWentWellItems =
-    [ retroItem "We got it working again"
-    , retroItem "Tuple is working really nicely"
-    , retroItem "We pivoted and solved a problem as a group"
-    , retroItem "We learned some basic elm syntax"
-    , retroItem "Splitting the code and view allows us to get fast feedback"
-    , retroItem "Deploy before test driving lets us get moving faster"
-    , retroItem "We advanced with the event model"
-    , retroItem "We worry about to quickly get the syntax working"
-    , retroItem "We got to declare a type"
-    , retroItem "We learned about Html.Events and Attributes"
-    ]
+retro20241129 : Html msg
+retro20241129 =
+    let
+        whatWentWellItems : List (Html msg)
+        whatWentWellItems =
+            [ retroItem "We got it working again"
+            , retroItem "Tuple is working really nicely"
+            , retroItem "We pivoted and solved a problem as a group"
+            , retroItem "We learned some basic elm syntax"
+            , retroItem "Splitting the code and view allows us to get fast feedback"
+            , retroItem "Deploy before test driving lets us get moving faster"
+            , retroItem "We advanced with the event model"
+            , retroItem "We worry about to quickly get the syntax working"
+            , retroItem "We got to declare a type"
+            , retroItem "We learned about Html.Events and Attributes"
+            ]
+
+        whatWentLessWellItems : List (Html msg)
+        whatWentLessWellItems =
+            [ retroItem "ssh issues"
+            , retroItem "mobtime was set up with roles reversed, which was confusing"
+            , retroItem "mobtime in same window as coding"
+            , retroItem "Tony could not join this time, suggest using wine next time"
+            , retroItem "Windows host meant keyboard issues"
+            , retroItem "GitPod Flex failed us :("
+            ]
+    in
+    retroDay "2024-11-29" whatWentWellItems whatWentLessWellItems
 
 
-whatWentLessWellItems : List (Html msg)
-whatWentLessWellItems =
-    [ retroItem "ssh issues"
-    , retroItem "mobtime was set up with roles reversed, which was confusing"
-    , retroItem "mobtime in same window as coding"
-    , retroItem "Tony could not join this time, suggest using wine next time"
-    , retroItem "Windows host meant keyboard issues"
-    , retroItem "GitPod Flex failed us :("
-    ]
+retro20241206 : Html msg
+retro20241206 =
+    let
+        whatWentWellItems : List (Html msg)
+        whatWentWellItems =
+            [ retroItem "We advanced with the event model"
+            , retroItem "We worry about to quickly get the syntax working"
+            , retroItem "We got to declare a type"
+            , retroItem "We learned about Html.Events and Attributes"
+            ]
+
+        whatWentLessWellItems : List (Html msg)
+        whatWentLessWellItems =
+            [ retroItem "repeated keys for the host"
+            ]
+    in
+    retroDay "2024-11-29" whatWentWellItems whatWentLessWellItems
