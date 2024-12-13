@@ -137,3 +137,21 @@ retro20241206 =
             ]
     in
     retroDay "2024-11-29" whatWentWellItems whatWentLessWellItems
+
+retro20241213 : Html msg
+retro20241213 =
+    let
+        whatWentWellItems : List (Html msg)
+        whatWentWellItems =
+            [ retroItem "Created a filter function!!"
+              , retroItem "Added our first tests"
+              , retroItem "Learned how to run tests in elm"
+            ]
+
+        whatWentLessWellItems : List (Html msg)
+        whatWentLessWellItems =
+            [ retroItem "Missed CoPilot"
+              , retroItem "Understanding the modules and function syntax is tricky"
+            ]
+    in
+    retroDay "2024-11-29" whatWentWellItems whatWentLessWellItems
