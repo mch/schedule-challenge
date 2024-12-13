@@ -3,21 +3,24 @@ module Tests exposing (..)
 import Expect
 import Test exposing (Test, describe, test)
 
+
 filterEvents events query = 
-     ["Eat breakfast"]
+     List.filter (\appleSauce -> String.contains query appleSauce) events
 
 suite : Test
 suite =
     describe "Schedule Logic"
-        -- Arrange: I would like an input list of s = "eat"
-        -- The model should be a list of events:
-        -- 1. Eat breakfast
-        -- 2. Workout
-        -- Act: Apply filter
-        -- Assert: Resulting list contains only eat breakfast
         [ test "we can filter the schedule to match input" 
             <| \_ -> Expect.equal 
-                (filterEvents ["Eat breakfast", "Workout"] "eat") 
+                (filterEvents ["Eat breakfast", "Workout"] "Eat") 
                 ["Eat breakfast"]
+        , test "if nothing matches, nothing is returned"
+        <| \_ -> Expect.equal 
+                (filterEvents ["Eat breakfast", "Workout"] "drink coffee") 
+                []
+        , test "if the query matches multiple items in the list return all the items that contains the query"
+        <| \_ -> Expect.equal 
+                (filterEvents ["Eat breakfast", "Workout", "Eat lunch"] "Eat") 
+                ["Eat breakfast", "Eat lunch"]
         ]
 
