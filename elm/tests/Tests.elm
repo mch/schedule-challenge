@@ -3,11 +3,21 @@ module Tests exposing (..)
 import Expect
 import Test exposing (Test, describe, test)
 
+filterEvents events query = 
+     ["Eat breakfast"]
 
 suite : Test
 suite =
     describe "Schedule Logic"
-        [ Test.todo "Implement the first test. See https://package.elm-lang.org/packages/elm-explorations/test/latest for how to do this!"
-        , test "does a thing" <| \_ -> Expect.equal "string" "string"
-        , test "does another thing" (\_ -> Expect.equal 1 2)
+        -- Arrange: I would like an input list of s = "eat"
+        -- The model should be a list of events:
+        -- 1. Eat breakfast
+        -- 2. Workout
+        -- Act: Apply filter
+        -- Assert: Resulting list contains only eat breakfast
+        [ test "we can filter the schedule to match input" 
+            <| \_ -> Expect.equal 
+                (filterEvents ["Eat breakfast", "Workout"] "eat") 
+                ["Eat breakfast"]
         ]
+
