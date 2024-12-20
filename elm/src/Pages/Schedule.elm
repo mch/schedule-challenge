@@ -63,7 +63,7 @@ update msg model =
             )
 
         FilterInput s ->
-            ( { model | events = model.events }
+            ( { model | events = filterEvents model.events s }
             , Effect.none
             )
 
