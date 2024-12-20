@@ -70,6 +70,8 @@ view model =
         [ h1 [] [ text "Retro" ]
         , retro20241129
         , retro20241206
+        , retro20241213
+        , retro20241220
         ]
     }
 
@@ -136,7 +138,8 @@ retro20241206 =
             [ retroItem "repeated keys for the host"
             ]
     in
-    retroDay "2024-11-29" whatWentWellItems whatWentLessWellItems
+    retroDay "2024-12-06" whatWentWellItems whatWentLessWellItems
+
 
 retro20241213 : Html msg
 retro20241213 =
@@ -144,14 +147,38 @@ retro20241213 =
         whatWentWellItems : List (Html msg)
         whatWentWellItems =
             [ retroItem "Created a filter function!!"
-              , retroItem "Added our first tests"
-              , retroItem "Learned how to run tests in elm"
+            , retroItem "Added our first tests"
+            , retroItem "Learned how to run tests in elm"
             ]
 
         whatWentLessWellItems : List (Html msg)
         whatWentLessWellItems =
             [ retroItem "Missed CoPilot"
-              , retroItem "Understanding the modules and function syntax is tricky"
+            , retroItem "Understanding the modules and function syntax is tricky"
             ]
     in
-    retroDay "2024-11-29" whatWentWellItems whatWentLessWellItems
+    retroDay "2024-12-13" whatWentWellItems whatWentLessWellItems
+
+
+retro20241220 : Html msg
+retro20241220 =
+    let
+        whatWentWellItems : List (Html msg)
+        whatWentWellItems =
+            [ retroItem "Used coaching  questions to help find things that weren't clear, and gave an opening to explain"
+            , retroItem "Using diff tool to see what changed to help write commit message"
+            , retroItem "Able to change the type definition from string to Record"
+            , retroItem "We got to see the filter work on the web page!"
+            , retroItem "Backed up after the type error to fix the tests before changing production code"
+            , retroItem "Learned that you can make lots of commits and push them later"
+            ]
+
+        whatWentLessWellItems : List (Html msg)
+        whatWentLessWellItems =
+            [ retroItem "The filter has a bug"
+            , retroItem "Windows keyboard issues"
+            , retroItem "It felt uncomfortable to use git revert, cmd-z was easier"
+            , retroItem "We did two things at once: move a function and use it, but didn't fully complete the move before trying to use it"
+            ]
+    in
+    retroDay "2024-12-20" whatWentWellItems whatWentLessWellItems
