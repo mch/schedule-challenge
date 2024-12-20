@@ -1,4 +1,4 @@
-module Pages.Schedule exposing (Model, Msg, page)
+module Pages.Schedule exposing (Model, Msg, filterEvents, page)
 
 import Effect exposing (Effect)
 import Html
@@ -66,6 +66,10 @@ update msg model =
             ( { model | events = model.events }
             , Effect.none
             )
+
+
+filterEvents probably_events_andstuff query =
+    List.filter (\event -> String.contains query event) probably_events_andstuff
 
 
 

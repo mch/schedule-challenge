@@ -1,11 +1,8 @@
 module Tests exposing (..)
 
 import Expect
+import Pages.Schedule exposing (filterEvents)
 import Test exposing (Test, describe, test)
-
-
-filterEvents events query =
-    List.filter (\event -> String.contains query event) events
 
 
 suite : Test
