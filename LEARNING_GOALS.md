@@ -1,0 +1,24 @@
+# Learning Goals
+
+- Process for full end to end requirement to delivered value
+  - What does the CI/CD pipeline look like for this? 
+  - Various kinds of testing: unit, component, integration, user acceptance, UI, security, performance
+  - Observability for CI/CD
+- Obseravability for operational product
+  - Real User Monitoring (RUM)
+  - Wide events
+- Be able to experiement with different technologies
+  - Functional and Domain
+  - Docker vs Podman
+  - Terraform vs Pulumi
+  - Elm vs React vs Vue
+- Software Design
+  - Decomposition
+  - Domain Driven Design
+    - Event Storming
+  - Documenting the design
+    - RFC
+    - ADR
+- Local First Techniques
+- Developer Experience
+  - One step to running dev environment
