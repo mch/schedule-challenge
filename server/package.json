@@ -7,8 +7,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "test": "NODE_NO_WARNINGS=1 mocha",
-    "watch": "NODE_NO_WARNINGS=1 mocha -w",
+    "test": "vitest run",
+    "watch": "vitest watch",
     "checkstyle": "biome check",
     "pretty": "biome check --write"
   },
@@ -18,13 +18,9 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@tsconfig/recommended": "^1.0.6",
-    "@types/chai": "^4.2.18",
-    "@types/mocha": "^10.0.6",
     "@types/node": "^20.14.2",
-    "chai": "^5.1.1",
-    "mocha": "^10.4.0",
-    "nyc": "^17.0.0",
     "ts-node": "^10.0.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "vitest": "^3.1.3"
   }
 }
