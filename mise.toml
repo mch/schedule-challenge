@@ -1,2 +1,3 @@
 [tools]
 "aqua:npryce/adr-tools" = "latest"
+"ubi:grafana/k6" = "latest"
