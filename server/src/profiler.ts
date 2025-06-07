@@ -10,5 +10,5 @@ export async function profile(durationInSecond: number) {
     });
 
     const result = await session.post('Profiler.stop');
-    return JSON.stringify(result.profile);
+    return result.profile;
 }
