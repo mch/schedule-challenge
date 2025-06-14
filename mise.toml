@@ -1,3 +1,4 @@
 [tools]
 "aqua:npryce/adr-tools" = "latest"
+node = "24"
 "ubi:grafana/k6" = "latest"

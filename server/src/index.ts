@@ -6,7 +6,13 @@ import express, { Request, Response } from 'express';
 const app = express()
 const port = 3000
 
-app.get('/', (req: Request, res: Response) => {
+app.get('/', async (req: Request, res: Response) => {
+    const fetchNodeDocResult = await fetch('https://nodejs.org/api/documentation.json');
+    if (fetchNodeDocResult.ok) {
+        const data = await fetchNodeDocResult.json();
+        console.log(data);
+    }
+
     res.send('Hello World!')
 })
 
