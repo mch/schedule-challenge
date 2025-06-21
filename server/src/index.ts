@@ -1,3 +1,5 @@
+import { configurableSampler } from "./instrumentation";
+
 export function foo() {}
 
 export class Bar {}
@@ -5,6 +7,8 @@ import { profile } from './profiler.js';
 import express, { Request, Response } from 'express';
 const app = express()
 const port = 3000
+import { TraceAPI } from '@opentelemetry/api';
+import {NodeTracerProvider} from "@opentelemetry/sdk-trace-node";
 
 app.get('/', async (req: Request, res: Response) => {
     const fetchNodeDocResult = await fetch('https://nodejs.org/api/documentation.json');
@@ -19,6 +23,11 @@ app.get('/', async (req: Request, res: Response) => {
 app.get('/profile', async (req: Request, res: Response) => {
     res.json(await profile(20));
 })
+
+app.get('/toggle-tracing', (req: Request, res: Response) => {
+    configurableSampler.enabled = !configurableSampler.enabled;
+    res.json({ tracingEnabled: configurableSampler.enabled });
+});
 
 app.get('/fibonacci/:n', (req: Request, res: Response) => {
     const n = parseInt(req.params.n, 10);

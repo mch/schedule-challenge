@@ -6,7 +6,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "OTEL_SERVICE_NAME=\"tony\" node --loader ts-node/esm --import ./src/instrumentation.ts src/index.ts",
+    "dev": "node --loader ts-node/esm --import ./src/instrumentation.ts src/index.ts",
     "build": "tsc",
     "test": "vitest run",
     "watch": "vitest watch",
