@@ -36,6 +36,7 @@
     "@opentelemetry/sdk-metrics": "^2.0.1",
     "@opentelemetry/sdk-node": "^0.202.0",
     "@opentelemetry/sdk-trace-node": "^2.0.1",
+    "express": "^5.1.0",
     "winston": "^3.17.0"
   }
 }

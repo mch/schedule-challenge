@@ -44,6 +44,7 @@ app.get('/fibonacci/:n', (req: Request, res: Response) => {
     logger.info(`req=${inspect(req, {depth: 3})}`);
     const n = parseInt(req.params.n, 10);
     if (isNaN(n) || n < 0) {
+        logger.error(`invalid input, req=${inspect(req, {depth: 3})}`);
         res.status(400).json({ error: 'Invalid input' });
         return
     }

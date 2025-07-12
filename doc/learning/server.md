@@ -7,3 +7,9 @@
 - use vitest rather than mocha and chai independently so it all in one experience including assertions, coverage, and runner, etc...
 - use biome for fast all in one linting and formatting
 - we chose to .gitignore to update as we go instead of using templates, might want to revisit decision as we have updated it multiple times today
+
+# tip and tricks on node development
+- to list the scripts available in package.json
+  - 'npm run'
+  - or 'npm run' + tab completion
+ 
