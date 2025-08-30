@@ -1,8 +1,17 @@
 # use cases
 
 - I want to see all of the logs for the module I'm working on
+  - set the logger name to the module name (the module name typically could be java class name or javascript file name)
 - I want to see all the logs for a specific request for jobs within single node or across nodes
+  - use open telemetry and tag your logs with with traceId and spanId
+    - traceId generally represents a http request
+    - spanId generally represents unique identifer for a single unit of work within a trace such as
+      - database query
+      - call to another service
+      - long running compute process
 - I want to see all logs for a specific user
+  - tag specific user to all of the logs
+  - tag specific host to all of the logs
 - I want to see all logs for specific web server because the specific web server is behaving
 - I want to see specific version of the software in the logs (like git hash)
 - I want to see the configurations for the software and server
@@ -19,7 +28,10 @@
     - we could save the data in S3, database on demand, and retrieving those data for debugging purposes.
       - we can put more stringent constraints on s3, databases for auditing, access control and security purposes.
   - metrics around response time
-  - do we need to scale up, scale down
+  - metrics could indicate some signals where the system is underload or overload and the system can be scaled dynamically
+
+- log levels
+  - error: we should setup pager for the error?
 
 # non use-cases
 
