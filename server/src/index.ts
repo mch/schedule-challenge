@@ -1,4 +1,5 @@
 import { configurableSampler } from "./instrumentation.js";
+import * as api from '@opentelemetry/api';
 
 export function foo() {}
 
@@ -7,16 +8,31 @@ import { profile } from './profiler.js';
 import express, { Request, Response } from 'express';
 const app = express()
 const port = 3000
-import winston from 'winston';
 
-const logger = winston.createLogger({
-    level: 'info',
-    format: winston.format.json(),
-    transports: [new winston.transports.Console()],
-});
 import { TraceAPI } from '@opentelemetry/api';
 import {NodeTracerProvider} from "@opentelemetry/sdk-trace-node";
 import {inspect} from "node:util";
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.log('unhandledRejection', reason, promise);
+})
+
+process.on('uncaughtException', (reason, promise) => {
+    console.log('unhandledException1', reason, promise);
+})
+
+process.on('uncaughtException', (reason, promise) => {
+    console.log('unhandledException2', reason, promise);
+})
+
+import {createLogger, setContext} from "./logger.js";
+
+const logger = createLogger('index');
+
+app.use((request, response, next) => {
+    const requestId = request.header('requestId');
+    setContext({'requestId': requestId}, next);
+})
 
 app.get('/', async (req: Request, res: Response) => {
     const fetchNodeDocResult = await fetch('https://nodejs.org/api/documentation.json');
@@ -40,8 +56,20 @@ app.get('/toggle-tracing', (req: Request, res: Response) => {
     res.json({ tracingEnabled: configurableSampler.enabled });
 });
 
+app.use((req, res, next) => {
+    const ctx = api.context.active();
+    let userIdSymbol = api.createContextKey('userId');
+    const newContext = ctx.setValue(userIdSymbol, '123');
+    api.context.with(newContext, next);
+});
+
+app.use((req, res, next) => {
+    api.trace.getActiveSpan()?.setAttribute('userId', '1234');
+    next();
+});
+
 app.get('/fibonacci/:n', (req: Request, res: Response) => {
-    logger.info(`req=${inspect(req, {depth: 3})}`);
+    //logger.info(`req=${inspect(req, {depth: 3})}`);
     const n = parseInt(req.params.n, 10);
     if (isNaN(n) || n < 0) {
         logger.error(`invalid input, req=${inspect(req, {depth: 3})}`);
@@ -54,7 +82,7 @@ app.get('/fibonacci/:n', (req: Request, res: Response) => {
         return fibonacci(num - 1) + fibonacci(num - 2);
     }
     const result = fibonacci(n);
-    logger.info(`result=${inspect(result, {depth: 3})}`);
+    //logger.info(`result=${inspect(result, {depth: 3})}`);
     res.json({ n, fibonacci: result });
 });
 
