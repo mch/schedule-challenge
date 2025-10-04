@@ -28,6 +28,7 @@ process.on('uncaughtException', (reason, promise) => {
 import {createLogger, setContext} from "./logger.js";
 
 const logger = createLogger('index');
+logger.info("app start up");
 
 app.use((request, response, next) => {
     const requestId = request.header('requestId');
@@ -69,7 +70,7 @@ app.use((req, res, next) => {
 });
 
 app.get('/fibonacci/:n', (req: Request, res: Response) => {
-    //logger.info(`req=${inspect(req, {depth: 3})}`);
+    //        logger.info(`starting req`);
     const n = parseInt(req.params.n, 10);
     if (isNaN(n) || n < 0) {
         logger.error(`invalid input, req=${inspect(req, {depth: 3})}`);

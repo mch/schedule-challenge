@@ -28,7 +28,7 @@ class ConfigurableSampler implements Sampler {
 }
 
 export const configurableSampler = new ConfigurableSampler();
-//diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.DEBUG);
+diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.DEBUG);
 const sdk = new NodeSDK({
     traceExporter: new OTLPTraceExporter(),
     // metricReader: new PeriodicExportingMetricReader({

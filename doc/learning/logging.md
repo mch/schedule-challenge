@@ -14,7 +14,7 @@
   - tag specific host to all of the logs
 - I want to see all logs for specific web server because the specific web server is behaving
 - I want to see specific version of the software in the logs (like git hash)
-- I want to see the configurations for the software and server
+- I want to see the important configurations for the software and server at start up
 - I want to see the information to correlate the logs such as host, pid
 - I want to see the information to help me with the software development process including deployment, debuging, health of system, security.
 - I want to see logs for specific service I'm working on
@@ -27,8 +27,10 @@
   - logging requests/response could create lots of logs and security/risks concerns regarding to PII, PHI
     - we could save the data in S3, database on demand, and retrieving those data for debugging purposes.
       - we can put more stringent constraints on s3, databases for auditing, access control and security purposes.
+    - as a note, we could use dynamic logging to turn on the logs for requests/response at runtime on development environment
   - metrics around response time
   - metrics could indicate some signals where the system is underload or overload and the system can be scaled dynamically
+ 
 
 - log levels
   - error: we should setup pager for the error?
