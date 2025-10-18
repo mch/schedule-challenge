@@ -7,7 +7,7 @@
 - Obseravability for operational product
   - Real User Monitoring (RUM)
   - Wide events
-- Be able to experiement with different technologies
+- Be able to experiment with different technologies
   - Functional and Domain
   - Docker vs Podman
   - Terraform vs Pulumi

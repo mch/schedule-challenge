@@ -30,7 +30,10 @@
     - as a note, we could use dynamic logging to turn on the logs for requests/response at runtime on development environment
   - metrics around response time
   - metrics could indicate some signals where the system is underload or overload and the system can be scaled dynamically
- 
+  - As a developer, I want to provide useful information/feedback to the operator system, who is one of the important user of the system
+    - what can the operator do when the error happens?
+      - check configuration? log weird values?
+
 
 - log levels
   - error: we should setup pager for the error?
