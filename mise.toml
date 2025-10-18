@@ -1,7 +1,11 @@
 [tools]
 "aqua:npryce/adr-tools" = "latest"
+caddy = "latest"
 node = "24"
 "ubi:grafana/k6" = "latest"
 
 [env]
 _.file = ".env"
+
+[tasks.caddy]
+run = "caddy file-server --listen :8888 public"
