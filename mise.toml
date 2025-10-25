@@ -8,4 +8,4 @@ node = "24"
 _.file = ".env"
 
 [tasks.caddy]
-run = "caddy file-server --listen :8888 public"
+run = "caddy file-server --listen :8888 --root public"
