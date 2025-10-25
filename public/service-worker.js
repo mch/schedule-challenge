@@ -2,7 +2,8 @@ const CACHE_NAME = 'my-cache-v1';
 const urlsToCache = [
     '/',
     '/index.html',
-    '/index.js'
+    '/index.js',
+    '/schedules.json'
 ];
 
 // Install event - cache resources
@@ -10,7 +11,7 @@ self.addEventListener('install', event => {
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then(cache => {
-                console.log('Cache opened');
+                console.info('Cache opened');
                 return cache.addAll(urlsToCache);
             })
     );
@@ -34,9 +35,11 @@ self.addEventListener('activate', event => {
 
 // Fetch event - serve from cache, fallback to network
 self.addEventListener('fetch', event => {
+    console.info(`fetch`, event);
     event.respondWith(
         caches.match(event.request)
             .then(response => {
+                console.info('response', response)
                 // Cache hit - return response
                 if (response) {
                     return response;
