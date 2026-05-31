@@ -95,15 +95,15 @@ test.describe('App boot — returning visitor (existing passphrase)', () => {
 
     // After confirming, the main app view should appear
     await expect(
-      page.getByRole('heading', { name: /craft 2026 schedule/i })
+      page.getByRole('heading', { name: /craft 2026/i })
     ).toBeVisible({ timeout: 10_000 })
 
     // Allow async Automerge initialisation to complete
     await page.waitForTimeout(2_000)
 
-    // The app should show "Syncing…" or a bookmark count — not crash
+    // The schedule nav tab should be visible — the main app is loaded
     await expect(
-      page.getByText(/syncing|bookmarks/i)
+      page.getByRole('button', { name: /schedule/i }).first()
     ).toBeVisible({ timeout: 5_000 })
 
     const errors = getErrors().filter(

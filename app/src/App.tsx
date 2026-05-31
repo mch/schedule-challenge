@@ -11,6 +11,7 @@ import './App.css'
 
 function App() {
   const { identity, confirm, generateNew } = useIdentity()
+  const [view, setView] = useState<'schedule' | 'personal'>('schedule')
 
   const docId = identity.status === 'ready' ? identity.docId : null
   const { doc, handle } = useUserDoc(docId)
@@ -25,7 +26,6 @@ function App() {
   }
 
   // identity.status === 'ready'
-  const [view, setView] = useState<'schedule' | 'personal'>('schedule')
 
   function handleOpenSession(slotId: number) {
     openSession(slotId)
