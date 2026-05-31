@@ -42,13 +42,13 @@
   - [x] Define TypeScript types matching `craft2026/schedule-schema.json`
   - [x] Make schedule data available to components via a hook or context
 
-- [ ] Session list view
-  - [ ] Display all sessions grouped by day (one day per page/tab)
-  - [ ] Show session title, time, stage/room, speaker(s)
-  - [ ] Filter by tag
-  - [ ] Filter by stage/room
-  - [ ] Filters reflected in URL (back/forward works)
-  - [ ] Scroll position preserved on navigation and refresh
+- [x] Session list view
+  - [x] Display all sessions grouped by day (one day per page/tab)
+  - [x] Show session title, time, stage/room, speaker(s)
+  - [x] Filter by tag
+  - [x] Filter by stage/room
+  - [x] Filters reflected in URL (back/forward works)
+  - [x] Scroll position preserved on navigation and refresh
 
 - [ ] Session detail view
   - [ ] Show full session details (title, speakers, description, tags, etc.)

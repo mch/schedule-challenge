@@ -15,7 +15,7 @@
 import { createContext, useContext, type ReactNode } from 'react'
 import { useSchedule, type UseScheduleResult } from './useSchedule'
 
-const ScheduleContext = createContext<UseScheduleResult | null>(null)
+export const ScheduleContext = createContext<UseScheduleResult | null>(null)
 
 export interface ScheduleProviderProps {
   children: ReactNode

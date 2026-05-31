@@ -4,6 +4,7 @@ import './index.css'
 import App from './App.tsx'
 import { createRepo } from './automerge/repo'
 import { RepoProvider } from './automerge/RepoContext'
+import { ScheduleProvider } from './schedule/ScheduleContext'
 
 // Initialise Automerge's WebAssembly module before mounting.
 // vite-plugin-wasm handles the import; `?url` gives us the asset URL at build time.
@@ -16,7 +17,9 @@ Automerge.initializeWasm(wasmUrl).then(() => {
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
       <RepoProvider repo={repo}>
-        <App />
+        <ScheduleProvider>
+          <App />
+        </ScheduleProvider>
       </RepoProvider>
     </StrictMode>,
   )

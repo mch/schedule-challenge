@@ -1,6 +1,7 @@
 import { useIdentity } from './identity/useIdentity'
 import { IdentitySetup } from './components/IdentitySetup'
 import { PassphraseDisplay } from './components/PassphraseDisplay'
+import { SessionListView } from './components/SessionListView'
 import { useUserDoc } from './automerge/useUserDoc'
 import './App.css'
 
@@ -21,13 +22,14 @@ function App() {
   // identity.status === 'ready'
   return (
     <main>
-      <h1>Craft 2026 Schedule</h1>
-      <PassphraseDisplay passphrase={identity.passphrase} />
-      <p>Doc ID: <code>{identity.docId}</code></p>
-      {doc === null
-        ? <p aria-live="polite">Syncing…</p>
-        : <p>Bookmarks: {doc.bookmarks.length}</p>
-      }
+      <header className="app-header">
+        <h1>Craft 2026</h1>
+        <PassphraseDisplay passphrase={identity.passphrase} />
+        {doc !== null && (
+          <p className="app-bookmark-count">{doc.bookmarks.length} bookmarked</p>
+        )}
+      </header>
+      <SessionListView />
     </main>
   )
 }

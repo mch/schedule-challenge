@@ -1,0 +1,400 @@
+/**
+ * Tests for SessionListView.
+ *
+ * Uses a minimal in-memory schedule fixture with 2 days, multiple stages,
+ * sessions with tags — covering:
+ *   - Day tabs render
+ *   - Sessions displayed (title, time, stage, speaker)
+ *   - Switching day tabs
+ *   - Tag filter
+ *   - Stage filter
+ *   - Clear filters button
+ *   - Empty state
+ *   - URL params round-trip
+ */
+
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { SessionListView } from './SessionListView'
+import { ScheduleContext } from '../schedule/ScheduleContext'
+import type { Schedule } from '../types/schedule'
+import type { UseScheduleResult } from '../schedule/useSchedule'
+
+// --------------------------------------------------------------------------
+// Fixture
+// --------------------------------------------------------------------------
+
+const FIXTURE_SCHEDULE: Schedule = {
+  conference: { id: 'craft', name: 'Craft', year: 2026, date: 'June 4-5', location: 'Budapest' },
+  days: [
+    {
+      id: 1,
+      name: 'Day 1',
+      date: '2026-06-04',
+      global_slots: [],
+      stages: [
+        {
+          id: 10,
+          name: 'Main Stage',
+          color: 'ff4d00',
+          slots: [
+            {
+              id: 101,
+              type: 'talk',
+              start_time: '09:30',
+              end_time: '10:10',
+              talk: {
+                id: 1001,
+                title: 'Opening Keynote',
+                slug: 'opening-keynote',
+                is_keynote: true,
+                is_online: false,
+                tags: [{ id: 1, name: 'architecture' }],
+                speakers: [{ name: 'Alice Smith', slug: 'alice-smith' }],
+              },
+            },
+            {
+              id: 102,
+              type: 'talk',
+              start_time: '10:30',
+              end_time: '11:00',
+              talk: {
+                id: 1002,
+                title: 'Deep Dive into DDD',
+                slug: 'deep-dive-ddd',
+                is_keynote: false,
+                is_online: false,
+                tags: [
+                  { id: 2, name: 'domain-driven design' },
+                  { id: 3, name: 'architecture' },
+                ],
+                speakers: [{ name: 'Bob Jones', slug: 'bob-jones' }],
+              },
+            },
+          ],
+        },
+        {
+          id: 11,
+          name: 'Yellow Stage',
+          color: 'ffcc00',
+          slots: [
+            {
+              id: 103,
+              type: 'workshop',
+              start_time: '10:00',
+              end_time: '12:00',
+              workshop: {
+                id: 2001,
+                title: 'Hands-on TDD Workshop',
+                slug: 'tdd-workshop',
+                tags: [{ id: 4, name: 'tdd' }, { id: 5, name: 'hands-on' }],
+                speakers: [{ name: 'Carol White', slug: 'carol-white' }],
+              },
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: 'Day 2',
+      date: '2026-06-05',
+      global_slots: [],
+      stages: [
+        {
+          id: 20,
+          name: 'Main Stage',
+          color: 'ff4d00',
+          slots: [
+            {
+              id: 201,
+              type: 'talk',
+              start_time: '09:00',
+              end_time: '09:45',
+              talk: {
+                id: 3001,
+                title: 'Day 2 Keynote',
+                slug: 'day2-keynote',
+                is_keynote: true,
+                is_online: false,
+                tags: [{ id: 6, name: 'ai' }],
+                speakers: [{ name: 'Dave Brown', slug: 'dave-brown' }],
+              },
+            },
+          ],
+        },
+      ],
+    },
+  ],
+}
+
+// --------------------------------------------------------------------------
+// Helpers
+// --------------------------------------------------------------------------
+
+function makeResult(overrides?: Partial<UseScheduleResult>): UseScheduleResult {
+  return {
+    schedule: FIXTURE_SCHEDULE,
+    loading: false,
+    error: null,
+    ...overrides,
+  } as UseScheduleResult
+}
+
+function renderView(result: UseScheduleResult = makeResult()) {
+  return render(
+    <ScheduleContext.Provider value={result}>
+      <SessionListView />
+    </ScheduleContext.Provider>,
+  )
+}
+
+// --------------------------------------------------------------------------
+// Reset URL between tests
+// --------------------------------------------------------------------------
+
+beforeEach(() => {
+  window.history.replaceState(null, '', '/')
+})
+
+afterEach(() => {
+  window.history.replaceState(null, '', '/')
+})
+
+// --------------------------------------------------------------------------
+// Tests
+// --------------------------------------------------------------------------
+
+describe('SessionListView', () => {
+  describe('loading / error states', () => {
+    it('shows loading message while schedule is loading', () => {
+      renderView({ schedule: null, loading: true, error: null })
+      expect(screen.getByText(/loading schedule/i)).toBeInTheDocument()
+    })
+
+    it('shows error message when schedule fails to load', () => {
+      renderView({ schedule: null, loading: false, error: new Error('Network error') } as UseScheduleResult)
+      expect(screen.getByRole('alert')).toHaveTextContent(/network error/i)
+    })
+  })
+
+  describe('day tabs', () => {
+    it('renders a tab for each day', () => {
+      renderView()
+      const tabs = screen.getAllByRole('tab')
+      expect(tabs).toHaveLength(2)
+      expect(tabs[0]).toHaveTextContent('Day 1')
+      expect(tabs[1]).toHaveTextContent('Day 2')
+    })
+
+    it('first tab is selected by default', () => {
+      renderView()
+      const tabs = screen.getAllByRole('tab')
+      expect(tabs[0]).toHaveAttribute('aria-selected', 'true')
+      expect(tabs[1]).toHaveAttribute('aria-selected', 'false')
+    })
+
+    it('shows Day 1 sessions on first tab', () => {
+      renderView()
+      expect(screen.getByText('Opening Keynote')).toBeInTheDocument()
+      expect(screen.getByText('Deep Dive into DDD')).toBeInTheDocument()
+      expect(screen.getByText('Hands-on TDD Workshop')).toBeInTheDocument()
+    })
+
+    it('switches to Day 2 when tab is clicked', () => {
+      renderView()
+      fireEvent.click(screen.getAllByRole('tab')[1])
+      expect(screen.getByText('Day 2 Keynote')).toBeInTheDocument()
+      expect(screen.queryByText('Opening Keynote')).not.toBeInTheDocument()
+    })
+
+    it('marks selected tab as active after click', () => {
+      renderView()
+      fireEvent.click(screen.getAllByRole('tab')[1])
+      const tabs = screen.getAllByRole('tab')
+      expect(tabs[0]).toHaveAttribute('aria-selected', 'false')
+      expect(tabs[1]).toHaveAttribute('aria-selected', 'true')
+    })
+  })
+
+  describe('session cards', () => {
+    it('shows session title', () => {
+      renderView()
+      expect(screen.getByText('Opening Keynote')).toBeInTheDocument()
+    })
+
+    it('shows session times', () => {
+      renderView()
+      expect(screen.getByText('09:30–10:10')).toBeInTheDocument()
+    })
+
+    it('shows speaker names', () => {
+      renderView()
+      expect(screen.getByText('Alice Smith')).toBeInTheDocument()
+      expect(screen.getByText('Bob Jones')).toBeInTheDocument()
+    })
+
+    it('shows stage name', () => {
+      renderView()
+      const stageLabels = screen.getAllByText('Main Stage')
+      expect(stageLabels.length).toBeGreaterThan(0)
+    })
+
+    it('shows tags', () => {
+      renderView()
+      expect(screen.getAllByText('architecture').length).toBeGreaterThan(0)
+    })
+
+    it('shows Keynote badge for keynote sessions', () => {
+      renderView()
+      expect(screen.getByText('Keynote')).toBeInTheDocument()
+    })
+
+    it('shows Workshop badge for workshop sessions', () => {
+      renderView()
+      expect(screen.getByText('Workshop')).toBeInTheDocument()
+    })
+
+    it('sessions are sorted by start time', () => {
+      renderView()
+      const cards = screen.getAllByRole('article')
+      const times = cards.map((c) => c.querySelector('.session-card__time')?.textContent ?? '')
+      // First card should be 09:30 (Opening Keynote), then 10:00 (Workshop), then 10:30 (DDD)
+      expect(times[0]).toContain('09:30')
+      expect(times[1]).toContain('10:00')
+      expect(times[2]).toContain('10:30')
+    })
+  })
+
+  describe('tag filter', () => {
+    it('renders tag filter select', () => {
+      renderView()
+      expect(screen.getByRole('combobox', { name: /^tag$/i })).toBeInTheDocument()
+    })
+
+    it('populates tag options from current day', () => {
+      renderView()
+      const select = screen.getByRole('combobox', { name: /^tag$/i }) as HTMLSelectElement
+      const options = Array.from(select.options).map((o) => o.value)
+      expect(options).toContain('architecture')
+      expect(options).toContain('tdd')
+    })
+
+    it('filters sessions by selected tag', () => {
+      renderView()
+      const select = screen.getByRole('combobox', { name: /^tag$/i })
+      fireEvent.change(select, { target: { value: 'tdd' } })
+      expect(screen.getByText('Hands-on TDD Workshop')).toBeInTheDocument()
+      expect(screen.queryByText('Opening Keynote')).not.toBeInTheDocument()
+      expect(screen.queryByText('Deep Dive into DDD')).not.toBeInTheDocument()
+    })
+
+    it('shows empty state when no sessions match the combined filters', () => {
+      // Set up a combination that results in no matches: architecture tag + Yellow Stage
+      // architecture is only on Main Stage sessions, not Yellow Stage
+      window.history.replaceState(null, '', '/?tag=architecture&stage=Yellow+Stage')
+      renderView()
+      expect(screen.getByText(/no sessions match/i)).toBeInTheDocument()
+    })
+  })
+
+  describe('stage filter', () => {
+    it('renders stage filter select', () => {
+      renderView()
+      expect(screen.getByRole('combobox', { name: /stage/i })).toBeInTheDocument()
+    })
+
+    it('populates stage options from current day', () => {
+      renderView()
+      const select = screen.getByRole('combobox', { name: /stage/i }) as HTMLSelectElement
+      const options = Array.from(select.options).map((o) => o.value)
+      expect(options).toContain('Main Stage')
+      expect(options).toContain('Yellow Stage')
+    })
+
+    it('filters sessions by selected stage', () => {
+      renderView()
+      const select = screen.getByRole('combobox', { name: /stage/i })
+      fireEvent.change(select, { target: { value: 'Yellow Stage' } })
+      expect(screen.getByText('Hands-on TDD Workshop')).toBeInTheDocument()
+      expect(screen.queryByText('Opening Keynote')).not.toBeInTheDocument()
+    })
+  })
+
+  describe('clear filters', () => {
+    it('does not show clear button when no filters active', () => {
+      renderView()
+      expect(screen.queryByText(/clear filters/i)).not.toBeInTheDocument()
+    })
+
+    it('shows clear button when a filter is active', () => {
+      renderView()
+      fireEvent.change(screen.getByRole('combobox', { name: /^tag$/i }), { target: { value: 'tdd' } })
+      expect(screen.getByText(/clear filters/i)).toBeInTheDocument()
+    })
+
+    it('clears both filters when clear is clicked', () => {
+      renderView()
+      fireEvent.change(screen.getByRole('combobox', { name: /^tag$/i }), { target: { value: 'tdd' } })
+      fireEvent.change(screen.getByRole('combobox', { name: /stage/i }), { target: { value: 'Yellow Stage' } })
+      fireEvent.click(screen.getByText(/clear filters/i))
+      // All Day 1 sessions visible again
+      expect(screen.getByText('Opening Keynote')).toBeInTheDocument()
+      expect(screen.getByText('Deep Dive into DDD')).toBeInTheDocument()
+      expect(screen.getByText('Hands-on TDD Workshop')).toBeInTheDocument()
+    })
+  })
+
+  describe('session count', () => {
+    it('shows total session count for the day', () => {
+      renderView()
+      expect(screen.getByText('3 sessions')).toBeInTheDocument()
+    })
+
+    it('shows filtered count with "(filtered)" label', () => {
+      renderView()
+      fireEvent.change(screen.getByRole('combobox', { name: /^tag$/i }), { target: { value: 'tdd' } })
+      expect(screen.getByText('1 session (filtered)')).toBeInTheDocument()
+    })
+  })
+
+  describe('URL param persistence', () => {
+    it('updates URL when a filter changes', async () => {
+      renderView()
+      fireEvent.change(screen.getByRole('combobox', { name: /^tag$/i }), { target: { value: 'tdd' } })
+      await waitFor(() => {
+        expect(window.location.search).toContain('tag=tdd')
+      })
+    })
+
+    it('updates URL when day tab changes', async () => {
+      renderView()
+      fireEvent.click(screen.getAllByRole('tab')[1])
+      await waitFor(() => {
+        expect(window.location.search).toContain('day=1')
+      })
+    })
+
+    it('reads initial day from URL', () => {
+      window.history.replaceState(null, '', '/?day=1')
+      renderView()
+      const tabs = screen.getAllByRole('tab')
+      expect(tabs[1]).toHaveAttribute('aria-selected', 'true')
+      expect(screen.getByText('Day 2 Keynote')).toBeInTheDocument()
+    })
+
+    it('reads initial tag filter from URL', () => {
+      window.history.replaceState(null, '', '/?tag=tdd')
+      renderView()
+      expect(screen.getByText('Hands-on TDD Workshop')).toBeInTheDocument()
+      expect(screen.queryByText('Opening Keynote')).not.toBeInTheDocument()
+    })
+
+    it('reads initial stage filter from URL', () => {
+      window.history.replaceState(null, '', '/?stage=Yellow+Stage')
+      renderView()
+      expect(screen.getByText('Hands-on TDD Workshop')).toBeInTheDocument()
+      expect(screen.queryByText('Opening Keynote')).not.toBeInTheDocument()
+    })
+  })
+})
