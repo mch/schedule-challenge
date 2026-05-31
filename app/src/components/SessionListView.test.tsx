@@ -19,6 +19,8 @@ import { SessionListView } from './SessionListView'
 import { ScheduleContext } from '../schedule/ScheduleContext'
 import type { Schedule } from '../types/schedule'
 import type { UseScheduleResult } from '../schedule/useSchedule'
+import type { UserDocument } from '../types/user-document'
+import type { DocHandle } from '@automerge/automerge-repo'
 
 // --------------------------------------------------------------------------
 // Fixture
@@ -141,12 +143,41 @@ function makeResult(overrides?: Partial<UseScheduleResult>): UseScheduleResult {
   } as UseScheduleResult
 }
 
-function renderView(result: UseScheduleResult = makeResult()) {
+function makeUserDoc(bookmarks: number[] = []): UserDocument {
+  return { bookmarks }
+}
+
+function makeFakeHandle(bookmarks: number[] = []) {
+  const doc = makeUserDoc(bookmarks)
+  const handle = {
+    change: vi.fn((fn: (d: UserDocument) => void) => fn(doc)),
+  } as unknown as DocHandle<UserDocument>
+  return { handle, doc }
+}
+
+interface RenderOptions {
+  result?: UseScheduleResult
+  handle?: DocHandle<UserDocument> | null
+  userDoc?: UserDocument | null
+  onOpenSession?: (slotId: number) => void
+}
+
+function renderView({
+  result = makeResult(),
+  handle = null,
+  userDoc = null,
+  onOpenSession,
+}: RenderOptions = {}) {
   return render(
     <ScheduleContext.Provider value={result}>
-      <SessionListView />
+      <SessionListView handle={handle} userDoc={userDoc} onOpenSession={onOpenSession} />
     </ScheduleContext.Provider>,
   )
+}
+
+/** Legacy helper for tests that only pass a schedule result */
+function renderViewWithResult(result: UseScheduleResult = makeResult()) {
+  return renderView({ result })
 }
 
 // --------------------------------------------------------------------------
@@ -168,19 +199,19 @@ afterEach(() => {
 describe('SessionListView', () => {
   describe('loading / error states', () => {
     it('shows loading message while schedule is loading', () => {
-      renderView({ schedule: null, loading: true, error: null })
+      renderViewWithResult({ schedule: null, loading: true, error: null })
       expect(screen.getByText(/loading schedule/i)).toBeInTheDocument()
     })
 
     it('shows error message when schedule fails to load', () => {
-      renderView({ schedule: null, loading: false, error: new Error('Network error') } as UseScheduleResult)
+      renderViewWithResult({ schedule: null, loading: false, error: new Error('Network error') } as UseScheduleResult)
       expect(screen.getByRole('alert')).toHaveTextContent(/network error/i)
     })
   })
 
   describe('day tabs', () => {
     it('renders a tab for each day', () => {
-      renderView()
+      renderViewWithResult()
       const tabs = screen.getAllByRole('tab')
       expect(tabs).toHaveLength(2)
       expect(tabs[0]).toHaveTextContent('Day 1')
@@ -188,28 +219,28 @@ describe('SessionListView', () => {
     })
 
     it('first tab is selected by default', () => {
-      renderView()
+      renderViewWithResult()
       const tabs = screen.getAllByRole('tab')
       expect(tabs[0]).toHaveAttribute('aria-selected', 'true')
       expect(tabs[1]).toHaveAttribute('aria-selected', 'false')
     })
 
     it('shows Day 1 sessions on first tab', () => {
-      renderView()
+      renderViewWithResult()
       expect(screen.getByText('Opening Keynote')).toBeInTheDocument()
       expect(screen.getByText('Deep Dive into DDD')).toBeInTheDocument()
       expect(screen.getByText('Hands-on TDD Workshop')).toBeInTheDocument()
     })
 
     it('switches to Day 2 when tab is clicked', () => {
-      renderView()
+      renderViewWithResult()
       fireEvent.click(screen.getAllByRole('tab')[1])
       expect(screen.getByText('Day 2 Keynote')).toBeInTheDocument()
       expect(screen.queryByText('Opening Keynote')).not.toBeInTheDocument()
     })
 
     it('marks selected tab as active after click', () => {
-      renderView()
+      renderViewWithResult()
       fireEvent.click(screen.getAllByRole('tab')[1])
       const tabs = screen.getAllByRole('tab')
       expect(tabs[0]).toHaveAttribute('aria-selected', 'false')
@@ -219,44 +250,44 @@ describe('SessionListView', () => {
 
   describe('session cards', () => {
     it('shows session title', () => {
-      renderView()
+      renderViewWithResult()
       expect(screen.getByText('Opening Keynote')).toBeInTheDocument()
     })
 
     it('shows session times', () => {
-      renderView()
+      renderViewWithResult()
       expect(screen.getByText('09:30–10:10')).toBeInTheDocument()
     })
 
     it('shows speaker names', () => {
-      renderView()
+      renderViewWithResult()
       expect(screen.getByText('Alice Smith')).toBeInTheDocument()
       expect(screen.getByText('Bob Jones')).toBeInTheDocument()
     })
 
     it('shows stage name', () => {
-      renderView()
+      renderViewWithResult()
       const stageLabels = screen.getAllByText('Main Stage')
       expect(stageLabels.length).toBeGreaterThan(0)
     })
 
     it('shows tags', () => {
-      renderView()
+      renderViewWithResult()
       expect(screen.getAllByText('architecture').length).toBeGreaterThan(0)
     })
 
     it('shows Keynote badge for keynote sessions', () => {
-      renderView()
+      renderViewWithResult()
       expect(screen.getByText('Keynote')).toBeInTheDocument()
     })
 
     it('shows Workshop badge for workshop sessions', () => {
-      renderView()
+      renderViewWithResult()
       expect(screen.getByText('Workshop')).toBeInTheDocument()
     })
 
     it('sessions are sorted by start time', () => {
-      renderView()
+      renderViewWithResult()
       const cards = screen.getAllByRole('button', { name: /view details for/i })
       const times = cards.map((c) => c.querySelector('.session-card__time')?.textContent ?? '')
       // First card should be 09:30 (Opening Keynote), then 10:00 (Workshop), then 10:30 (DDD)
@@ -268,12 +299,12 @@ describe('SessionListView', () => {
 
   describe('tag filter', () => {
     it('renders tag filter select', () => {
-      renderView()
+      renderViewWithResult()
       expect(screen.getByRole('combobox', { name: /^tag$/i })).toBeInTheDocument()
     })
 
     it('populates tag options from current day', () => {
-      renderView()
+      renderViewWithResult()
       const select = screen.getByRole('combobox', { name: /^tag$/i }) as HTMLSelectElement
       const options = Array.from(select.options).map((o) => o.value)
       expect(options).toContain('architecture')
@@ -281,7 +312,7 @@ describe('SessionListView', () => {
     })
 
     it('filters sessions by selected tag', () => {
-      renderView()
+      renderViewWithResult()
       const select = screen.getByRole('combobox', { name: /^tag$/i })
       fireEvent.change(select, { target: { value: 'tdd' } })
       expect(screen.getByText('Hands-on TDD Workshop')).toBeInTheDocument()
@@ -300,12 +331,12 @@ describe('SessionListView', () => {
 
   describe('stage filter', () => {
     it('renders stage filter select', () => {
-      renderView()
+      renderViewWithResult()
       expect(screen.getByRole('combobox', { name: /stage/i })).toBeInTheDocument()
     })
 
     it('populates stage options from current day', () => {
-      renderView()
+      renderViewWithResult()
       const select = screen.getByRole('combobox', { name: /stage/i }) as HTMLSelectElement
       const options = Array.from(select.options).map((o) => o.value)
       expect(options).toContain('Main Stage')
@@ -313,7 +344,7 @@ describe('SessionListView', () => {
     })
 
     it('filters sessions by selected stage', () => {
-      renderView()
+      renderViewWithResult()
       const select = screen.getByRole('combobox', { name: /stage/i })
       fireEvent.change(select, { target: { value: 'Yellow Stage' } })
       expect(screen.getByText('Hands-on TDD Workshop')).toBeInTheDocument()
@@ -323,18 +354,18 @@ describe('SessionListView', () => {
 
   describe('clear filters', () => {
     it('does not show clear button when no filters active', () => {
-      renderView()
+      renderViewWithResult()
       expect(screen.queryByText(/clear filters/i)).not.toBeInTheDocument()
     })
 
     it('shows clear button when a filter is active', () => {
-      renderView()
+      renderViewWithResult()
       fireEvent.change(screen.getByRole('combobox', { name: /^tag$/i }), { target: { value: 'tdd' } })
       expect(screen.getByText(/clear filters/i)).toBeInTheDocument()
     })
 
     it('clears both filters when clear is clicked', () => {
-      renderView()
+      renderViewWithResult()
       fireEvent.change(screen.getByRole('combobox', { name: /^tag$/i }), { target: { value: 'tdd' } })
       fireEvent.change(screen.getByRole('combobox', { name: /stage/i }), { target: { value: 'Yellow Stage' } })
       fireEvent.click(screen.getByText(/clear filters/i))
@@ -347,12 +378,12 @@ describe('SessionListView', () => {
 
   describe('session count', () => {
     it('shows total session count for the day', () => {
-      renderView()
+      renderViewWithResult()
       expect(screen.getByText('3 sessions')).toBeInTheDocument()
     })
 
     it('shows filtered count with "(filtered)" label', () => {
-      renderView()
+      renderViewWithResult()
       fireEvent.change(screen.getByRole('combobox', { name: /^tag$/i }), { target: { value: 'tdd' } })
       expect(screen.getByText('1 session (filtered)')).toBeInTheDocument()
     })
@@ -360,7 +391,7 @@ describe('SessionListView', () => {
 
   describe('URL param persistence', () => {
     it('updates URL when a filter changes', async () => {
-      renderView()
+      renderViewWithResult()
       fireEvent.change(screen.getByRole('combobox', { name: /^tag$/i }), { target: { value: 'tdd' } })
       await waitFor(() => {
         expect(window.location.search).toContain('tag=tdd')
@@ -368,7 +399,7 @@ describe('SessionListView', () => {
     })
 
     it('updates URL when day tab changes', async () => {
-      renderView()
+      renderViewWithResult()
       fireEvent.click(screen.getAllByRole('tab')[1])
       await waitFor(() => {
         expect(window.location.search).toContain('day=1')
@@ -377,7 +408,7 @@ describe('SessionListView', () => {
 
     it('reads initial day from URL', () => {
       window.history.replaceState(null, '', '/?day=1')
-      renderView()
+      renderViewWithResult()
       const tabs = screen.getAllByRole('tab')
       expect(tabs[1]).toHaveAttribute('aria-selected', 'true')
       expect(screen.getByText('Day 2 Keynote')).toBeInTheDocument()
@@ -385,16 +416,78 @@ describe('SessionListView', () => {
 
     it('reads initial tag filter from URL', () => {
       window.history.replaceState(null, '', '/?tag=tdd')
-      renderView()
+      renderViewWithResult()
       expect(screen.getByText('Hands-on TDD Workshop')).toBeInTheDocument()
       expect(screen.queryByText('Opening Keynote')).not.toBeInTheDocument()
     })
 
     it('reads initial stage filter from URL', () => {
       window.history.replaceState(null, '', '/?stage=Yellow+Stage')
-      renderView()
+      renderViewWithResult()
       expect(screen.getByText('Hands-on TDD Workshop')).toBeInTheDocument()
       expect(screen.queryByText('Opening Keynote')).not.toBeInTheDocument()
+    })
+  })
+
+  describe('bookmark buttons in session cards', () => {
+    it('shows a bookmark button on each session card', () => {
+      renderViewWithResult()
+      const bookmarkBtns = screen.getAllByRole('button', { name: /personal schedule/i })
+      // 3 sessions on Day 1
+      expect(bookmarkBtns).toHaveLength(3)
+    })
+
+    it('bookmark button shows unbookmarked state when session is not bookmarked', () => {
+      const { handle, doc } = makeFakeHandle([])
+      renderView({ handle, userDoc: doc })
+      const btn = screen.getAllByRole('button', { name: /add to personal schedule/i })
+      expect(btn.length).toBeGreaterThan(0)
+      expect(btn[0]).toHaveAttribute('aria-pressed', 'false')
+    })
+
+    it('bookmark button shows bookmarked state when session IS bookmarked', () => {
+      const { handle, doc } = makeFakeHandle([101])
+      renderView({ handle, userDoc: doc })
+      // Slot 101 should now show "remove" label
+      expect(
+        screen.getByRole('button', { name: /remove from personal schedule/i }),
+      ).toHaveAttribute('aria-pressed', 'true')
+    })
+
+    it('bookmark button is disabled when no handle provided', () => {
+      renderViewWithResult()
+      const btns = screen.getAllByRole('button', { name: /personal schedule/i })
+      btns.forEach((btn) => expect(btn).toBeDisabled())
+    })
+
+    it('calls handle.change to add bookmark when clicked on unbookmarked session', () => {
+      const { handle, doc } = makeFakeHandle([])
+      renderView({ handle, userDoc: doc })
+      const addBtns = screen.getAllByRole('button', { name: /add to personal schedule/i })
+      fireEvent.click(addBtns[0]) // click bookmark on first card (slot 101)
+      expect(handle.change).toHaveBeenCalledOnce()
+    })
+
+    it('calls handle.change to remove bookmark when clicked on bookmarked session', () => {
+      const { handle, doc } = makeFakeHandle([101])
+      renderView({ handle, userDoc: doc })
+      const removeBtn = screen.getByRole('button', { name: /remove from personal schedule/i })
+      fireEvent.click(removeBtn)
+      expect(handle.change).toHaveBeenCalledOnce()
+      // Verify the mutation logic removes slot 101
+      const callArg = vi.mocked(handle.change).mock.calls[0][0]
+      const mutDoc = makeUserDoc([101])
+      callArg(mutDoc)
+      expect(mutDoc.bookmarks).not.toContain(101)
+    })
+
+    it('does not bubble bookmark click to onOpenSession', () => {
+      const { handle, doc } = makeFakeHandle([])
+      const onOpenSession = vi.fn()
+      renderView({ handle, userDoc: doc, onOpenSession })
+      const addBtns = screen.getAllByRole('button', { name: /add to personal schedule/i })
+      fireEvent.click(addBtns[0])
+      expect(onOpenSession).not.toHaveBeenCalled()
     })
   })
 })

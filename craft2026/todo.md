@@ -54,12 +54,12 @@
   - [x] Show full session details (title, speakers, description, tags, etc.)
   - [x] Bookmark button (add/remove from personal schedule)
 
-- [ ] Personal schedule
-  - [ ] View personal schedule (bookmarked sessions, grouped by day)
-  - [ ] Handle overlapping sessions in the display
-  - [ ] Bookmark button in session list view (add/remove)
-  - [ ] Bookmark button in session detail view (add/remove)
-  - [ ] Button state reflects current bookmark status
+- [x] Personal schedule
+  - [x] View personal schedule (bookmarked sessions, grouped by day)
+  - [x] Handle overlapping sessions in the display
+  - [x] Bookmark button in session list view (add/remove)
+  - [x] Bookmark button in session detail view (add/remove)
+  - [x] Button state reflects current bookmark status
 
 - [ ] PWA / offline
   - [ ] Service worker caches static assets and schedule data

@@ -11,8 +11,10 @@
  */
 
 import { useEffect, useRef, useCallback } from 'react'
+import type { DocHandle } from '@automerge/automerge-repo'
 import { useScheduleContext } from '../schedule/ScheduleContext'
 import { useSessionListParams } from '../schedule/useSessionListParams'
+import type { UserDocument } from '../types/user-document'
 import type { Day, Stage } from '../types/schedule'
 import './SessionListView.css'
 
@@ -186,10 +188,18 @@ function Filters({ tags, stages, selectedTag, selectedStage, onTagChange, onStag
 interface SessionCardProps {
   session: SessionInfo
   onOpen: (slotId: number) => void
+  isBookmarked: boolean
+  onToggleBookmark: (slotId: number) => void
+  bookmarkDisabled: boolean
 }
 
-function SessionCard({ session, onOpen }: SessionCardProps) {
+function SessionCard({ session, onOpen, isBookmarked, onToggleBookmark, bookmarkDisabled }: SessionCardProps) {
   const stageStyle = { '--stage-color': `#${session.stageColor}` } as React.CSSProperties
+
+  function handleBookmarkClick(e: React.MouseEvent) {
+    e.stopPropagation()
+    onToggleBookmark(session.slotId)
+  }
 
   return (
     <article
@@ -238,6 +248,19 @@ function SessionCard({ session, onOpen }: SessionCardProps) {
           )}
         </div>
       </div>
+
+      <div className="session-card__bookmark">
+        <button
+          className={`session-card__bookmark-btn${isBookmarked ? ' session-card__bookmark-btn--active' : ''}`}
+          aria-label={isBookmarked ? 'Remove from personal schedule' : 'Add to personal schedule'}
+          aria-pressed={isBookmarked}
+          disabled={bookmarkDisabled}
+          onClick={handleBookmarkClick}
+          title={isBookmarked ? 'Remove bookmark' : 'Bookmark'}
+        >
+          {isBookmarked ? '★' : '☆'}
+        </button>
+      </div>
     </article>
   )
 }
@@ -248,9 +271,11 @@ function SessionCard({ session, onOpen }: SessionCardProps) {
 
 export interface SessionListViewProps {
   onOpenSession?: (slotId: number) => void
+  handle?: DocHandle<UserDocument> | null
+  userDoc?: UserDocument | null
 }
 
-export function SessionListView({ onOpenSession }: SessionListViewProps = {}) {
+export function SessionListView({ onOpenSession, handle = null, userDoc = null }: SessionListViewProps = {}) {
   const { schedule, loading, error } = useScheduleContext()
   const { params, setDay, setTag, setStage } = useSessionListParams()
   const listRef = useRef<HTMLDivElement>(null)
@@ -336,9 +361,29 @@ export function SessionListView({ onOpenSession }: SessionListViewProps = {}) {
         {filteredSessions.length === 0 ? (
           <p className="session-list-empty">No sessions match the current filters.</p>
         ) : (
-          filteredSessions.map((session) => (
-            <SessionCard key={session.slotId} session={session} onOpen={onOpenSession ?? (() => {})} />
-          ))
+          filteredSessions.map((session) => {
+            const isBookmarked = userDoc?.bookmarks.includes(session.slotId) ?? false
+            return (
+              <SessionCard
+                key={session.slotId}
+                session={session}
+                onOpen={onOpenSession ?? (() => {})}
+                isBookmarked={isBookmarked}
+                bookmarkDisabled={handle === null}
+                onToggleBookmark={(slotId) => {
+                  if (!handle) return
+                  handle.change((doc) => {
+                    const idx = doc.bookmarks.indexOf(slotId)
+                    if (idx === -1) {
+                      doc.bookmarks.push(slotId)
+                    } else {
+                      doc.bookmarks.splice(idx, 1)
+                    }
+                  })
+                }}
+              />
+            )
+          })
         )}
       </div>
     </div>

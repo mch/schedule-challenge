@@ -167,7 +167,7 @@
 
 .session-card {
   display: grid;
-  grid-template-columns: 90px 1fr;
+  grid-template-columns: 90px 1fr auto;
   gap: 0 16px;
   padding: 16px 0;
   border-bottom: 1px solid var(--border);
@@ -304,6 +304,53 @@
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
+}
+
+/* ---- Card bookmark button ---- */
+
+.session-card__bookmark {
+  display: flex;
+  align-items: flex-start;
+  padding-top: 2px;
+  padding-right: 4px;
+}
+
+.session-card__bookmark-btn {
+  font: inherit;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--text);
+  background: none;
+  border: none;
+  padding: 2px 4px;
+  cursor: pointer;
+  border-radius: 4px;
+  opacity: 0.35;
+  transition: opacity 0.15s, color 0.15s;
+
+  &:hover:not(:disabled) {
+    opacity: 1;
+    color: var(--accent);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    opacity: 1;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.session-card__bookmark-btn--active {
+  color: var(--accent);
+  opacity: 1;
+
+  &:hover:not(:disabled) {
+    opacity: 0.65;
+  }
 }
 
 .session-tag {
