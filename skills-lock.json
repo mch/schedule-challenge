@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "brave-search": {
+      "source": "badlogic/pi-skills",
+      "sourceType": "github",
+      "skillPath": "brave-search/SKILL.md",
+      "computedHash": "f65c8b9679272d3de03b0850ebed158d65d81642c9e208eec663764dc6575525"
+    },
+    "browser-tools": {
+      "source": "badlogic/pi-skills",
+      "sourceType": "github",
+      "skillPath": "browser-tools/SKILL.md",
+      "computedHash": "84d66f8bfdd5cfdb0b6f448b61f192c504e4ffa9e4943969c1d394e5eed0daee"
+    }
+  }
+}
