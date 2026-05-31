@@ -50,9 +50,9 @@
   - [x] Filters reflected in URL (back/forward works)
   - [x] Scroll position preserved on navigation and refresh
 
-- [ ] Session detail view
-  - [ ] Show full session details (title, speakers, description, tags, etc.)
-  - [ ] Bookmark button (add/remove from personal schedule)
+- [x] Session detail view
+  - [x] Show full session details (title, speakers, description, tags, etc.)
+  - [x] Bookmark button (add/remove from personal schedule)
 
 - [ ] Personal schedule
   - [ ] View personal schedule (bookmarked sessions, grouped by day)

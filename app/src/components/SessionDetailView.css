@@ -1,0 +1,297 @@
+/* ============================================================
+   Session Detail View
+   ============================================================ */
+
+.session-detail-view {
+  width: 100%;
+  text-align: left;
+  padding: 0 24px 48px;
+  box-sizing: border-box;
+
+  @media (max-width: 600px) {
+    padding: 0 12px 32px;
+  }
+}
+
+.session-detail-loading,
+.session-detail-error,
+.session-detail-not-found {
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.session-detail-error {
+  color: #e53e3e;
+}
+
+/* ---- Back button ---- */
+
+.session-detail-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent);
+  background: none;
+  border: none;
+  padding: 20px 0 16px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.15s;
+
+  &:hover {
+    opacity: 0.75;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+/* ---- Header ---- */
+
+.session-detail-header {
+  border-left: 3px solid var(--stage-color, var(--border));
+  padding-left: 16px;
+  margin-bottom: 24px;
+
+  @media (max-width: 600px) {
+    padding-left: 12px;
+  }
+}
+
+.session-detail-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+/* Reuse .session-badge classes from SessionListView */
+.session-badge {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.session-badge--keynote {
+  background: var(--accent);
+  color: #fff;
+}
+
+.session-badge--workshop {
+  background: #0d9488;
+  color: #fff;
+}
+
+.session-badge--online {
+  background: #2563eb;
+  color: #fff;
+}
+
+.session-detail-title {
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--text-h);
+  line-height: 130%;
+  letter-spacing: -0.3px;
+  margin: 0 0 14px;
+
+  @media (max-width: 600px) {
+    font-size: 22px;
+  }
+}
+
+.session-detail-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.session-detail-time {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  color: var(--text-h);
+  background: var(--code-bg);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.session-detail-stage {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+  padding: 2px 8px;
+  border: 1px solid;
+  border-radius: 4px;
+}
+
+.session-detail-day {
+  font-size: 12px;
+  color: var(--text);
+}
+
+/* ---- Actions (bookmark) ---- */
+
+.session-detail-actions {
+  margin-bottom: 32px;
+}
+
+.bookmark-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-h);
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+
+  &:hover:not(:disabled) {
+    background: var(--accent-bg);
+    border-color: var(--accent-border);
+    color: var(--accent);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+.bookmark-button--active {
+  background: var(--accent-bg);
+  border-color: var(--accent-border);
+  color: var(--accent);
+
+  &:hover:not(:disabled) {
+    background: var(--accent-border);
+  }
+}
+
+.bookmark-button__icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* ---- Sections ---- */
+
+.session-detail-section {
+  margin-bottom: 28px;
+}
+
+.session-detail-section-title {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--text);
+  margin: 0 0 10px;
+}
+
+/* ---- Speakers ---- */
+
+.session-detail-speakers {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.session-detail-speaker {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+/* ---- Description ---- */
+
+.session-detail-description {
+  font-size: 15px;
+  line-height: 160%;
+  color: var(--text-h);
+  white-space: pre-line;
+}
+
+/* ---- Tags ---- */
+
+.session-detail-tags {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.session-tag {
+  font-size: 12px;
+  color: var(--text);
+  background: var(--code-bg);
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.session-tag--trending {
+  background: var(--accent-bg);
+  color: var(--accent);
+  border: 1px solid var(--accent-border);
+}
+
+/* ---- Links ---- */
+
+.session-detail-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.session-detail-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+  padding: 7px 14px;
+  border: 1px solid var(--accent-border);
+  border-radius: 8px;
+  background: var(--accent-bg);
+  transition: background 0.15s;
+
+  &:hover {
+    background: var(--accent-border);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}

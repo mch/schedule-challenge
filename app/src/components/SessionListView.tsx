@@ -13,7 +13,7 @@
 import { useEffect, useRef, useCallback } from 'react'
 import { useScheduleContext } from '../schedule/ScheduleContext'
 import { useSessionListParams } from '../schedule/useSessionListParams'
-import type { Day, Slot, Stage } from '../types/schedule'
+import type { Day, Stage } from '../types/schedule'
 import './SessionListView.css'
 
 // ---------------------------------------------------------------------------
@@ -185,16 +185,22 @@ function Filters({ tags, stages, selectedTag, selectedStage, onTagChange, onStag
 
 interface SessionCardProps {
   session: SessionInfo
+  onOpen: (slotId: number) => void
 }
 
-function SessionCard({ session }: SessionCardProps) {
+function SessionCard({ session, onOpen }: SessionCardProps) {
   const stageStyle = { '--stage-color': `#${session.stageColor}` } as React.CSSProperties
 
   return (
     <article
-      className={`session-card${session.isKeynote ? ' session-card--keynote' : ''}${session.type === 'workshop' ? ' session-card--workshop' : ''}`}
+      className={`session-card${session.isKeynote ? ' session-card--keynote' : ''}${session.type === 'workshop' ? ' session-card--workshop' : ''} session-card--clickable`}
       style={stageStyle}
       data-slot-id={session.slotId}
+      onClick={() => onOpen(session.slotId)}
+      role="button"
+      tabIndex={0}
+      aria-label={`View details for ${session.title}`}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen(session.slotId) } }}
     >
       <div className="session-card__time">
         {session.startTime}–{session.endTime}
@@ -240,7 +246,11 @@ function SessionCard({ session }: SessionCardProps) {
 // Main view
 // ---------------------------------------------------------------------------
 
-export function SessionListView() {
+export interface SessionListViewProps {
+  onOpenSession?: (slotId: number) => void
+}
+
+export function SessionListView({ onOpenSession }: SessionListViewProps = {}) {
   const { schedule, loading, error } = useScheduleContext()
   const { params, setDay, setTag, setStage } = useSessionListParams()
   const listRef = useRef<HTMLDivElement>(null)
@@ -327,7 +337,7 @@ export function SessionListView() {
           <p className="session-list-empty">No sessions match the current filters.</p>
         ) : (
           filteredSessions.map((session) => (
-            <SessionCard key={session.slotId} session={session} />
+            <SessionCard key={session.slotId} session={session} onOpen={onOpenSession ?? (() => {})} />
           ))
         )}
       </div>

@@ -257,7 +257,7 @@ describe('SessionListView', () => {
 
     it('sessions are sorted by start time', () => {
       renderView()
-      const cards = screen.getAllByRole('article')
+      const cards = screen.getAllByRole('button', { name: /view details for/i })
       const times = cards.map((c) => c.querySelector('.session-card__time')?.textContent ?? '')
       // First card should be 09:30 (Opening Keynote), then 10:00 (Workshop), then 10:30 (DDD)
       expect(times[0]).toContain('09:30')
