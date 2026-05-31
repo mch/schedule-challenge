@@ -81,7 +81,8 @@ function rewriteCommitMessage(command: string, trailers: string[]): string | nul
     // here to be safe: strip any trailing whitespace from the existing
     // body and add the blank separator + trailer.
     const normalised = body.trimEnd();
-    const separator = normalised.includes("\n") ? "\n" : "\n\n";
+    // Always ensure a blank line between the commit details and the trailers.
+    const separator = normalised.endsWith("\n") ? "\n" : "\n\n";
     return `${flag}${quote}${normalised}${separator}${trailers.join("\n")}${quote}`;
   });
 
