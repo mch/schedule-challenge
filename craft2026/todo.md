@@ -30,12 +30,12 @@
   - [x] UI: on first visit, offer "Create new account" (shows generated passphrase) or "Enter existing passphrase"
   - [x] UI: display and allow copying of the user's passphrase
 
-- [ ] Automerge setup
-  - [ ] Define `UserDocument` type — contains bookmarked slot IDs (a set of integers)
-  - [ ] Create/open the user's Automerge doc from the derived document ID
-  - [ ] Wire up WebSocket sync to `sync.home.halfbakery.xyz`
-  - [ ] Wire up IndexedDB storage for offline persistence
-  - [ ] Provide Automerge `Repo` via React context
+- [x] Automerge setup
+  - [x] Define `UserDocument` type — contains bookmarked slot IDs (a set of integers)
+  - [x] Create/open the user's Automerge doc from the derived document ID
+  - [x] Wire up WebSocket sync to `sync.home.halfbakery.xyz`
+  - [x] Wire up IndexedDB storage for offline persistence
+  - [x] Provide Automerge `Repo` via React context
 
 - [ ] Schedule data
   - [ ] Load `craft2026/schedule.json` as a static asset
