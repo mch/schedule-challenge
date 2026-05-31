@@ -4,7 +4,9 @@
  * Covers:
  *   - Renders full session details (title, time, stage, day, speakers, tags)
  *   - Shows Keynote / Workshop / Online badges
- *   - Shows description
+ *   - Shows description (from talk.description, NOT talk.topic)
+ *   - Shows level badge when present
+ *   - Does not show description section when talk.description is null
  *   - Shows resource links (video, slides)
  *   - Not found state
  *   - Loading / error states from schedule context
@@ -12,6 +14,12 @@
  *   - Bookmark button: shows unbookmarked state, bookmarked state
  *   - Bookmark button: disabled when no handle
  *   - Bookmark button: calls handle.change() to add/remove
+ *
+ * Known issues (failing tests):
+ *   - talk.description and talk.level are absent from the JSON data, schema,
+ *     and TypeScript types — they need to be scraped/added
+ *   - SessionDetailView currently shows src?.topic as the description instead
+ *     of talk.description
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
@@ -52,7 +60,12 @@ const FIXTURE_SCHEDULE: Schedule = {
                 slug: 'opening-keynote',
                 is_keynote: true,
                 is_online: false,
-                topic: 'The keynote description text.',
+                topic: 'craft',
+                // description and level are the fields missing from the real JSON data.
+                // They need to be scraped from craft-conf.com and added to schedule.json,
+                // the schema, and the TypeScript types.
+                description: 'The real talk description from the website.',
+                level: 'general',
                 video_url: 'https://video.example.com/1001',
                 slides_url: 'https://slides.example.com/1001',
                 tags: [
@@ -76,6 +89,9 @@ const FIXTURE_SCHEDULE: Schedule = {
                 slug: 'remote-talk',
                 is_keynote: false,
                 is_online: true,
+                topic: 'craft',
+                description: null,
+                level: null,
                 tags: [],
                 speakers: [{ name: 'Carol White', slug: 'carol-white' }],
               },
@@ -215,9 +231,30 @@ describe('SessionDetailView', () => {
       expect(screen.getByText('Bob Jones')).toBeInTheDocument()
     })
 
-    it('renders description (topic)', () => {
+    it('renders description from talk.description (not topic)', () => {
+      // The description must come from talk.description, not talk.topic.
+      // talk.topic is a category string like "craft", not the human-readable description.
       renderDetail()
-      expect(screen.getByText('The keynote description text.')).toBeInTheDocument()
+      expect(screen.getByText('The real talk description from the website.')).toBeInTheDocument()
+    })
+
+    it('does not render the topic string "craft" as the description', () => {
+      // Regression: SessionDetailView previously fell back to src?.topic as the description.
+      // topic is a category label (e.g. "craft"), not a human-readable description.
+      renderDetail()
+      // The word "craft" may appear elsewhere (e.g. tags), but it must not appear
+      // inside the "About this session" section.
+      const aboutSection = screen.queryByRole('region', { name: /about this session/i })
+        ?? screen.queryByText(/about this session/i)?.closest('section')
+      if (aboutSection) {
+        expect(aboutSection).not.toHaveTextContent(/^craft$/)
+      }
+    })
+
+    it('does not render description section when talk.description is null', () => {
+      // Session 102 has description: null — the "About this session" section should be absent.
+      renderDetail({ slotId: 102 })
+      expect(screen.queryByText(/about this session/i)).not.toBeInTheDocument()
     })
 
     it('renders tags', () => {
@@ -236,6 +273,23 @@ describe('SessionDetailView', () => {
       renderDetail({ slotId: 103 })
       expect(screen.queryByText(/watch video/i)).not.toBeInTheDocument()
       expect(screen.queryByText(/view slides/i)).not.toBeInTheDocument()
+    })
+  })
+
+  describe('level badge', () => {
+    it('renders the level badge when talk.level is set', () => {
+      // talk.level (e.g. "general", "intermediate", "advanced") should be displayed
+      // as a visible badge on the detail page, mirroring craft-conf.com.
+      // This field is currently absent from schedule.json and the TypeScript types.
+      renderDetail()
+      expect(screen.getByText(/general/i)).toBeInTheDocument()
+    })
+
+    it('does not render a level badge when talk.level is null', () => {
+      // Session 102 has level: null — no level badge should appear.
+      renderDetail({ slotId: 102 })
+      // "general", "intermediate", "advanced" should not appear
+      expect(screen.queryByText(/\b(general|intermediate|advanced)\b/i)).not.toBeInTheDocument()
     })
   })
 

@@ -2,3 +2,4 @@
 node_modules/
 server/build/
 .env
+.last-run.json

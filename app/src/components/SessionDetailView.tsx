@@ -121,7 +121,8 @@ export function SessionDetailView({ slotId, onClose, handle, userDoc }: SessionD
   const type: 'talk' | 'workshop' | 'text' = slot.type
   const isKeynote = src && 'is_keynote' in src ? src.is_keynote : false
   const isOnline = src && 'is_online' in src ? src.is_online : false
-  const description = src?.topic ?? slot.description ?? null
+  const description = (src && 'description' in src ? src.description : null) ?? slot.description ?? null
+  const level = src && 'level' in src ? src.level : null
   const videoUrl = src && 'video_url' in src ? src.video_url : null
   const slidesUrl = src && 'slides_url' in src ? src.slides_url : null
   const title = src?.title ?? slot.title ?? `Slot ${slot.id}`
@@ -163,6 +164,9 @@ export function SessionDetailView({ slotId, onClose, handle, userDoc }: SessionD
           )}
           {isOnline && (
             <span className="session-badge session-badge--online">Online</span>
+          )}
+          {level && (
+            <span className="session-badge session-badge--level">{level}</span>
           )}
         </div>
 

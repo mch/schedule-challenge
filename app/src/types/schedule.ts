@@ -59,6 +59,8 @@ export interface Talk {
   topic?: string | null
   is_keynote: boolean
   is_online: boolean
+  description?: string | null
+  level?: string | null
   video_url?: string | null
   slides_url?: string | null
   tags: Tag[]
