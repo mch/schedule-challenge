@@ -1,0 +1,4587 @@
+{
+  "conference": {
+    "id": "craft",
+    "name": "Craft",
+    "year": 2026,
+    "date": "June 4-5",
+    "location": "Budapest | Hungarian Railway Museum",
+    "domain": "craft-conf.com"
+  },
+  "days": [
+    {
+      "id": 20,
+      "name": "Day 1",
+      "date": "2026-06-04",
+      "global_slots": [
+        {
+          "id": 57,
+          "type": "text",
+          "title": "Break",
+          "description": null,
+          "start_time": "10:40",
+          "end_time": "10:50"
+        },
+        {
+          "id": 58,
+          "type": "text",
+          "title": "🍵Coffee Break",
+          "description": null,
+          "start_time": "11:45",
+          "end_time": "12:00"
+        },
+        {
+          "id": 59,
+          "type": "text",
+          "title": "Lunch",
+          "description": null,
+          "start_time": "12:45",
+          "end_time": "14:00"
+        },
+        {
+          "id": 60,
+          "type": "text",
+          "title": "Break",
+          "description": null,
+          "start_time": "14:45",
+          "end_time": "14:55"
+        },
+        {
+          "id": 61,
+          "type": "text",
+          "title": "🍵Coffee Break",
+          "description": null,
+          "start_time": "15:40",
+          "end_time": "16:00"
+        },
+        {
+          "id": 62,
+          "type": "text",
+          "title": "Break",
+          "description": null,
+          "start_time": "16:45",
+          "end_time": "16:55"
+        },
+        {
+          "id": 63,
+          "type": "text",
+          "title": "Break",
+          "description": null,
+          "start_time": "17:40",
+          "end_time": "17:50"
+        },
+        {
+          "id": 64,
+          "type": "text",
+          "title": "Networking Party sponsored by Epam",
+          "description": "<p class=\"pb-4\">🔥 Head outside from 19:30 for EPAM Systems’s spectacular <strong>fire show</strong>, then get ready for the <strong>EPAM CupPong Championship</strong> kicking off at 19:45 🍻🏆<br><br><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" class=\"text-blue-600\" href=\"https://wearecommunity.io/events/epam-cup-pong-championship\"><strong>REGISTER HERE</strong></a>!</p>",
+          "start_time": "18:50",
+          "end_time": "22:00"
+        },
+        {
+          "id": 70,
+          "type": "text",
+          "title": "Registration",
+          "description": null,
+          "start_time": "08:20",
+          "end_time": "09:20"
+        }
+      ],
+      "stages": [
+        {
+          "id": 96,
+          "name": "Main Stage",
+          "color": "ff4d00",
+          "slots": [
+            {
+              "id": 706,
+              "type": "text",
+              "topic": "craft",
+              "start_time": "09:20",
+              "end_time": "09:40",
+              "title": "🎤Opening ceremony",
+              "description": null,
+              "talk": null,
+              "workshop": null
+            },
+            {
+              "id": 616,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "09:40",
+              "end_time": "10:40",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1475,
+                "title": "Slow down to speed up",
+                "slug": "gergely-oroszs-talk",
+                "topic": "craft",
+                "is_keynote": true,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2558,
+                    "name": "modernization",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2560,
+                    "name": "management",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2543,
+                    "name": "technical excellence",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Gergely Orosz",
+                    "slug": "gergely-orosz",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 617,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "11:00",
+              "end_time": "11:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1540,
+                "title": "The Shift to Agentic AI: From Concept to Practice",
+                "slug": "reuven-cohens-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Reuven Cohen",
+                    "slug": "reuvencohen",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 618,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "12:00",
+              "end_time": "12:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1478,
+                "title": "Thinking like an Architect",
+                "slug": "gregor-hohpes-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2548,
+                    "name": "architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2571,
+                    "name": "domain-driven design",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2544,
+                    "name": "software architecture",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Gregor Hohpe",
+                    "slug": "gregor-hohpe",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 619,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "14:00",
+              "end_time": "14:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1527,
+                "title": "Taming the Unpredictable: Technical Leadership in Chaotic Times",
+                "slug": "michelle-brushs-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2548,
+                    "name": "architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2545,
+                    "name": "code quality",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2559,
+                    "name": "leadership",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2536,
+                    "name": "scaling",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2549,
+                    "name": "software development",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2544,
+                    "name": "software architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2543,
+                    "name": "technical excellence",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Michelle Brush",
+                    "slug": "michellebrush",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 620,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "14:55",
+              "end_time": "15:40",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1499,
+                "title": "Ship the loop, not the product",
+                "slug": "james-hawkins-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2550,
+                    "name": "product thinking",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2538,
+                    "name": "organization",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "James Hawkins",
+                    "slug": "j-hawkins",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 621,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "16:00",
+              "end_time": "16:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1542,
+                "title": "Harness Engineering: How to Build Software When Humans Steer and Agents Execute",
+                "slug": "ryan-lopopolos-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2548,
+                    "name": "architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2578,
+                    "name": "design patterns",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2544,
+                    "name": "software architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2549,
+                    "name": "software development",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2555,
+                    "name": "artificial intelligence",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2545,
+                    "name": "code quality",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Ryan Lopopolo",
+                    "slug": "ryanlopopolo",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 622,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "16:55",
+              "end_time": "17:40",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1534,
+                "title": "Am I holding this right?",
+                "slug": "dan-norths-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2545,
+                    "name": "code quality",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2588,
+                    "name": "programming",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2583,
+                    "name": "testing",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2582,
+                    "name": "tdd",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2556,
+                    "name": "llms",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2561,
+                    "name": "tools",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2590,
+                    "name": "unit tests",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Daniel Terhorst-North",
+                    "slug": "dan-north",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 691,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "17:50",
+              "end_time": "18:50",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1517,
+                "title": "Crossing the Line: What are you waiting for - and what would happen if you stopped?",
+                "slug": "veronica-clarks-talk",
+                "topic": "craft",
+                "is_keynote": true,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2564,
+                    "name": "psychology",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2566,
+                    "name": "self confidence",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2569,
+                    "name": "unlimited potential",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2559,
+                    "name": "leadership",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2565,
+                    "name": "imposter syndrome",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2593,
+                    "name": "TECH LEADERS",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2550,
+                    "name": "product thinking",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2560,
+                    "name": "management",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Veronica Lynn Clark",
+                    "slug": "veronicalclark",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            }
+          ]
+        },
+        {
+          "id": 97,
+          "name": "Platform 2",
+          "color": "0F766E",
+          "slots": [
+            {
+              "id": 707,
+              "type": "text",
+              "topic": "craft",
+              "start_time": "09:20",
+              "end_time": "09:40",
+              "title": "Opening ceremony streamed",
+              "description": "<p class=\"pb-4\">If there are no more seats left at the Main stage, come and watch the opening ceremony streamed at Platform 2.</p>",
+              "talk": null,
+              "workshop": null
+            },
+            {
+              "id": 708,
+              "type": "text",
+              "topic": "craft",
+              "start_time": "09:40",
+              "end_time": "10:40",
+              "title": "Keynote streamed",
+              "description": "<p class=\"pb-4\">If there are no more seats left at the Main stage, come and watch the keynote streamed at Platform 2.</p>",
+              "talk": null,
+              "workshop": null
+            },
+            {
+              "id": 623,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "11:00",
+              "end_time": "11:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1510,
+                "title": "Turn the Sh*t Around -         \nHigh-performance communication techniques for high-performing teams",
+                "slug": "joseph-pelrines-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2564,
+                    "name": "psychology",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2549,
+                    "name": "software development",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2560,
+                    "name": "management",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2538,
+                    "name": "organization",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Joseph Pelrine",
+                    "slug": "joseph-pelrine",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 624,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "12:00",
+              "end_time": "12:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1490,
+                "title": "Architecture AntiPatterns and Pitfalls",
+                "slug": "mark-richards-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2544,
+                    "name": "software architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2548,
+                    "name": "architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2562,
+                    "name": "design",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2572,
+                    "name": "microservices",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Mark Richards",
+                    "slug": "markrichards3",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 625,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "14:00",
+              "end_time": "14:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1493,
+                "title": "Responsibility Driven Design Revisited",
+                "slug": "ian-coopers-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2571,
+                    "name": "domain-driven design",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2574,
+                    "name": "domain model",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2544,
+                    "name": "software architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2549,
+                    "name": "software development",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Ian Cooper",
+                    "slug": "iancooper",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 626,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "14:55",
+              "end_time": "15:40",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1500,
+                "title": "Beyond Vibe Coding: Building the Harness for Production Agents",
+                "slug": "banjo-obayomis-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2545,
+                    "name": "code quality",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2549,
+                    "name": "software development",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2539,
+                    "name": "technical debt",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2590,
+                    "name": "unit tests",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2556,
+                    "name": "llms",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2548,
+                    "name": "architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2583,
+                    "name": "testing",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Banjo Obayomi",
+                    "slug": "banjo-obayomi",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 627,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "16:00",
+              "end_time": "16:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1503,
+                "title": "Learning Programming in the Age of AI",
+                "slug": "chelsea-troys-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2539,
+                    "name": "technical debt",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2581,
+                    "name": "technical debt management",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2541,
+                    "name": "legacy code",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Chelsea Troy",
+                    "slug": "chelseatroy",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 628,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "16:55",
+              "end_time": "17:40",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1520,
+                "title": "Justin Reock's Talk",
+                "slug": "justin-reocks-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2555,
+                    "name": "artificial intelligence",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2538,
+                    "name": "organization",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2560,
+                    "name": "management",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Justin Reock",
+                    "slug": "justinreock",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            }
+          ]
+        },
+        {
+          "id": 98,
+          "name": "Focus Platform",
+          "color": "881337",
+          "slots": [
+            {
+              "id": 629,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "11:00",
+              "end_time": "12:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1536,
+                "title": "The Awareness Layer - How Accelerated Engineering Forces Smarter Organizations",
+                "slug": "robert-ransons-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2559,
+                    "name": "leadership",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2560,
+                    "name": "management",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2558,
+                    "name": "modernization",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2538,
+                    "name": "organization",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2593,
+                    "name": "TECH LEADERS",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Robert Ranson",
+                    "slug": "robert-ranson",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 630,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "14:00",
+              "end_time": "15:40",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1532,
+                "title": "From Idea to Model to Code",
+                "slug": "martin-dilgers-hands-on-session",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2589,
+                    "name": "hands-on",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2556,
+                    "name": "llms",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2544,
+                    "name": "software architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2549,
+                    "name": "software development",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Martin Dilger",
+                    "slug": "martindilger",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 631,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "16:00",
+              "end_time": "17:40",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1541,
+                "title": "Cognitum: Building Intelligence at the Hardware Layer",
+                "slug": "reuven-cohens-hands-on-session",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Reuven Cohen",
+                    "slug": "reuvencohen",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            }
+          ]
+        },
+        {
+          "id": 99,
+          "name": "Yellow Stage",
+          "color": "ffa414",
+          "slots": [
+            {
+              "id": 632,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "11:00",
+              "end_time": "11:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1476,
+                "title": "How to survive and thrive as a dev (team) in the exponential age of AI.",
+                "slug": "sander-hoogendoorns-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2555,
+                    "name": "artificial intelligence",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2546,
+                    "name": "maintenance",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2558,
+                    "name": "modernization",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2561,
+                    "name": "tools",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2545,
+                    "name": "code quality",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Sander Hoogendoorn",
+                    "slug": "sander-hoogendoorn",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 633,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "12:00",
+              "end_time": "12:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1486,
+                "title": "AI & Social Acceleration: Why are we faster yet falling behind?",
+                "slug": "cat-swetels-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2555,
+                    "name": "artificial intelligence",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2559,
+                    "name": "leadership",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2560,
+                    "name": "management",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Cat Swetel",
+                    "slug": "cat-swetel",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 634,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "14:00",
+              "end_time": "14:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1492,
+                "title": "Software Workflow Optimization: The DDO Model",
+                "slug": "titus-winters-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2593,
+                    "name": "TECH LEADERS",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Titus Winters",
+                    "slug": "tituswinters",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 635,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "14:55",
+              "end_time": "15:40",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1495,
+                "title": "Compiling AI-Assisted Specs into Well-Typed Applications with F# and WebSharper",
+                "slug": "adam-graniczs-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2588,
+                    "name": "programming",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2549,
+                    "name": "software development",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Adam Granicz",
+                    "slug": "granicz",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 636,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "16:00",
+              "end_time": "16:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1474,
+                "title": "Principle Misunderstandings",
+                "slug": "kevlin-henneys-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2549,
+                    "name": "software development",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2545,
+                    "name": "code quality",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2588,
+                    "name": "programming",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2562,
+                    "name": "design",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2578,
+                    "name": "design patterns",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2579,
+                    "name": "dependency management",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2574,
+                    "name": "domain model",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2583,
+                    "name": "testing",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2590,
+                    "name": "unit tests",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2543,
+                    "name": "technical excellence",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Kevlin Henney",
+                    "slug": "kevlin",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 637,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "16:55",
+              "end_time": "17:40",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1481,
+                "title": "An Introduction to Infrastructure for AI",
+                "slug": "bryan-olivers-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2555,
+                    "name": "artificial intelligence",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Bryan Oliver",
+                    "slug": "bryan-oliver",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            }
+          ]
+        },
+        {
+          "id": 100,
+          "name": "Telekom Stage",
+          "color": "e6007e",
+          "slots": [
+            {
+              "id": 638,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "11:00",
+              "end_time": "11:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1508,
+                "title": "Model Drift and Software Attractors",
+                "slug": "barry-oreillys-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2548,
+                    "name": "architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2544,
+                    "name": "software architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2573,
+                    "name": "modular monolith",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Barry O'Reilly",
+                    "slug": "barryoreilly",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 639,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "12:00",
+              "end_time": "12:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1497,
+                "title": "Why New Processes Don't Fix Delivery",
+                "slug": "marian-hartmans-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2559,
+                    "name": "leadership",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2560,
+                    "name": "management",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2546,
+                    "name": "maintenance",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2593,
+                    "name": "TECH LEADERS",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2582,
+                    "name": "tdd",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2562,
+                    "name": "design",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Marian Hartman",
+                    "slug": "marianhartman",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 640,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "14:00",
+              "end_time": "14:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1479,
+                "title": "Debiasing Your Software Design Decision-Making",
+                "slug": "kenny-and-evelyns-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2548,
+                    "name": "architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2562,
+                    "name": "design",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2544,
+                    "name": "software architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2570,
+                    "name": "vital skills",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2576,
+                    "name": "architecture decision records",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Kenny (Baas) Schwegler",
+                    "slug": "kenny-baas-schwegler",
+                    "topic": "craft"
+                  },
+                  {
+                    "name": "Evelyn van Kelle",
+                    "slug": "evelyn-van-kelle",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 641,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "14:55",
+              "end_time": "15:40",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1543,
+                "title": "Who Is Actually Making the Architectural Decisions Right Now? Facilitating Architecture in an AI-Accelerated World",
+                "slug": "kennys-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2548,
+                    "name": "architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2555,
+                    "name": "artificial intelligence",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2544,
+                    "name": "software architecture",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Kenny (Baas) Schwegler",
+                    "slug": "kenny-baas-schwegler",
+                    "topic": "craft"
+                  },
+                  {
+                    "name": "Evelyn van Kelle",
+                    "slug": "evelyn-van-kelle",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 642,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "16:00",
+              "end_time": "16:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1485,
+                "title": "Taste: The main advantage in AI",
+                "slug": "tejas-kumars-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2555,
+                    "name": "artificial intelligence",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2588,
+                    "name": "programming",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Tejas Kumar",
+                    "slug": "tejas-kumar",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 643,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "16:55",
+              "end_time": "17:40",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1524,
+                "title": "From Templates to Conversations: Automating Support in Fintech",
+                "slug": "balazs-csintalans-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2550,
+                    "name": "product thinking",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2556,
+                    "name": "llms",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Balázs Csintalan",
+                    "slug": "balazs-csintalan",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            }
+          ]
+        },
+        {
+          "id": 101,
+          "name": "Purple Stage",
+          "color": "6545cc",
+          "slots": [
+            {
+              "id": 644,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "11:00",
+              "end_time": "11:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1504,
+                "title": "Architecture in the Age of Autonomous Code",
+                "slug": "matthew-clarks-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2548,
+                    "name": "architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2544,
+                    "name": "software architecture",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Matthew Clark",
+                    "slug": "matthewclarkuk",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 645,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "12:00",
+              "end_time": "12:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1511,
+                "title": "How to find bugs in systems that don't exist",
+                "slug": "hillel-waynes-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2548,
+                    "name": "architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2561,
+                    "name": "tools",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2544,
+                    "name": "software architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2536,
+                    "name": "scaling",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Hillel Wayne",
+                    "slug": "hillel-wayne",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 646,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "14:00",
+              "end_time": "14:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1531,
+                "title": "Beyond autonomous teams: essence and accident in product development complexity",
+                "slug": "simon-rohrers-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Simon Rohrer",
+                    "slug": "simonrohrer",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 647,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "14:55",
+              "end_time": "15:40",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1512,
+                "title": "Code Health Guardian: Rigorous yet Sustainable Human Reviews in the AI Era",
+                "slug": "artie-shevchenkos-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2549,
+                    "name": "software development",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2545,
+                    "name": "code quality",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2589,
+                    "name": "hands-on",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2555,
+                    "name": "artificial intelligence",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Artie Shevchenko",
+                    "slug": "artie-shevchenko",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 648,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "16:00",
+              "end_time": "16:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1489,
+                "title": "Neal Ford's Talk",
+                "slug": "neal-fords-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2548,
+                    "name": "architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2544,
+                    "name": "software architecture",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Neal Ford",
+                    "slug": "neal-ford",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 649,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "16:55",
+              "end_time": "17:40",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1545,
+                "title": "Building the Verification Sandwich: Policy-as-Code for Every Agent",
+                "slug": "matthew-maisels-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2556,
+                    "name": "llms",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Matthew Maisel",
+                    "slug": "matthewmaisel",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            }
+          ]
+        },
+        {
+          "id": 102,
+          "name": "Green Stage",
+          "color": "00a75d",
+          "slots": [
+            {
+              "id": 650,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "11:00",
+              "end_time": "12:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1473,
+                "title": "AI & I - The Architecture of Our Identity: Mapping the Possibles, Lovables, and Undiscussables",
+                "slug": "xin-yaos-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2548,
+                    "name": "architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2571,
+                    "name": "domain-driven design",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2589,
+                    "name": "hands-on",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2559,
+                    "name": "leadership",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2539,
+                    "name": "technical debt",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2562,
+                    "name": "design",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Xin Yao",
+                    "slug": "xinyao",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 651,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "14:00",
+              "end_time": "15:40",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1528,
+                "title": "Re-engineering Software Delivery: Delivering with Supervised and Unsupervised Coding Agents",
+                "slug": "wesley-reisz-hands-on-session",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2555,
+                    "name": "artificial intelligence",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2578,
+                    "name": "design patterns",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2556,
+                    "name": "llms",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2588,
+                    "name": "programming",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Wesley Reisz",
+                    "slug": "wesreisz",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 652,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "16:00",
+              "end_time": "17:40",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1539,
+                "title": "Distributed agents that survive anything",
+                "slug": "daniel-vigovszkys-hands-on-session",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2587,
+                    "name": "typescript",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2589,
+                    "name": "hands-on",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Daniel Vigovszky",
+                    "slug": "dvigovszky",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            }
+          ]
+        },
+        {
+          "id": 110,
+          "name": "Innovation Stage",
+          "color": "000000",
+          "slots": [
+            {
+              "id": 701,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "11:00",
+              "end_time": "11:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1557,
+                "title": "Beyond the Pipeline: How Data Projects Drive Enterprise-Wide Business Transformation",
+                "slug": "beyond-the-pipeline-how-data-projects-drive-enterprise-wide-business-transformation",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Sam Matysen",
+                    "slug": "sam-matysen",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 693,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "12:00",
+              "end_time": "12:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1547,
+                "title": "From Single Database to Distributed: Scaling Real-Time Fraud Detection at SEON",
+                "slug": "from-single-database-to-distributed-scaling-real-time-fraud-detection-at-seon",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Viktor Micskó",
+                    "slug": "viktor-micsko",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 715,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "14:00",
+              "end_time": "14:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1560,
+                "title": "Diversity in the AI age",
+                "slug": "diversity-in-the-ai-age",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Gabriella Mátyás-Kollár",
+                    "slug": "gabriella-matyas-kollar",
+                    "topic": "craft"
+                  },
+                  {
+                    "name": "Katalin Hornyik",
+                    "slug": "katalin-hornyik",
+                    "topic": "craft"
+                  },
+                  {
+                    "name": "Rozália Miklós",
+                    "slug": "rozalia-miklos",
+                    "topic": "craft"
+                  },
+                  {
+                    "name": "József Holderith",
+                    "slug": "jozsef-holderith",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 694,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "14:55",
+              "end_time": "15:40",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1550,
+                "title": "Is it really that expensive to build an AI system today?",
+                "slug": "is-it-really-that-expensive-to-build-an-ai-system-today",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Ivan Petrović",
+                    "slug": "ivan-petrovic",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 724,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "16:00",
+              "end_time": "16:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1569,
+                "title": "From idea to impact: building successful products in the Agentic AI era",
+                "slug": "from-idea-to-impact-building-successful-products-in-the-agentic-ai-era",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Emese Pogácsás",
+                    "slug": "emese-pogacsas",
+                    "topic": "craft"
+                  },
+                  {
+                    "name": "Richárd Román",
+                    "slug": "richard-roman",
+                    "topic": "craft"
+                  },
+                  {
+                    "name": "István Szabó",
+                    "slug": "istvan-szabo",
+                    "topic": "craft"
+                  },
+                  {
+                    "name": "Zsuzsa Kovács",
+                    "slug": "zsuzsa-kovacs",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 714,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "16:55",
+              "end_time": "17:40",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1559,
+                "title": "Get your systems to define the story of your organization. Is it work surveillance, or hyperoptimized operational excellence?",
+                "slug": "get-your-systems-to-define-the-story-of-your-organization-is-it-work-surveillance-or-hyperoptimized-operational-excellence",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Ádám Kovács",
+                    "slug": "adam-kovacs",
+                    "topic": "craft"
+                  },
+                  {
+                    "name": "Klara Hermesz",
+                    "slug": "klara-hermesz",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            }
+          ]
+        },
+        {
+          "id": 111,
+          "name": "Podcast Stage",
+          "color": "159dd9",
+          "slots": [
+            {
+              "id": 697,
+              "type": "text",
+              "topic": "craft",
+              "start_time": "10:50",
+              "end_time": "11:00",
+              "title": "Podcast Stage Opening",
+              "description": null,
+              "talk": null,
+              "workshop": null
+            },
+            {
+              "id": 716,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "11:00",
+              "end_time": "11:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1561,
+                "title": "Legacy code in the AI era",
+                "slug": "legacy-code-in-the-ai-era",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Michael Feathers",
+                    "slug": "michael-feathers",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 698,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "12:00",
+              "end_time": "12:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1554,
+                "title": "How Developers Still Have Jobs?",
+                "slug": "how-developers-still-have-jobs",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Kent Beck",
+                    "slug": "kent-beck",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 718,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "14:00",
+              "end_time": "14:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1563,
+                "title": "How to reinvent yourself in the face of disruption",
+                "slug": "how-to-reinvent-yourself-in-the-face-of-disruption",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Nickolas Means",
+                    "slug": "nickolas-means",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 699,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "15:00",
+              "end_time": "15:40",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1555,
+                "title": "Ethics of engineering in the age of AI",
+                "slug": "ethics-of-engineering-in-the-age-of-ai",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Ian Thomas",
+                    "slug": "ian-thomas",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 717,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "16:00",
+              "end_time": "16:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1562,
+                "title": "How to weigh AI, human intuition, and engineering?",
+                "slug": "how-to-weigh-ai-human-intuition-and-engineering",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Evelyn van Kelle",
+                    "slug": "evelyn-van-kelle",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            }
+          ]
+        },
+        {
+          "id": 115,
+          "name": "Tech Leaders' Lounge",
+          "color": "000000",
+          "slots": [
+            {
+              "id": 685,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "14:00",
+              "end_time": "14:45",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1548,
+                "title": "What Are We, Exactly? Redefining the Tech Manager Role",
+                "slug": "what-are-we-exactly-redefining-the-tech-manager-role",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Cat Swetel",
+                    "slug": "cat-swetel",
+                    "topic": "craft"
+                  },
+                  {
+                    "name": "Robert Ranson",
+                    "slug": "robert-ranson",
+                    "topic": "craft"
+                  },
+                  {
+                    "name": "Arlo Belshee",
+                    "slug": "arlobelshee",
+                    "topic": "craft"
+                  },
+                  {
+                    "name": "Emese Pogácsás",
+                    "slug": "emese-pogacsas",
+                    "topic": "craft"
+                  },
+                  {
+                    "name": "Péter Szász",
+                    "slug": "peter-szasz",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 725,
+              "type": "text",
+              "topic": "craft",
+              "start_time": "19:00",
+              "end_time": "22:00",
+              "title": "Wine tasting",
+              "description": "<p class=\"pb-4\">Join the Tech Leaders for a relaxing evening of networking and fine wine - hosted by Namaste &amp; Cabarnet</p>",
+              "talk": null,
+              "workshop": null
+            }
+          ]
+        },
+        {
+          "id": 116,
+          "name": "🚂 Train Tracks",
+          "color": "52525B",
+          "slots": [
+            {
+              "id": 689,
+              "type": "text",
+              "topic": "craft",
+              "start_time": "15:45",
+              "end_time": "16:30",
+              "title": "🚂 Guided Tour of the Hungarian Railway Museum 💨",
+              "description": "<p class=\"pb-4\">During the guided tour we'll discover Central Europe's largest open air railway museum in about 45 minutes. We'll learn about Hungary's remarkable railway history as well as picking up interesting technical information about the steam age and the exciting buildings and equipements designed for the locomotives. Stay tuned to experience the classic steel masterpieces from a gone by era of engineering.</p><p class=\"pb-4\">Guide: Balázs Ackermann</p><p class=\"pb-4\">Spots are limited, you can <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" class=\"text-blue-600\" href=\"https://luma.com/ks6go1fm\">REGISTER HERE</a>!</p>",
+              "talk": null,
+              "workshop": null
+            },
+            {
+              "id": 690,
+              "type": "text",
+              "topic": "craft",
+              "start_time": "19:00",
+              "end_time": "19:45",
+              "title": "🚂 Guided Tour of the Hungarian Railway Museum 💨",
+              "description": "<p class=\"pb-4\">During the guided tour we'll discover Central Europe's largest open air railway museum in about 45 minutes. We'll learn about Hungary's remarkable railway history as well as picking up interesting technical information about the steam age and the exciting buildings and equipements designed for the locomotives. Stay tuned to experience the classic steel masterpieces from a gone by era of engineering.<br><br>Guide: Balázs Ackermann</p><p class=\"pb-4\">Spots are limited, you can <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" class=\"text-blue-600\" href=\"https://luma.com/b97s3p42\">REGISTER HERE</a>!</p>",
+              "talk": null,
+              "workshop": null
+            }
+          ]
+        },
+        {
+          "id": 117,
+          "name": "Central Workshop Area",
+          "color": "6E359F",
+          "slots": [
+            {
+              "id": 702,
+              "type": "workshop",
+              "topic": "craft",
+              "start_time": "11:00",
+              "end_time": "12:00",
+              "title": null,
+              "description": null,
+              "talk": null,
+              "workshop": {
+                "id": 403,
+                "title": "From Idea to an AI-Enabled SAP App",
+                "slug": "from-idea-to-an-ai-enabled-sap-app",
+                "topic": "craft",
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Gabor Timar",
+                    "slug": "gabor-timar",
+                    "topic": "craft"
+                  }
+                ]
+              }
+            },
+            {
+              "id": 703,
+              "type": "workshop",
+              "topic": "craft",
+              "start_time": "14:50",
+              "end_time": "15:50",
+              "title": null,
+              "description": null,
+              "talk": null,
+              "workshop": {
+                "id": 402,
+                "title": "Refactor Smarter, Not Harder: AI for Legacy Code",
+                "slug": "refactor-smarter-not-harder-ai-for-legacy-code",
+                "topic": "craft",
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Gergely Ruzsics",
+                    "slug": "gergely-ruzsics",
+                    "topic": "craft"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 119,
+          "name": "Sponsor Arena",
+          "color": "000000",
+          "slots": [
+            {
+              "id": 712,
+              "type": "text",
+              "topic": "craft",
+              "start_time": "11:45",
+              "end_time": "14:30",
+              "title": "📖 Book signing by Gergely Orosz",
+              "description": "<p class=\"pb-4\">Meet Gergely Orosz at the Sponsor Arena next to the CraftHub booth for an exclusive signing session of the Hungarian edition of <em>Software Engineer’s Guidebook</em>! </p>",
+              "talk": null,
+              "workshop": null
+            },
+            {
+              "id": 713,
+              "type": "text",
+              "topic": "craft",
+              "start_time": "18:50",
+              "end_time": "19:30",
+              "title": "📖 Book signing by Veronica Clark",
+              "description": "<p class=\"pb-4\">Meet Veronica Clark at the Sponsor Arena next to the CraftHub booth for an exclusive signing session of <em>To Be Aligned</em> — limited signed copies available!</p>",
+              "talk": null,
+              "workshop": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "name": "Day 2",
+      "date": "2026-06-05",
+      "global_slots": [
+        {
+          "id": 65,
+          "type": "text",
+          "title": "🍵Coffee Break",
+          "description": null,
+          "start_time": "10:10",
+          "end_time": "10:30"
+        },
+        {
+          "id": 66,
+          "type": "text",
+          "title": "Break",
+          "description": null,
+          "start_time": "11:15",
+          "end_time": "11:30"
+        },
+        {
+          "id": 67,
+          "type": "text",
+          "title": "Lunch",
+          "description": null,
+          "start_time": "12:15",
+          "end_time": "13:45"
+        },
+        {
+          "id": 68,
+          "type": "text",
+          "title": "🍵Coffee Break",
+          "description": null,
+          "start_time": "14:30",
+          "end_time": "14:50"
+        },
+        {
+          "id": 69,
+          "type": "text",
+          "title": "Break",
+          "description": null,
+          "start_time": "15:35",
+          "end_time": "15:45"
+        },
+        {
+          "id": 72,
+          "type": "text",
+          "title": "Registration",
+          "description": null,
+          "start_time": "08:10",
+          "end_time": "09:00"
+        }
+      ],
+      "stages": [
+        {
+          "id": 103,
+          "name": "Main Stage",
+          "color": "ff4d00",
+          "slots": [
+            {
+              "id": 711,
+              "type": "text",
+              "topic": "craft",
+              "start_time": "09:00",
+              "end_time": "09:10",
+              "title": "🎤Opening ceremony",
+              "description": null,
+              "talk": null,
+              "workshop": null
+            },
+            {
+              "id": 653,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "09:10",
+              "end_time": "10:10",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1521,
+                "title": "Forest & Desert & Genie",
+                "slug": "kent-becks-talk",
+                "topic": "craft",
+                "is_keynote": true,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2588,
+                    "name": "programming",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2582,
+                    "name": "tdd",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2549,
+                    "name": "software development",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2562,
+                    "name": "design",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Kent Beck",
+                    "slug": "kent-beck",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 654,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "10:30",
+              "end_time": "11:15",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1484,
+                "title": "Working Effectively with AI-Generated Code",
+                "slug": "michael-feathers-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2562,
+                    "name": "design",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2549,
+                    "name": "software development",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2545,
+                    "name": "code quality",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2555,
+                    "name": "artificial intelligence",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2588,
+                    "name": "programming",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2541,
+                    "name": "legacy code",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2539,
+                    "name": "technical debt",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2581,
+                    "name": "technical debt management",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2548,
+                    "name": "architecture",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Michael Feathers",
+                    "slug": "michael-feathers",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 655,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "11:30",
+              "end_time": "12:15",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1491,
+                "title": "114 Miles to the Final Cut",
+                "slug": "nickolas-means-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2559,
+                    "name": "leadership",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2560,
+                    "name": "management",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2555,
+                    "name": "artificial intelligence",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2564,
+                    "name": "psychology",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Nickolas Means",
+                    "slug": "nickolas-means",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 656,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "13:45",
+              "end_time": "14:30",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1498,
+                "title": "Keeping humans in the loop with AI coding agents",
+                "slug": "gojko-adzics-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2550,
+                    "name": "product thinking",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2556,
+                    "name": "llms",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2588,
+                    "name": "programming",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2551,
+                    "name": "race against the machine",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2543,
+                    "name": "technical excellence",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Gojko Adzic",
+                    "slug": "gojko",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 657,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "14:50",
+              "end_time": "15:35",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1513,
+                "title": "Tools for Certainty, Claws for Discovery: Lessons from Building NemoClaw",
+                "slug": "aaron-ericksons-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2555,
+                    "name": "artificial intelligence",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Aaron Erickson",
+                    "slug": "aaronerickson",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 658,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "15:45",
+              "end_time": "16:30",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1477,
+                "title": "AI Won't Eat Your Stack: Why Robust Components Matter More Than Ever",
+                "slug": "randy-shoups-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2548,
+                    "name": "architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2536,
+                    "name": "scaling",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2544,
+                    "name": "software architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2555,
+                    "name": "artificial intelligence",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2571,
+                    "name": "domain-driven design",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2556,
+                    "name": "llms",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2582,
+                    "name": "tdd",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Randy Shoup",
+                    "slug": "randy-shoup",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 726,
+              "type": "text",
+              "topic": "craft",
+              "start_time": "16:30",
+              "end_time": "16:45",
+              "title": "Raffle",
+              "description": "<p class=\"pb-4\" style=\"text-align: center;\"><strong>🎊 It's raining prizes!</strong></p><p class=\"pb-4\" style=\"text-align: center;\">We have many ways of qualifying for prizes during the conference. Visit every booth for a chance to win one of our epic prizes!</p>",
+              "talk": null,
+              "workshop": null
+            },
+            {
+              "id": 727,
+              "type": "text",
+              "topic": "craft",
+              "start_time": "16:45",
+              "end_time": "17:00",
+              "title": "👋 Closing ceremony",
+              "description": "<p class=\"pb-4\" style=\"text-align: center;\">Our last train of thought has arrived at the station, and thus we must say goodbye. Join us for the final goodbye of Craft Conference 2026 and be a part of our group photo! 📸👥</p><p class=\"pb-4\" style=\"text-align: center;\">See you next year!</p>",
+              "talk": null,
+              "workshop": null
+            }
+          ]
+        },
+        {
+          "id": 104,
+          "name": "Platform 2",
+          "color": "0F766E",
+          "slots": [
+            {
+              "id": 709,
+              "type": "text",
+              "topic": "craft",
+              "start_time": "09:10",
+              "end_time": "10:10",
+              "title": "Keynote streamed",
+              "description": "<p class=\"pb-4\">If there are no more seats left at the Main stage, come and watch the keynote streamed at Platform 2.</p>",
+              "talk": null,
+              "workshop": null
+            },
+            {
+              "id": 692,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "10:30",
+              "end_time": "11:15",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1552,
+                "title": "Fully Automated Luxury Gay Space Communism: a brief how-to",
+                "slug": "ashi-krishnans-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2555,
+                    "name": "artificial intelligence",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2564,
+                    "name": "psychology",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2593,
+                    "name": "TECH LEADERS",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2570,
+                    "name": "vital skills",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2556,
+                    "name": "llms",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2538,
+                    "name": "organization",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Ashi Krishnan",
+                    "slug": "ashi-krishnan",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 660,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "11:30",
+              "end_time": "12:15",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1488,
+                "title": "Governance Without the Red Tape",
+                "slug": "sarah-wells-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2559,
+                    "name": "leadership",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2538,
+                    "name": "organization",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2560,
+                    "name": "management",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2576,
+                    "name": "architecture decision records",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2546,
+                    "name": "maintenance",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2539,
+                    "name": "technical debt",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2581,
+                    "name": "technical debt management",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Sarah Wells",
+                    "slug": "sarah-wells",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 661,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "13:45",
+              "end_time": "14:30",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1530,
+                "title": "Computer vision beyond cameras - how robots can see with radars?",
+                "slug": "andras-palffys-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2555,
+                    "name": "artificial intelligence",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Andras Palffy",
+                    "slug": "andraspalffy",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 662,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "14:50",
+              "end_time": "15:35",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1494,
+                "title": "Platform as a Product: A dive into the Technical Foundations",
+                "slug": "abby-bangsers-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2558,
+                    "name": "modernization",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2550,
+                    "name": "product thinking",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2548,
+                    "name": "architecture",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Abby Bangser",
+                    "slug": "abbybangser",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            }
+          ]
+        },
+        {
+          "id": 105,
+          "name": "Focus Platform",
+          "color": "881337",
+          "slots": [
+            {
+              "id": 664,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "10:30",
+              "end_time": "12:15",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1533,
+                "title": "TDD in the AI Era: No Vibes, Just Velocity",
+                "slug": "barry-s-stahls-hands-on-session",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2547,
+                    "name": "agile development",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2582,
+                    "name": "tdd",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2590,
+                    "name": "unit tests",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Barry S. Stahl",
+                    "slug": "bstahl",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 665,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "13:45",
+              "end_time": "15:35",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1529,
+                "title": "Quality Engineering in the Agentic Age: Build, Test, Orchestrate",
+                "slug": "dragan-spiridonovs-hands-on-session",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Dragan Spiridonov",
+                    "slug": "dragan-spiridonov",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 666,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "15:45",
+              "end_time": "16:30",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1537,
+                "title": "Building Your AI Security Framework",
+                "slug": "adam-litters-hands-on-session",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2548,
+                    "name": "architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2579,
+                    "name": "dependency management",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2556,
+                    "name": "llms",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Adam Litter",
+                    "slug": "adam-litter",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            }
+          ]
+        },
+        {
+          "id": 106,
+          "name": "Yellow Stage",
+          "color": "ffa414",
+          "slots": [
+            {
+              "id": 667,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "10:30",
+              "end_time": "11:15",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1506,
+                "title": "The Art of Pairing with Human (and Artificial) Intelligence",
+                "slug": "ilyas-landikovs-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2555,
+                    "name": "artificial intelligence",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2556,
+                    "name": "llms",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2588,
+                    "name": "programming",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Ilyas Landikov",
+                    "slug": "ilandikov",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 668,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "11:30",
+              "end_time": "12:15",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1487,
+                "title": "Christopher Grainger's Talk",
+                "slug": "christopher-graingers-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Christopher Grainger",
+                    "slug": "christopher-grainger",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 669,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "13:45",
+              "end_time": "14:30",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1518,
+                "title": "Staying at the Exponential: Mastering Claude Code",
+                "slug": "kashyap-muralis-talk-2",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2556,
+                    "name": "llms",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2560,
+                    "name": "management",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2555,
+                    "name": "artificial intelligence",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Kashyap Murali",
+                    "slug": "kashyap-murali",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 670,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "14:50",
+              "end_time": "15:35",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1525,
+                "title": "Solutions That Evolve: Building Self-Improving Systems with Genetic Algorithms",
+                "slug": "barry-s-stahls-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": "https://cognitiveinheritance.com/Presentations/Session/SolutionsThatEvolve/index.html",
+                "tags": [
+                  {
+                    "id": 2555,
+                    "name": "artificial intelligence",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Barry S. Stahl",
+                    "slug": "bstahl",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 671,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "15:45",
+              "end_time": "16:30",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1544,
+                "title": "Engineering Agentic AI: Coordinated Agents on Structured Infrastructure",
+                "slug": "florin-coros-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2555,
+                    "name": "artificial intelligence",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2548,
+                    "name": "architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2562,
+                    "name": "design",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2549,
+                    "name": "software development",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Florin Coros",
+                    "slug": "florincoros",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            }
+          ]
+        },
+        {
+          "id": 107,
+          "name": "Telekom Stage",
+          "color": "e6007e",
+          "slots": [
+            {
+              "id": 672,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "10:30",
+              "end_time": "11:15",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1502,
+                "title": "Team dynamics after AI",
+                "slug": "duncan-browns-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2588,
+                    "name": "programming",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2562,
+                    "name": "design",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2549,
+                    "name": "software development",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2559,
+                    "name": "leadership",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Duncan Brown",
+                    "slug": "duncanjbrown",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 674,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "11:30",
+              "end_time": "12:15",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1519,
+                "title": "Jeremy Edberg's Talk",
+                "slug": "jeremy-edbergs-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2548,
+                    "name": "architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2536,
+                    "name": "scaling",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Jeremy Edberg",
+                    "slug": "jedberg",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 673,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "13:45",
+              "end_time": "14:30",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1496,
+                "title": "Careless by Design: AI with Zero Bugs in Ugly Code",
+                "slug": "arlo-belshees-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2555,
+                    "name": "artificial intelligence",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2545,
+                    "name": "code quality",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2541,
+                    "name": "legacy code",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2549,
+                    "name": "software development",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2543,
+                    "name": "technical excellence",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Arlo Belshee",
+                    "slug": "arlobelshee",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 675,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "14:50",
+              "end_time": "15:35",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1505,
+                "title": "Pulling Continuous Delivery inside the agentic loop",
+                "slug": "kief-morris-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Kief Morris",
+                    "slug": "kiefmorris",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 722,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "15:45",
+              "end_time": "16:30",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1567,
+                "title": "Craft Still Matters",
+                "slug": "craft-still-matters",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Gregor Riegler",
+                    "slug": "gregor-riegler",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            }
+          ]
+        },
+        {
+          "id": 108,
+          "name": "Purple Stage",
+          "color": "6545cc",
+          "slots": [
+            {
+              "id": 677,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "10:30",
+              "end_time": "11:15",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1514,
+                "title": "From Idea to Event Model to Code - and Back",
+                "slug": "martin-dilgers-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2544,
+                    "name": "software architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2548,
+                    "name": "architecture",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2549,
+                    "name": "software development",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Martin Dilger",
+                    "slug": "martindilger",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 678,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "11:30",
+              "end_time": "12:15",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1516,
+                "title": "AI-Friendly Code: Your Code Is an AI Crime Scene",
+                "slug": "adam-tornhills-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2545,
+                    "name": "code quality",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2557,
+                    "name": "refactoring",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Adam Tornhill",
+                    "slug": "adamtornhill",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 679,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "13:45",
+              "end_time": "14:30",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1482,
+                "title": "AI Native Engineering",
+                "slug": "ian-thomas-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2555,
+                    "name": "artificial intelligence",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2578,
+                    "name": "design patterns",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2558,
+                    "name": "modernization",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2560,
+                    "name": "management",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Ian Thomas",
+                    "slug": "ian-thomas",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 680,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "14:50",
+              "end_time": "15:35",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1535,
+                "title": "Code World Model: Building World Models for Computation",
+                "slug": "jacob-kahns-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2555,
+                    "name": "artificial intelligence",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Jacob Kahn",
+                    "slug": "jacob-kahn",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 681,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "15:45",
+              "end_time": "16:30",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1515,
+                "title": "Journaling with AI",
+                "slug": "llewellyn-falcos-talk",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2537,
+                    "name": "agile",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2547,
+                    "name": "agile development",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2555,
+                    "name": "artificial intelligence",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2588,
+                    "name": "programming",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Llewellyn Falco",
+                    "slug": "llewellynfalco",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            }
+          ]
+        },
+        {
+          "id": 109,
+          "name": "Green Stage",
+          "color": "00a75d",
+          "slots": [
+            {
+              "id": 682,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "10:30",
+              "end_time": "12:15",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1526,
+                "title": "Patterns for Coding with AI",
+                "slug": "lada-kesselers-hands-on",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2556,
+                    "name": "llms",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2549,
+                    "name": "software development",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2543,
+                    "name": "technical excellence",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2561,
+                    "name": "tools",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Lada Kesseler",
+                    "slug": "lada-kesseler",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 683,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "13:45",
+              "end_time": "15:35",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1522,
+                "title": "The Eight Desires Workshop",
+                "slug": "veronika-clarks-hands-on-session",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2569,
+                    "name": "unlimited potential",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2593,
+                    "name": "TECH LEADERS",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2566,
+                    "name": "self confidence",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2564,
+                    "name": "psychology",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2541,
+                    "name": "legacy code",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2559,
+                    "name": "leadership",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2589,
+                    "name": "hands-on",
+                    "is_trending": false
+                  },
+                  {
+                    "id": 2565,
+                    "name": "imposter syndrome",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Veronica Lynn Clark",
+                    "slug": "veronicalclark",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 684,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "15:45",
+              "end_time": "16:30",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1538,
+                "title": "Inside the Brain of the Top 1% AI Companies",
+                "slug": "marton-szabos-hands-on-session",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [
+                  {
+                    "id": 2554,
+                    "name": "ai",
+                    "is_trending": false
+                  }
+                ],
+                "speakers": [
+                  {
+                    "name": "Márton Szabó",
+                    "slug": "marton-szabo",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            }
+          ]
+        },
+        {
+          "id": 112,
+          "name": "Innovation Stage",
+          "color": "000000",
+          "slots": [
+            {
+              "id": 695,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "10:30",
+              "end_time": "11:15",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1546,
+                "title": "Artificial Intelligence, Actual Culture: Renegotiating Work in the AI Era",
+                "slug": "artificial-intelligence-actual-culture-renegotiating-work-in-the-ai-era",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Zach Pendleton",
+                    "slug": "zach-pendleton",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 696,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "11:30",
+              "end_time": "12:15",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1553,
+                "title": "Tier 0 Engineering at Tesco Technology",
+                "slug": "tier-0-engineering-at-tesco-technology",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "János Csorvási",
+                    "slug": "janos-csorvasi",
+                    "topic": "craft"
+                  },
+                  {
+                    "name": "Julia Raksimowicz",
+                    "slug": "julia-raksimowicz",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 721,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "13:45",
+              "end_time": "14:30",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1566,
+                "title": "Monte Carlo for SaaS: Simulating The Effect Of Product Decisions",
+                "slug": "monte-carlo-for-saas-simulating-the-effect-of-product-decisions",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Zoltán Dávid",
+                    "slug": "zoltan-david",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 723,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "14:50",
+              "end_time": "15:35",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1568,
+                "title": "AI in 6G mobile networks",
+                "slug": "ai-in-6g-mobile-networks",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Benedek Kovács",
+                    "slug": "benedek-kovacs",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 704,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "15:45",
+              "end_time": "16:30",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1558,
+                "title": "Agents Need Names: Trust at the age of agentic web",
+                "slug": "agents-need-names-trust-at-the-age-of-agentic-web",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Balázs Némethi",
+                    "slug": "balazs-nemethi",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            }
+          ]
+        },
+        {
+          "id": 113,
+          "name": "Podcast Stage",
+          "color": "159dd9",
+          "slots": [
+            {
+              "id": 719,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "11:30",
+              "end_time": "12:15",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1564,
+                "title": "What will happen with juniors now?",
+                "slug": "what-will-happen-with-juniors-now",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Emese Pogácsás",
+                    "slug": "emese-pogacsas",
+                    "topic": "craft"
+                  },
+                  {
+                    "name": "Péter Szász",
+                    "slug": "peter-szasz",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 700,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "13:45",
+              "end_time": "14:30",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1556,
+                "title": "How to plug AI into your team? Practical tips",
+                "slug": "how-to-plug-ai-into-your-team-practical-tips",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Xin Yao",
+                    "slug": "xinyao",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            },
+            {
+              "id": 720,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "14:50",
+              "end_time": "15:35",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1565,
+                "title": "State of Engineering Management",
+                "slug": "state-of-engineering-management",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Gergely Orosz",
+                    "slug": "gergely-orosz",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            }
+          ]
+        },
+        {
+          "id": 114,
+          "name": "Tech Leaders' Lounge",
+          "color": "000000",
+          "slots": [
+            {
+              "id": 686,
+              "type": "talk",
+              "topic": "craft",
+              "start_time": "10:30",
+              "end_time": "11:15",
+              "title": null,
+              "description": null,
+              "talk": {
+                "id": 1549,
+                "title": "What Do I Do With My Developers? Product Ownership, Agentic Craft, and Shifting Expectations",
+                "slug": "what-do-i-do-with-my-developers-product-ownership-agentic-craft-and-shifting-expectations",
+                "topic": "craft",
+                "is_keynote": false,
+                "is_online": false,
+                "video_url": null,
+                "slides_url": null,
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Gojko Adzic",
+                    "slug": "gojko",
+                    "topic": "craft"
+                  },
+                  {
+                    "name": "Reuven Cohen",
+                    "slug": "reuvencohen",
+                    "topic": "craft"
+                  },
+                  {
+                    "name": "Daniel Terhorst-North",
+                    "slug": "dan-north",
+                    "topic": "craft"
+                  },
+                  {
+                    "name": "Emese Pogácsás",
+                    "slug": "emese-pogacsas",
+                    "topic": "craft"
+                  },
+                  {
+                    "name": "Péter Szász",
+                    "slug": "peter-szasz",
+                    "topic": "craft"
+                  }
+                ]
+              },
+              "workshop": null
+            }
+          ]
+        },
+        {
+          "id": 118,
+          "name": "Central Workshop Area",
+          "color": "6E359F",
+          "slots": [
+            {
+              "id": 705,
+              "type": "workshop",
+              "topic": "craft",
+              "start_time": "11:00",
+              "end_time": "12:00",
+              "title": null,
+              "description": null,
+              "talk": null,
+              "workshop": {
+                "id": 404,
+                "title": "AI@Allianz: Shape the Future – Challenge Our Next AI Initiatives",
+                "slug": "ai-at-allianz-shape-the-future-challenge-our-next-ai-initiatives",
+                "topic": "craft",
+                "tags": [],
+                "speakers": [
+                  {
+                    "name": "Zoltán Kukovecz",
+                    "slug": "zoltan-kukovecz",
+                    "topic": "craft"
+                  },
+                  {
+                    "name": "Balázs Bábos",
+                    "slug": "balazs-babos",
+                    "topic": "craft"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 120,
+          "name": "Sponsor Arena",
+          "color": "000000",
+          "slots": []
+        }
+      ]
+    }
+  ],
+  "fetched_at": "2026-05-31T19:30:23.201530+00:00"
+}

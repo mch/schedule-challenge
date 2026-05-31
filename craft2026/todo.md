@@ -16,12 +16,12 @@
 
 ## To Do
 
-- [ ] Project scaffold
-  - [ ] Create `app/` with Vite + React + TypeScript
-  - [ ] Configure Vitest and React Testing Library
-  - [ ] Configure Playwright
-  - [ ] Add `vite-plugin-pwa` and basic PWA manifest
-  - [ ] Add Automerge dependencies (`@automerge/automerge-repo`, `@automerge/automerge-repo-react-hooks`, `@automerge/automerge-repo-network-websocket`, `@automerge/automerge-repo-storage-indexeddb`)
+- [x] Project scaffold
+  - [x] Create `app/` with Vite + React + TypeScript
+  - [x] Configure Vitest and React Testing Library
+  - [x] Configure Playwright
+  - [x] Add `vite-plugin-pwa` and basic PWA manifest
+  - [x] Add Automerge dependencies (`@automerge/automerge-repo`, `@automerge/automerge-repo-react-hooks`, `@automerge/automerge-repo-network-websocket`, `@automerge/automerge-repo-storage-indexeddb`)
 
 - [ ] Passphrase identity
   - [ ] `generatePassphrase()` — returns a random human-readable passphrase (e.g. 4 words)
