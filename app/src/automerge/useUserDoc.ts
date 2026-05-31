@@ -2,11 +2,24 @@
  * Opens (or creates) the user's Automerge document identified by `docId`.
  *
  * - If the document already exists locally or on the sync server it is opened.
- * - If it is brand-new it is created with the default `UserDocument` shape.
+ * - If it is brand-new it is bootstrapped with the default `UserDocument` shape
+ *   at the deterministic docId derived from the user's passphrase.
  * - Returns `{ doc, handle }` once the document is ready, or `{ doc: null }`
  *   while it is still loading.
+ *
+ * ### API notes (automerge-repo ≥ 2.0)
+ * - `repo.find(id)` is now async and rejects when the document is unavailable.
+ *   Pass `allowableStates: ['ready', 'unavailable']` to get back the handle
+ *   in either case instead of throwing.
+ * - `handle.doc()` is synchronous and throws if the handle is not ready.
+ * - `handle.change()` also throws if not ready; never call it on an
+ *   unavailable handle.
+ * - To bootstrap a brand-new doc at a deterministic ID, use `repo.import()`
+ *   with a serialised empty Automerge document.
  */
 import { useEffect, useRef, useState } from 'react'
+import * as A from '@automerge/automerge/slim'
+import { parseAutomergeUrl } from '@automerge/automerge-repo'
 import type { AutomergeUrl, DocHandle } from '@automerge/automerge-repo'
 import type { UserDocument } from '../types/user-document'
 import { useRepo } from './RepoContext'
@@ -30,38 +43,55 @@ export function useUserDoc(docId: AutomergeUrl | null): UseUserDocResult {
 
     let cancelled = false
 
-    // Try to find an existing doc; if not found, create it with defaults.
-    const handle = repo.find<UserDocument>(docId)
-    handleRef.current = handle
+    async function init() {
+      // `repo.find()` resolves to a ready handle, or rejects if unavailable
+      // (the default `allowableStates` is ['ready']).
+      // Ask for both so we can bootstrap the doc ourselves if needed.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const handle = await (repo as any).find<UserDocument>(docId, {
+        allowableStates: ['ready', 'unavailable'],
+      }) as DocHandle<UserDocument>
 
-    handle.doc().then((loaded) => {
       if (cancelled) return
 
-      if (loaded === undefined) {
-        // Doc doesn't exist yet — initialise it.
-        // `repo.find` already created a local handle; we need to create a
-        // new one at the desired URL. Use `repo.create` with a fixed docId
-        // by merging the handle.
-        // In automerge-repo the canonical way is: if `find` returns undefined
-        // after await, the doc was never written; we initialise via `change`.
-        handle.change((d) => {
+      if (handle.isUnavailable()) {
+        // Doc has never been written anywhere. Bootstrap it at the
+        // deterministic docId using repo.import(), which transitions the
+        // handle to 'ready' via the internal update/doneLoading path.
+        const { documentId } = parseAutomergeUrl(docId!)
+        const emptyDoc = A.change(A.init<UserDocument>(), (d) => {
           d.bookmarks = DEFAULT_USER_DOCUMENT.bookmarks
         })
-        setDoc({ ...DEFAULT_USER_DOCUMENT })
+        const binary = A.save(emptyDoc)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ;(repo as any).import(binary, { docId: documentId })
+        // After import, find the now-ready handle
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const readyHandle = await (repo as any).find<UserDocument>(docId) as DocHandle<UserDocument>
+        if (cancelled) return
+        handleRef.current = readyHandle
+        setDoc(readyHandle.doc())
+        readyHandle.on('change', onchange)
       } else {
-        setDoc(loaded)
+        handleRef.current = handle
+        setDoc(handle.doc())
+        handle.on('change', onchange)
       }
-    })
+    }
 
-    // Subscribe to future changes.
     function onchange({ doc: updated }: { doc: UserDocument }) {
       if (!cancelled) setDoc(updated)
     }
-    handle.on('change', onchange)
+
+    init().catch((err) => {
+      if (!cancelled) {
+        console.error('useUserDoc: failed to open document', err)
+      }
+    })
 
     return () => {
       cancelled = true
-      handle.off('change', onchange)
+      handleRef.current?.off('change', onchange)
       handleRef.current = null
     }
   }, [repo, docId])

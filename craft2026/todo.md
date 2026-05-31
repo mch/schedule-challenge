@@ -37,10 +37,10 @@
   - [x] Wire up IndexedDB storage for offline persistence
   - [x] Provide Automerge `Repo` via React context
 
-- [ ] Schedule data
-  - [ ] Load `craft2026/schedule.json` as a static asset
-  - [ ] Define TypeScript types matching `craft2026/schedule-schema.json`
-  - [ ] Make schedule data available to components via a hook or context
+- [x] Schedule data
+  - [x] Load `craft2026/schedule.json` as a static asset
+  - [x] Define TypeScript types matching `craft2026/schedule-schema.json`
+  - [x] Make schedule data available to components via a hook or context
 
 - [ ] Session list view
   - [ ] Display all sessions grouped by day (one day per page/tab)
