@@ -1,0 +1,164 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "craft-conf-schedule",
+  "title": "Craft Conference Schedule",
+  "description": "Offline schedule for Craft Conference 2026 (Budapest, June 4–5)",
+  "type": "object",
+  "required": ["conference", "days"],
+  "properties": {
+
+    "conference": {
+      "description": "Top-level metadata about the conference edition",
+      "type": "object",
+      "required": ["id", "name", "year", "date", "location"],
+      "properties": {
+        "id":       { "type": "string",  "example": "craft" },
+        "name":     { "type": "string",  "example": "Craft" },
+        "year":     { "type": "integer", "example": 2026 },
+        "date":     { "type": "string",  "example": "June 4-5" },
+        "location": { "type": "string",  "example": "Budapest | Hungarian Railway Museum" },
+        "domain":   { "type": "string",  "example": "craft-conf.com" }
+      }
+    },
+
+    "days": {
+      "description": "One entry per conference day, ordered chronologically",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Day"
+      }
+    }
+  },
+
+  "$defs": {
+
+    "Day": {
+      "type": "object",
+      "required": ["id", "name", "date", "global_slots", "stages"],
+      "properties": {
+        "id":           { "type": "integer", "description": "Internal day ID" },
+        "name":         { "type": "string",  "example": "Day 1" },
+        "date":         { "type": "string",  "format": "date", "example": "2026-06-04" },
+        "global_slots": {
+          "description": "All-track events (breaks, lunch, registration) that span every stage simultaneously",
+          "type": "array",
+          "items": { "$ref": "#/$defs/GlobalSlot" }
+        },
+        "stages": {
+          "description": "Parallel tracks / rooms; each has its own ordered list of slots",
+          "type": "array",
+          "items": { "$ref": "#/$defs/Stage" }
+        }
+      }
+    },
+
+    "GlobalSlot": {
+      "description": "A time-block that applies to the whole conference simultaneously (e.g. Break, Lunch)",
+      "type": "object",
+      "required": ["id", "type", "title", "start_time", "end_time"],
+      "properties": {
+        "id":          { "type": "integer" },
+        "type":        { "type": "string", "enum": ["text"] },
+        "title":       { "type": "string", "example": "Lunch" },
+        "description": { "type": ["string", "null"] },
+        "start_time":  { "type": "string", "pattern": "^\\d{2}:\\d{2}$", "example": "12:00" },
+        "end_time":    { "type": "string", "pattern": "^\\d{2}:\\d{2}$", "example": "13:00" }
+      }
+    },
+
+    "Stage": {
+      "description": "A named track / room within a day",
+      "type": "object",
+      "required": ["id", "name", "color", "slots"],
+      "properties": {
+        "id":    { "type": "integer" },
+        "name":  { "type": "string", "example": "Main Stage" },
+        "color": { "type": "string", "description": "Hex color (without #) used for UI", "example": "ff4d00" },
+        "slots": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Slot" }
+        }
+      }
+    },
+
+    "Slot": {
+      "description": "A single time block on a stage. Exactly one of talk / workshop / title is populated depending on type.",
+      "type": "object",
+      "required": ["id", "type", "start_time", "end_time"],
+      "properties": {
+        "id":         { "type": "integer" },
+        "type": {
+          "type": "string",
+          "enum": ["talk", "workshop", "text"],
+          "description": "'talk' – a speaker session; 'workshop' – a hands-on session; 'text' – a freeform label (ceremony, sponsor slot, etc.)"
+        },
+        "topic":      { "type": ["string", "null"], "example": "craft" },
+        "start_time": { "type": "string", "pattern": "^\\d{2}:\\d{2}$", "example": "09:40" },
+        "end_time":   { "type": "string", "pattern": "^\\d{2}:\\d{2}$", "example": "10:40" },
+        "title": {
+          "type": ["string", "null"],
+          "description": "Populated only for type=text slots; null for talk/workshop (use talk.title or workshop.title)"
+        },
+        "description": { "type": ["string", "null"] },
+        "talk":     { "oneOf": [{ "$ref": "#/$defs/Talk" },     { "type": "null" }] },
+        "workshop": { "oneOf": [{ "$ref": "#/$defs/Workshop" }, { "type": "null" }] }
+      }
+    },
+
+    "Talk": {
+      "description": "A speaker presentation linked to a Slot of type 'talk'",
+      "type": "object",
+      "required": ["id", "title", "slug", "is_keynote", "is_online", "speakers"],
+      "properties": {
+        "id":         { "type": "integer" },
+        "title":      { "type": "string",  "example": "Slow down to speed up" },
+        "slug":       { "type": "string",  "example": "gergely-oroszs-talk" },
+        "topic":      { "type": ["string", "null"] },
+        "is_keynote": { "type": "boolean" },
+        "is_online":  { "type": "boolean", "description": "True if the speaker presents remotely" },
+        "video_url":  { "type": ["string", "null"], "format": "uri" },
+        "slides_url": { "type": ["string", "null"], "format": "uri" },
+        "tags":       { "type": "array", "items": { "$ref": "#/$defs/Tag" } },
+        "speakers":   { "type": "array", "items": { "$ref": "#/$defs/Speaker" } }
+      }
+    },
+
+    "Workshop": {
+      "description": "A hands-on session linked to a Slot of type 'workshop'",
+      "type": "object",
+      "required": ["id", "title", "slug", "speakers"],
+      "properties": {
+        "id":       { "type": "integer" },
+        "title":    { "type": "string",  "example": "From Idea to an AI-Enabled SAP App" },
+        "slug":     { "type": "string",  "example": "from-idea-to-an-ai-enabled-sap-app" },
+        "topic":    { "type": ["string", "null"] },
+        "tags":     { "type": "array", "items": { "$ref": "#/$defs/Tag" } },
+        "speakers": { "type": "array", "items": { "$ref": "#/$defs/Speaker" } }
+      }
+    },
+
+    "Speaker": {
+      "description": "A person presenting a talk or workshop",
+      "type": "object",
+      "required": ["name", "slug"],
+      "properties": {
+        "name":  { "type": "string", "example": "Gergely Orosz" },
+        "slug":  { "type": "string", "example": "gergely-orosz",
+                   "description": "URL-safe identifier; speaker profile at craft-conf.com/2026/speakers/{slug}" },
+        "topic": { "type": ["string", "null"] }
+      }
+    },
+
+    "Tag": {
+      "description": "A topic/theme label attached to a talk or workshop",
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id":          { "type": "integer" },
+        "name":        { "type": "string", "example": "technical excellence" },
+        "is_trending": { "type": "boolean" }
+      }
+    }
+
+  }
+}
