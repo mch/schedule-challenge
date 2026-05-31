@@ -61,6 +61,11 @@
   - [x] Bookmark button in session detail view (add/remove)
   - [x] Button state reflects current bookmark status
 
+- [ ] Schedule data: add `description` and `level` to talks
+  - [ ] Update `craft2026/schedule-schema.json` — add `description` and `level` fields to the `Talk` definition
+  - [ ] Update `craft2026/update-schedule.py` (or equivalent scraper) to fetch `description` and `level` from each talk page on craft-conf.com and include them in the output
+  - [ ] Re-run the scraper and commit updated `craft2026/schedule.json` with real values
+
 - [ ] PWA / offline
   - [ ] Service worker caches static assets and schedule data
   - [ ] App is fully usable offline (view schedule, manage bookmarks)
