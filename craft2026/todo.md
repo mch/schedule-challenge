@@ -23,12 +23,12 @@
   - [x] Add `vite-plugin-pwa` and basic PWA manifest
   - [x] Add Automerge dependencies (`@automerge/automerge-repo`, `@automerge/automerge-repo-react-hooks`, `@automerge/automerge-repo-network-websocket`, `@automerge/automerge-repo-storage-indexeddb`)
 
-- [ ] Passphrase identity
-  - [ ] `generatePassphrase()` — returns a random human-readable passphrase (e.g. 4 words)
-  - [ ] `passphraseToDocId()` — deterministically derives an Automerge document URL / ID from a passphrase
-  - [ ] Persist passphrase in localStorage on first use
-  - [ ] UI: on first visit, offer "Create new account" (shows generated passphrase) or "Enter existing passphrase"
-  - [ ] UI: display and allow copying of the user's passphrase
+- [x] Passphrase identity
+  - [x] `generatePassphrase()` — returns a random human-readable passphrase (e.g. 4 words)
+  - [x] `passphraseToDocId()` — deterministically derives an Automerge document URL / ID from a passphrase
+  - [x] Persist passphrase in localStorage on first use
+  - [x] UI: on first visit, offer "Create new account" (shows generated passphrase) or "Enter existing passphrase"
+  - [x] UI: display and allow copying of the user's passphrase
 
 - [ ] Automerge setup
   - [ ] Define `UserDocument` type — contains bookmarked slot IDs (a set of integers)
