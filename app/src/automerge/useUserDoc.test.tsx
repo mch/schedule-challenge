@@ -73,7 +73,7 @@ describe('useUserDoc', () => {
   })
 
   it('returns the doc when find resolves with a ready handle', async () => {
-    const existingDoc: UserDocument = { bookmarks: [1, 2, 3] }
+    const existingDoc: UserDocument = { bookmarks: [1, 2, 3], hidePastEvents: false }
     fakeReadyHandle = makeFakeHandle(existingDoc)
     fakeRepo.find.mockResolvedValue(fakeReadyHandle)
 
@@ -85,7 +85,7 @@ describe('useUserDoc', () => {
 
   it('bootstraps a brand-new doc via repo.import() when handle is unavailable', async () => {
     const unavailableHandle = makeFakeHandle(undefined)
-    const bootstrappedDoc: UserDocument = { bookmarks: [] }
+    const bootstrappedDoc: UserDocument = { bookmarks: [], hidePastEvents: false }
     const bootstrappedHandle = makeFakeHandle(bootstrappedDoc)
 
     // First find() returns unavailable; second returns the bootstrapped handle
@@ -110,14 +110,14 @@ describe('useUserDoc', () => {
   })
 
   it('updates when the handle emits a change event', async () => {
-    const existingDoc: UserDocument = { bookmarks: [] }
+    const existingDoc: UserDocument = { bookmarks: [], hidePastEvents: false }
     fakeReadyHandle = makeFakeHandle(existingDoc)
     fakeRepo.find.mockResolvedValue(fakeReadyHandle)
 
     const { result } = renderHook(() => useUserDoc(FAKE_DOC_URL), { wrapper })
     await waitFor(() => expect(result.current.doc).not.toBeNull())
 
-    const updated: UserDocument = { bookmarks: [42] }
+    const updated: UserDocument = { bookmarks: [42], hidePastEvents: false }
     act(() => fakeReadyHandle._emit(updated))
 
     await waitFor(() => expect(result.current.doc?.bookmarks).toEqual([42]))
@@ -130,7 +130,7 @@ describe('useUserDoc', () => {
   })
 
   it('does not update state after the effect is cleaned up', async () => {
-    const existingDoc: UserDocument = { bookmarks: [] }
+    const existingDoc: UserDocument = { bookmarks: [], hidePastEvents: false }
     fakeReadyHandle = makeFakeHandle(existingDoc)
 
     let resolveFn!: (h: typeof fakeReadyHandle) => void

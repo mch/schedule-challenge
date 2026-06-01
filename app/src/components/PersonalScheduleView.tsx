@@ -178,11 +178,24 @@ interface FiltersProps {
   stages: string[]
   selectedTag: string
   selectedStage: string
+  hidePastEvents: boolean
   onTagChange: (tag: string) => void
   onStageChange: (stage: string) => void
+  onToggleHidePastEvents: () => void
+  hidePastEventsDisabled: boolean
 }
 
-function Filters({ tags, stages, selectedTag, selectedStage, onTagChange, onStageChange }: FiltersProps) {
+function Filters({
+  tags,
+  stages,
+  selectedTag,
+  selectedStage,
+  hidePastEvents,
+  onTagChange,
+  onStageChange,
+  onToggleHidePastEvents,
+  hidePastEventsDisabled,
+}: FiltersProps) {
   return (
     <div className="session-filters" aria-label="Session filters">
       <label className="filter-label" htmlFor="my-tag-filter">
@@ -219,6 +232,18 @@ function Filters({ tags, stages, selectedTag, selectedStage, onTagChange, onStag
             </option>
           ))}
         </select>
+      </label>
+
+      <label className="filter-label filter-label--toggle">
+        <input
+          type="checkbox"
+          className="filter-toggle"
+          checked={hidePastEvents}
+          onChange={onToggleHidePastEvents}
+          disabled={hidePastEventsDisabled}
+          aria-label="Hide past events"
+        />
+        Hide past events
       </label>
 
       {(selectedTag || selectedStage) && (
@@ -352,9 +377,11 @@ export interface PersonalScheduleViewProps {
   userDoc: UserDocument | null
   handle: DocHandle<UserDocument> | null
   onOpenSession: (slotId: number) => void
+  /** Injected current time (ms since epoch) for testability; defaults to Date.now() */
+  nowMs?: number
 }
 
-export function PersonalScheduleView({ userDoc, handle, onOpenSession }: PersonalScheduleViewProps) {
+export function PersonalScheduleView({ userDoc, handle, onOpenSession, nowMs }: PersonalScheduleViewProps) {
   const { schedule, loading, error } = useScheduleContext()
   const { params, setDay, setTag, setStage } = useSessionListParams()
 
@@ -394,10 +421,19 @@ export function PersonalScheduleView({ userDoc, handle, onOpenSession }: Persona
   const availableTags = collectTagsFromSessions(daySessions)
   const availableStages = collectStagesFromSessions(daySessions)
 
+  const hidePastEvents = userDoc?.hidePastEvents ?? false
+
   // Apply active filters
   const filteredSessions = daySessions.filter((s) => {
     if (params.tag && !s.tags.includes(params.tag)) return false
     if (params.stage && s.stageName !== params.stage) return false
+    if (hidePastEvents) {
+      const [endH, endM] = s.endTime.split(':').map(Number)
+      const endDate = new Date(currentDay.date)
+      endDate.setHours(endH, endM, 0, 0)
+      const now = nowMs !== undefined ? nowMs : Date.now()
+      if (endDate.getTime() <= now) return false
+    }
     return true
   })
 
@@ -420,8 +456,16 @@ export function PersonalScheduleView({ userDoc, handle, onOpenSession }: Persona
             stages={availableStages}
             selectedTag={params.tag}
             selectedStage={params.stage}
+            hidePastEvents={hidePastEvents}
             onTagChange={setTag}
             onStageChange={setStage}
+            onToggleHidePastEvents={() => {
+              if (!handle) return
+              handle.change((doc) => {
+                doc.hidePastEvents = !doc.hidePastEvents
+              })
+            }}
+            hidePastEventsDisabled={handle === null}
           />
           <p className="session-count" aria-live="polite">
             {filteredSessions.length} session{filteredSessions.length !== 1 ? 's' : ''}

@@ -31,6 +31,7 @@ export interface UseUserDocResult {
 
 const DEFAULT_USER_DOCUMENT: UserDocument = {
   bookmarks: [],
+  hidePastEvents: false,
 }
 
 export function useUserDoc(docId: AutomergeUrl | null): UseUserDocResult {
@@ -62,6 +63,7 @@ export function useUserDoc(docId: AutomergeUrl | null): UseUserDocResult {
         const { documentId } = parseAutomergeUrl(docId!)
         const emptyDoc = A.change(A.init() as A.Doc<UserDocument>, (d) => {
           (d as UserDocument).bookmarks = DEFAULT_USER_DOCUMENT.bookmarks
+          ;(d as UserDocument).hidePastEvents = DEFAULT_USER_DOCUMENT.hidePastEvents
         }) as A.Doc<UserDocument>
         const binary = A.save(emptyDoc)
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

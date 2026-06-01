@@ -110,6 +110,23 @@
   }
 }
 
+.filter-label--toggle {
+  cursor: pointer;
+  user-select: none;
+}
+
+.filter-toggle {
+  width: 15px;
+  height: 15px;
+  accent-color: var(--accent);
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
 .filter-clear {
   font: inherit;
   font-size: 12px;

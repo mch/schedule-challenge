@@ -146,7 +146,7 @@ function makeScheduleResult(overrides?: Partial<UseScheduleResult>): UseSchedule
 }
 
 function makeUserDoc(bookmarks: number[]): UserDocument {
-  return { bookmarks }
+  return { bookmarks, hidePastEvents: false }
 }
 
 function makeFakeHandle(bookmarks: number[] = []) {

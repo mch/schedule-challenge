@@ -112,10 +112,10 @@
 - [x] Improvement: ensure the input box on ios doesn't allow the first character to be uppercase 
 - [x] Improvement: improve the styling of the intial new/recover account screen be consistent with the rest and mobile friendly (no zooming to the box)
 
-- [ ] Stretch: Hide past events toggle
-  - [ ] Add a persistent boolean preference (stored in the user's Automerge doc) to hide sessions whose end time has passed
-  - [ ] Show a toggle in the UI (e.g. in the filter bar) to enable/disable this; state syncs across devices via Automerge
-  - [ ] Apply the filter in both the full schedule and "My Schedule" views
+- [x] Stretch: Hide past events toggle
+  - [x] Add a persistent boolean preference (stored in the user's Automerge doc) to hide sessions whose end time has passed
+  - [x] Show a toggle in the UI (e.g. in the filter bar) to enable/disable this; state syncs across devices via Automerge
+  - [x] Apply the filter in both the full schedule and "My Schedule" views
 
 - [ ] Stretch: Pocket ID / OIDC
   - [ ] Integrate OIDC sign-in via `auth.home.halfbakery.xyz`
@@ -125,7 +125,6 @@
 - [x] Improvement: Add links to the official site for all sessions
 - [x] Improvement: Colours to match the official site, but shifted in some way to make it clear this is not official
 - [x] Improvement: Favicon and pwa icons to match official site better, but also shifted in some way to make it clear this is not official
-- [ ] Improvement: Make it possible to filter by tags
 - [ ] Improvement: Make it possible to filter by session type (talk vs workshop)
 - [ ] Improvement: Make the sync server configurable
   - allow selecting between my internal one and the public example one

@@ -143,12 +143,12 @@ function makeResult(overrides?: Partial<UseScheduleResult>): UseScheduleResult {
   } as UseScheduleResult
 }
 
-function makeUserDoc(bookmarks: number[] = []): UserDocument {
-  return { bookmarks }
+function makeUserDoc(bookmarks: number[] = [], hidePastEvents = false): UserDocument {
+  return { bookmarks, hidePastEvents }
 }
 
-function makeFakeHandle(bookmarks: number[] = []) {
-  const doc = makeUserDoc(bookmarks)
+function makeFakeHandle(bookmarks: number[] = [], hidePastEvents = false) {
+  const doc = makeUserDoc(bookmarks, hidePastEvents)
   const handle = {
     change: vi.fn((fn: (d: UserDocument) => void) => fn(doc)),
   } as unknown as DocHandle<UserDocument>
@@ -160,6 +160,7 @@ interface RenderOptions {
   handle?: DocHandle<UserDocument> | null
   userDoc?: UserDocument | null
   onOpenSession?: (slotId: number) => void
+  nowMs?: number
 }
 
 function renderView({
@@ -167,10 +168,11 @@ function renderView({
   handle = null,
   userDoc = null,
   onOpenSession,
+  nowMs,
 }: RenderOptions = {}) {
   return render(
     <ScheduleContext.Provider value={result}>
-      <SessionListView handle={handle} userDoc={userDoc} onOpenSession={onOpenSession} />
+      <SessionListView handle={handle} userDoc={userDoc} onOpenSession={onOpenSession} nowMs={nowMs} />
     </ScheduleContext.Provider>,
   )
 }
@@ -480,6 +482,72 @@ describe('SessionListView', () => {
       callArg(mutDoc)
       expect(mutDoc.bookmarks).not.toContain(101)
     })
+
+  describe('hide past events toggle', () => {
+    // Day 1 date is 2026-06-04; sessions end at 10:10, 12:00, 11:00.
+    // "now" set to 10:05 on that day → Opening Keynote (ends 10:10) is still future.
+    // "now" set to 11:30 on that day → Opening Keynote (10:10) and DDD (11:00) are past.
+
+    const DAY1_DATE = '2026-06-04'
+    function dayMs(timeHHMM: string) {
+      const [h, m] = timeHHMM.split(':').map(Number)
+      const d = new Date(DAY1_DATE)
+      d.setHours(h, m, 0, 0)
+      return d.getTime()
+    }
+
+    it('renders the "Hide past events" checkbox', () => {
+      renderView()
+      expect(screen.getByRole('checkbox', { name: /hide past events/i })).toBeInTheDocument()
+    })
+
+    it('checkbox is unchecked when hidePastEvents is false', () => {
+      const { doc } = makeFakeHandle([], false)
+      renderView({ userDoc: doc })
+      expect(screen.getByRole('checkbox', { name: /hide past events/i })).not.toBeChecked()
+    })
+
+    it('checkbox is checked when hidePastEvents is true', () => {
+      const { handle, doc } = makeFakeHandle([], true)
+      renderView({ handle, userDoc: doc })
+      expect(screen.getByRole('checkbox', { name: /hide past events/i })).toBeChecked()
+    })
+
+    it('checkbox is disabled when no handle is provided', () => {
+      renderView()
+      expect(screen.getByRole('checkbox', { name: /hide past events/i })).toBeDisabled()
+    })
+
+    it('hides sessions that ended before now when hidePastEvents is true', () => {
+      // now = 11:30 → Opening Keynote (ends 10:10) and DDD (ends 11:00) are past
+      const { handle, doc } = makeFakeHandle([], true)
+      renderView({ handle, userDoc: doc, nowMs: dayMs('11:30') })
+      expect(screen.queryByText('Opening Keynote')).not.toBeInTheDocument()
+      expect(screen.queryByText('Deep Dive into DDD')).not.toBeInTheDocument()
+      // Workshop ends at 12:00 — still future
+      expect(screen.getByText('Hands-on TDD Workshop')).toBeInTheDocument()
+    })
+
+    it('shows all sessions when hidePastEvents is false even if they are past', () => {
+      const { doc } = makeFakeHandle([], false)
+      renderView({ userDoc: doc, nowMs: dayMs('23:59') })
+      expect(screen.getByText('Opening Keynote')).toBeInTheDocument()
+      expect(screen.getByText('Deep Dive into DDD')).toBeInTheDocument()
+      expect(screen.getByText('Hands-on TDD Workshop')).toBeInTheDocument()
+    })
+
+    it('calls handle.change to toggle hidePastEvents when checkbox is clicked', () => {
+      const { handle, doc } = makeFakeHandle([], false)
+      renderView({ handle, userDoc: doc })
+      fireEvent.click(screen.getByRole('checkbox', { name: /hide past events/i }))
+      expect(handle.change).toHaveBeenCalledOnce()
+      // Verify mutation flips the flag
+      const callArg = vi.mocked(handle.change).mock.calls[0][0]
+      const mutDoc = makeUserDoc([], false)
+      callArg(mutDoc)
+      expect(mutDoc.hidePastEvents).toBe(true)
+    })
+  })
 
     it('does not bubble bookmark click to onOpenSession', () => {
       const { handle, doc } = makeFakeHandle([])
