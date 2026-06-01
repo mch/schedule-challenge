@@ -84,15 +84,15 @@
 - [x] Bug: "My Schedule" tab not reflected in URL
   - [x] Active view is now encoded as `?view=myschedule` (My Schedule) or omitted (Schedule, the default); navigating back from a session detail correctly restores the active view
 
-- [ ] Deployment to Render
-  - [ ] Follow https://vite.dev/guide/static-deploy#render to set up a Static Site on render.com
-  - [ ] Set build command to `npm run build` and publish directory to `dist` (from the `app/` subdirectory)
-  - [ ] Confirm the deployed URL works correctly with Vite's client-side routing (configure rewrite rule so all routes serve `index.html`)
+- [x] Deployment to Render
+  - [x] Follow https://vite.dev/guide/static-deploy#render to set up a Static Site on render.com
+  - [x] Set build command to `npm run build` and publish directory to `dist` (from the `app/` subdirectory)
+  - [x] Confirm the deployed URL works correctly with Vite's client-side routing (configure rewrite rule so all routes serve `index.html`)
 
-- [ ] Search engine exclusion
-  - [ ] Add `robots.txt` with `Disallow: /` for all crawlers
-  - [ ] Add `<meta name="robots" content="noindex, nofollow">` in `index.html`
-  - [ ] Verify the deployed site is not accidentally submitted to any search index
+- [x] Search engine exclusion
+  - [x] Add `robots.txt` with `Disallow: /` for all crawlers
+  - [x] Add `<meta name="robots" content="noindex, nofollow">` in `index.html`
+  - [x] Verify the deployed site is not accidentally submitted to any search index
 
 - [ ] Error handling
   - [x] Graceful UI when sync server is unreachable (offline banner + Automerge falls back to IndexedDB)
@@ -106,6 +106,8 @@
 - [ ] Stretch: Speaker pages
   - [ ] Option A — Scrape: fetch speaker bio and photo from craft-conf.com; add fields to schema/JSON; show on session detail view
   - [ ] Option B (preferred) — In-app speaker page: derive speaker info from the existing schedule data (no scraping needed); create a speaker detail view listing all their talks, workshops, and other events; include a clearly labelled link to the speaker's page on craft-conf.com for full bio/details
+
+- [ ] Stretch: full text search across speakers, sessions, etc
 
 - [ ] Stretch: Hide past events toggle
   - [ ] Add a persistent boolean preference (stored in the user's Automerge doc) to hide sessions whose end time has passed
