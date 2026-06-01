@@ -89,6 +89,8 @@ export interface SessionDetailViewProps {
 
 export function SessionDetailView({ slotId, onClose, handle, userDoc, onOpenSpeaker }: SessionDetailViewProps) {
   const { schedule, loading, error } = useScheduleContext()
+  const domain = schedule?.conference.domain ?? 'craft-conf.com'
+  const year = schedule?.conference.year ?? 2026
 
   if (loading) {
     return (
@@ -132,6 +134,11 @@ export function SessionDetailView({ slotId, onClose, handle, userDoc, onOpenSpea
   const title: string = src?.title ?? slot.title ?? `Slot ${slot.id}`
   const speakers = src?.speakers ?? []
   const tags = src?.tags ?? []
+
+  const officialSlug = src?.slug ?? null
+  const officialUrl = officialSlug
+    ? `https://${domain}/${year}/${type === 'workshop' ? 'workshop' : 'talk'}/${officialSlug}`
+    : null
 
   const isBookmarked = userDoc?.bookmarks.includes(slotId) ?? false
   const canBookmark = handle !== null
@@ -254,10 +261,15 @@ export function SessionDetailView({ slotId, onClose, handle, userDoc, onOpenSpea
       )}
 
       {/* Links */}
-      {(videoUrl || slidesUrl) && (
+      {(officialUrl || videoUrl || slidesUrl) && (
         <section className="session-detail-section" aria-label="Resources">
           <h3 className="session-detail-section-title">Resources</h3>
           <div className="session-detail-links">
+            {officialUrl && (
+              <a href={officialUrl} target="_blank" rel="noopener noreferrer" className="session-detail-link">
+                🔗 Official session page
+              </a>
+            )}
             {videoUrl && (
               <a href={videoUrl} target="_blank" rel="noopener noreferrer" className="session-detail-link">
                 ▶ Watch video

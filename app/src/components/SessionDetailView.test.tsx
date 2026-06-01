@@ -36,7 +36,7 @@ import type { DocHandle } from '@automerge/automerge-repo'
 // ---------------------------------------------------------------------------
 
 const FIXTURE_SCHEDULE: Schedule = {
-  conference: { id: 'craft', name: 'Craft', year: 2026, date: 'June 4-5', location: 'Budapest' },
+  conference: { id: 'craft', name: 'Craft', year: 2026, date: 'June 4-5', location: 'Budapest', domain: 'craft-conf.com' },
   days: [
     {
       id: 1,
@@ -273,9 +273,27 @@ describe('SessionDetailView', () => {
     })
 
     it('does not render resources section when no links', () => {
+      // Workshop 103 has no video_url, slides_url, and no slug-based official URL would appear
+      // because the workshop *does* have a slug — so the resources section will appear with the official link.
+      // This test is updated to check only that video and slides are absent.
       renderDetail({ slotId: 103 })
       expect(screen.queryByText(/watch video/i)).not.toBeInTheDocument()
       expect(screen.queryByText(/view slides/i)).not.toBeInTheDocument()
+    })
+  })
+
+  describe('official session page link', () => {
+    it('renders a link to the official session page for a talk', () => {
+      renderDetail()
+      const link = screen.getByRole('link', { name: /official session page/i })
+      expect(link).toHaveAttribute('href', 'https://craft-conf.com/2026/talk/opening-keynote')
+      expect(link).toHaveAttribute('target', '_blank')
+    })
+
+    it('renders a link to the official session page for a workshop', () => {
+      renderDetail({ slotId: 103 })
+      const link = screen.getByRole('link', { name: /official session page/i })
+      expect(link).toHaveAttribute('href', 'https://craft-conf.com/2026/workshop/tdd-workshop')
     })
   })
 
