@@ -110,16 +110,18 @@
       "type": "object",
       "required": ["id", "title", "slug", "is_keynote", "is_online", "speakers"],
       "properties": {
-        "id":         { "type": "integer" },
-        "title":      { "type": "string",  "example": "Slow down to speed up" },
-        "slug":       { "type": "string",  "example": "gergely-oroszs-talk" },
-        "topic":      { "type": ["string", "null"] },
-        "is_keynote": { "type": "boolean" },
-        "is_online":  { "type": "boolean", "description": "True if the speaker presents remotely" },
-        "video_url":  { "type": ["string", "null"], "format": "uri" },
-        "slides_url": { "type": ["string", "null"], "format": "uri" },
-        "tags":       { "type": "array", "items": { "$ref": "#/$defs/Tag" } },
-        "speakers":   { "type": "array", "items": { "$ref": "#/$defs/Speaker" } }
+        "id":          { "type": "integer" },
+        "title":       { "type": "string",  "example": "Slow down to speed up" },
+        "slug":        { "type": "string",  "example": "gergely-oroszs-talk" },
+        "topic":       { "type": ["string", "null"] },
+        "description": { "type": ["string", "null"], "description": "HTML abstract / description of the talk, as returned by the craft-conf.com talk page" },
+        "level":       { "type": ["string", "null"], "description": "Target audience level, e.g. 'General', 'Intermediate', 'Intermediate+', 'Advanced'" },
+        "is_keynote":  { "type": "boolean" },
+        "is_online":   { "type": "boolean", "description": "True if the speaker presents remotely" },
+        "video_url":   { "type": ["string", "null"], "format": "uri" },
+        "slides_url":  { "type": ["string", "null"], "format": "uri" },
+        "tags":        { "type": "array", "items": { "$ref": "#/$defs/Tag" } },
+        "speakers":    { "type": "array", "items": { "$ref": "#/$defs/Speaker" } }
       }
     },
 

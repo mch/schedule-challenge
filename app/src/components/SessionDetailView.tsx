@@ -215,7 +215,12 @@ export function SessionDetailView({ slotId, onClose, handle, userDoc }: SessionD
       {description && (
         <section className="session-detail-section" aria-label="Description">
           <h3 className="session-detail-section-title">About this session</h3>
-          <p className="session-detail-description">{description}</p>
+          <div
+            className="session-detail-description"
+            // Description is HTML sourced directly from craft-conf.com (no user input)
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{ __html: description }}
+          />
         </section>
       )}
 

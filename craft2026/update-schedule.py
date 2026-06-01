@@ -17,6 +17,7 @@ import html
 import json
 import re
 import sys
+import time
 import urllib.request
 from copy import deepcopy
 from datetime import datetime, timezone
@@ -24,10 +25,13 @@ from pathlib import Path
 
 # ── config ────────────────────────────────────────────────────────────────────
 
+
 URL = "https://craft-conf.com/2026/schedule"
+TALK_URL = "https://craft-conf.com/2026/talk/{slug}"
 SCHEDULE_FILE = Path(__file__).parent / "schedule.json"
 CHANGES_FILE  = Path(__file__).parent / "schedule-changes.json"
 USER_AGENT = "Mozilla/5.0 (compatible; craft-schedule-updater/1.0)"
+FETCH_DELAY = 0.3  # seconds between talk-detail requests
 
 # ── fetch ─────────────────────────────────────────────────────────────────────
 
@@ -56,12 +60,35 @@ def make_tag(t: dict) -> dict:
 def make_speaker(s: dict) -> dict:
     return {"name": s["name"], "slug": s["slug"], "topic": s.get("topic")}
 
-def make_talk(t: dict) -> dict:
+def fetch_talk_detail(slug: str) -> dict:
+    """Fetch a talk's detail page and return its description (abstract) and level."""
+    url = TALK_URL.format(slug=slug)
+    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            page = resp.read().decode("utf-8")
+    except Exception:
+        return {"description": None, "level": None}
+    m = re.search(r'id="app"\s+data-page="([^"]+)"', page)
+    if not m:
+        return {"description": None, "level": None}
+    props = json.loads(html.unescape(m.group(1)))["props"]
+    talk = props.get("talk") or props.get("session") or {}
+    return {
+        "description": talk.get("abstract"),
+        "level": talk.get("level"),
+    }
+
+
+def make_talk(t: dict, detail: dict | None = None) -> dict:
+    d = detail or {}
     return {
         "id": t["id"],
         "title": t["title"],
         "slug": t["slug"],
         "topic": t.get("topic"),
+        "description": d.get("description"),
+        "level": d.get("level"),
         "is_keynote": t.get("is_keynote", False),
         "is_online": t.get("is_online", False),
         "video_url": t.get("video_url"),
@@ -80,7 +107,11 @@ def make_workshop(w: dict) -> dict:
         "speakers": [make_speaker(s) for s in w.get("speakers", [])],
     }
 
-def make_slot(s: dict) -> dict:
+def make_slot(s: dict, talk_details: dict | None = None) -> dict:
+    talk = s.get("talk")
+    detail = None
+    if talk and talk_details is not None:
+        detail = talk_details.get(talk["slug"])
     return {
         "id": s["id"],
         "type": s["type"],
@@ -89,7 +120,7 @@ def make_slot(s: dict) -> dict:
         "end_time": s["end_time"],
         "title": s.get("title"),
         "description": s.get("description"),
-        "talk": make_talk(s["talk"]) if s.get("talk") else None,
+        "talk": make_talk(talk, detail) if talk else None,
         "workshop": make_workshop(s["workshop"]) if s.get("workshop") else None,
     }
 
@@ -103,24 +134,46 @@ def make_global_slot(s: dict) -> dict:
         "end_time": s["end_time"],
     }
 
-def make_stage(stage: dict) -> dict:
+def make_stage(stage: dict, talk_details: dict | None = None) -> dict:
     return {
         "id": stage["id"],
         "name": stage["name"],
         "color": stage["color"],
-        "slots": [make_slot(s) for s in stage["slots"]],
+        "slots": [make_slot(s, talk_details) for s in stage["slots"]],
     }
 
-def make_day(day: dict) -> dict:
+def make_day(day: dict, talk_details: dict | None = None) -> dict:
     return {
         "id": day["id"],
         "name": day["name"],
         "date": day["date"],
         "global_slots": [make_global_slot(s) for s in day["global_slots"]],
-        "stages": [make_stage(stage) for stage in day["stages"]],
+        "stages": [make_stage(stage, talk_details) for stage in day["stages"]],
     }
 
-def build_schedule(props: dict) -> dict:
+def collect_talk_slugs(props: dict) -> list[str]:
+    """Return all unique talk slugs from a schedule props dict."""
+    slugs = []
+    seen: set[str] = set()
+    for day in props["schedule"]:
+        for stage in day["stages"]:
+            for slot in stage["slots"]:
+                t = slot.get("talk")
+                if t and t.get("slug") and t["slug"] not in seen:
+                    slugs.append(t["slug"])
+                    seen.add(t["slug"])
+    return slugs
+
+def fetch_all_talk_details(slugs: list[str]) -> dict:
+    """Fetch description/level for every talk slug; returns {slug: {description, level}}."""
+    details: dict = {}
+    for i, slug in enumerate(slugs, 1):
+        print(f"  [{i}/{len(slugs)}] fetching talk detail: {slug}", flush=True)
+        details[slug] = fetch_talk_detail(slug)
+        time.sleep(FETCH_DELAY)
+    return details
+
+def build_schedule(props: dict, talk_details: dict | None = None) -> dict:
     conf = props["conference"]
     cy = props["conferenceYear"]
     return {
@@ -132,7 +185,7 @@ def build_schedule(props: dict) -> dict:
             "location": cy["location"],
             "domain": conf["domain"],
         },
-        "days": [make_day(day) for day in props["schedule"]],
+        "days": [make_day(day, talk_details) for day in props["schedule"]],
     }
 
 # ── diff ──────────────────────────────────────────────────────────────────────
@@ -267,7 +320,12 @@ def main() -> int:
         print(f"ERROR: {e}", file=sys.stderr)
         return 2
 
-    new_schedule = build_schedule(props)
+    # 1b. Fetch talk descriptions + levels from individual talk pages
+    print("Fetching talk descriptions and levels…")
+    slugs = collect_talk_slugs(props)
+    talk_details = fetch_all_talk_details(slugs)
+
+    new_schedule = build_schedule(props, talk_details)
 
     # 2. Load existing schedule (if any)
     if SCHEDULE_FILE.exists():
