@@ -39,14 +39,14 @@ describe('createRepo', () => {
   it('creates a Repo with IndexedDB storage', () => {
     createRepo()
     expect(IndexedDBStorageAdapter).toHaveBeenCalledOnce()
-    const opts = (Repo as ReturnType<typeof vi.fn>).mock.calls[0][0]
+    const opts = (Repo as unknown as ReturnType<typeof vi.fn>).mock.calls[0][0]
     expect(opts.storage).toBeDefined()
   })
 
   it('creates a Repo with a WebSocket adapter pointing at the sync server', () => {
     createRepo()
     expect(BrowserWebSocketClientAdapter).toHaveBeenCalledWith(SYNC_SERVER_URL)
-    const opts = (Repo as ReturnType<typeof vi.fn>).mock.calls[0][0]
+    const opts = (Repo as unknown as ReturnType<typeof vi.fn>).mock.calls[0][0]
     expect(opts.network).toHaveLength(1)
   })
 

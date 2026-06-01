@@ -48,7 +48,8 @@ export function useUserDoc(docId: AutomergeUrl | null): UseUserDocResult {
       // (the default `allowableStates` is ['ready']).
       // Ask for both so we can bootstrap the doc ourselves if needed.
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const handle = await (repo as any).find<UserDocument>(docId, {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const handle = await (repo as any).find(docId, {
         allowableStates: ['ready', 'unavailable'],
       }) as DocHandle<UserDocument>
 
@@ -59,15 +60,15 @@ export function useUserDoc(docId: AutomergeUrl | null): UseUserDocResult {
         // deterministic docId using repo.import(), which transitions the
         // handle to 'ready' via the internal update/doneLoading path.
         const { documentId } = parseAutomergeUrl(docId!)
-        const emptyDoc = A.change(A.init<UserDocument>(), (d) => {
-          d.bookmarks = DEFAULT_USER_DOCUMENT.bookmarks
-        })
+        const emptyDoc = A.change(A.init() as A.Doc<UserDocument>, (d) => {
+          (d as UserDocument).bookmarks = DEFAULT_USER_DOCUMENT.bookmarks
+        }) as A.Doc<UserDocument>
         const binary = A.save(emptyDoc)
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ;(repo as any).import(binary, { docId: documentId })
         // After import, find the now-ready handle
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const readyHandle = await (repo as any).find<UserDocument>(docId) as DocHandle<UserDocument>
+        const readyHandle = await (repo as any).find(docId) as DocHandle<UserDocument>
         if (cancelled) return
         handleRef.current = readyHandle
         setDoc(readyHandle.doc())

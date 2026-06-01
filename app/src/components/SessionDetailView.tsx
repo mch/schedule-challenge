@@ -118,14 +118,15 @@ export function SessionDetailView({ slotId, onClose, handle, userDoc }: SessionD
 
   const { slot, stage, day } = found
   const src = slot.talk ?? slot.workshop
+  const talk = slot.talk ?? null
   const type: 'talk' | 'workshop' | 'text' = slot.type
-  const isKeynote = src && 'is_keynote' in src ? src.is_keynote : false
-  const isOnline = src && 'is_online' in src ? src.is_online : false
-  const description = (src && 'description' in src ? src.description : null) ?? slot.description ?? null
-  const level = src && 'level' in src ? src.level : null
-  const videoUrl = src && 'video_url' in src ? src.video_url : null
-  const slidesUrl = src && 'slides_url' in src ? src.slides_url : null
-  const title = src?.title ?? slot.title ?? `Slot ${slot.id}`
+  const isKeynote: boolean = talk ? talk.is_keynote : false
+  const isOnline: boolean = talk ? talk.is_online : false
+  const description: string | null = (talk?.description != null ? talk.description : null) ?? slot.description ?? null
+  const level: string | null = talk ? talk.level ?? null : null
+  const videoUrl: string | null = talk ? talk.video_url ?? null : null
+  const slidesUrl: string | null = talk ? talk.slides_url ?? null : null
+  const title: string = src?.title ?? slot.title ?? `Slot ${slot.id}`
   const speakers = src?.speakers ?? []
   const tags = src?.tags ?? []
 

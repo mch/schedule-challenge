@@ -22,7 +22,7 @@
  *     of talk.description
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { SessionDetailView } from './SessionDetailView'
 import { ScheduleContext } from '../schedule/ScheduleContext'

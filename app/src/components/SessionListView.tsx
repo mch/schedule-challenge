@@ -15,7 +15,7 @@ import type { DocHandle } from '@automerge/automerge-repo'
 import { useScheduleContext } from '../schedule/ScheduleContext'
 import { useSessionListParams } from '../schedule/useSessionListParams'
 import type { UserDocument } from '../types/user-document'
-import type { Day, Stage } from '../types/schedule'
+import type { Day } from '../types/schedule'
 import './SessionListView.css'
 
 // ---------------------------------------------------------------------------
@@ -67,7 +67,7 @@ function extractSessions(day: Day): SessionInfo[] {
         speakers: src.speakers.map((s) => s.name),
         tags: src.tags.map((t) => t.name),
         type: slot.type === 'workshop' ? 'workshop' : 'talk',
-        isKeynote: 'is_keynote' in src ? src.is_keynote : false,
+        isKeynote: 'is_keynote' in src ? (src.is_keynote as boolean) : false,
       })
     }
   }

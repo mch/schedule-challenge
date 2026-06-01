@@ -129,7 +129,7 @@ function buildDayGroups(
       stageColor: stage.color,
       speakers: src.speakers.map((s) => s.name),
       type: slot.type === 'workshop' ? 'workshop' : 'talk',
-      isKeynote: 'is_keynote' in src ? src.is_keynote : false,
+      isKeynote: 'is_keynote' in src ? (src.is_keynote as boolean) : false,
       overlaps: overlapSet.has(slotId),
     })
   }
