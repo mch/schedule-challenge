@@ -11,6 +11,10 @@
  *   - Sessions sorted chronologically within each day
  *   - Loading / error states from schedule context
  *   - Sessions not in the schedule (dangling bookmarks) are ignored
+ *   - Filter controls: tag and stage dropdowns scoped to bookmarked sessions on selected day
+ *   - Filters reflected in URL (?tag= and ?stage= params)
+ *   - Clear filters button removes both filters
+ *   - Filtered session count shown
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
@@ -51,7 +55,7 @@ const FIXTURE_SCHEDULE: Schedule = {
                 slug: 'opening-keynote',
                 is_keynote: true,
                 is_online: false,
-                tags: [],
+                tags: [{ id: 1, name: 'Architecture' }],
                 speakers: [{ name: 'Alice Smith', slug: 'alice-smith' }],
               },
             },
@@ -66,7 +70,7 @@ const FIXTURE_SCHEDULE: Schedule = {
                 slug: 'ddd',
                 is_keynote: false,
                 is_online: false,
-                tags: [],
+                tags: [{ id: 2, name: 'DDD' }],
                 speakers: [{ name: 'Bob Jones', slug: 'bob-jones' }],
               },
             },
@@ -87,7 +91,7 @@ const FIXTURE_SCHEDULE: Schedule = {
                 id: 2001,
                 title: 'TDD Workshop',
                 slug: 'tdd-workshop',
-                tags: [],
+                tags: [{ id: 3, name: 'Testing' }],
                 speakers: [{ name: 'Carol White', slug: 'carol-white' }],
               },
             },
@@ -245,7 +249,9 @@ describe('PersonalScheduleView', () => {
 
     it('renders stage name', () => {
       renderView({ bookmarks: [101] })
-      expect(screen.getByText('Main Stage')).toBeInTheDocument()
+      // 'Main Stage' appears in both the stage filter option and the session card
+      const matches = screen.getAllByText('Main Stage')
+      expect(matches.length).toBeGreaterThanOrEqual(1)
     })
 
     it('renders speaker name', () => {
@@ -340,6 +346,98 @@ describe('PersonalScheduleView', () => {
       const card = screen.getByRole('article')
       fireEvent.keyDown(card, { key: 'Enter' })
       expect(onOpenSession).toHaveBeenCalledWith(101)
+    })
+  })
+
+  describe('filter controls', () => {
+    it('renders a tag filter dropdown', () => {
+      renderView({ bookmarks: [101] })
+      expect(screen.getByRole('combobox', { name: /tag filter/i })).toBeInTheDocument()
+    })
+
+    it('renders a stage filter dropdown', () => {
+      renderView({ bookmarks: [101] })
+      expect(screen.getByRole('combobox', { name: /stage filter/i })).toBeInTheDocument()
+    })
+
+    it('tag dropdown lists tags from bookmarked sessions on the current day only', () => {
+      // Bookmarks 101 (Architecture) and 102 (DDD) are on Day 1
+      // 201 (no tags in fixture) is on Day 2 — not relevant for Day 1 filter
+      renderView({ bookmarks: [101, 102] })
+      const select = screen.getByRole('combobox', { name: /tag filter/i })
+      expect(select).toContainHTML('Architecture')
+      expect(select).toContainHTML('DDD')
+    })
+
+    it('stage dropdown lists stages from bookmarked sessions on the current day only', () => {
+      renderView({ bookmarks: [101, 103] })
+      const select = screen.getByRole('combobox', { name: /stage filter/i })
+      expect(select).toContainHTML('Main Stage')
+      expect(select).toContainHTML('Workshop Room')
+    })
+
+    it('filters sessions by selected tag', () => {
+      renderView({ bookmarks: [101, 102] })
+      const tagSelect = screen.getByRole('combobox', { name: /tag filter/i })
+      fireEvent.change(tagSelect, { target: { value: 'Architecture' } })
+      expect(screen.getByText('Opening Keynote')).toBeInTheDocument()
+      expect(screen.queryByText('Domain-Driven Design')).not.toBeInTheDocument()
+    })
+
+    it('filters sessions by selected stage', () => {
+      renderView({ bookmarks: [101, 103] })
+      const stageSelect = screen.getByRole('combobox', { name: /stage filter/i })
+      fireEvent.change(stageSelect, { target: { value: 'Workshop Room' } })
+      expect(screen.getByText('TDD Workshop')).toBeInTheDocument()
+      expect(screen.queryByText('Opening Keynote')).not.toBeInTheDocument()
+    })
+
+    it('reflects tag filter in URL as ?tag= param', () => {
+      renderView({ bookmarks: [101, 102] })
+      const tagSelect = screen.getByRole('combobox', { name: /tag filter/i })
+      fireEvent.change(tagSelect, { target: { value: 'DDD' } })
+      expect(window.location.search).toContain('tag=DDD')
+    })
+
+    it('reflects stage filter in URL as ?stage= param', () => {
+      renderView({ bookmarks: [101, 103] })
+      const stageSelect = screen.getByRole('combobox', { name: /stage filter/i })
+      fireEvent.change(stageSelect, { target: { value: 'Main Stage' } })
+      expect(window.location.search).toContain('stage=Main+Stage')
+    })
+
+    it('shows a "Clear filters" button when a filter is active', () => {
+      renderView({ bookmarks: [101, 102] })
+      const tagSelect = screen.getByRole('combobox', { name: /tag filter/i })
+      fireEvent.change(tagSelect, { target: { value: 'DDD' } })
+      expect(screen.getByRole('button', { name: /clear filters/i })).toBeInTheDocument()
+    })
+
+    it('does not show "Clear filters" button when no filter is active', () => {
+      renderView({ bookmarks: [101, 102] })
+      expect(screen.queryByRole('button', { name: /clear filters/i })).not.toBeInTheDocument()
+    })
+
+    it('clear filters button resets both filters', () => {
+      renderView({ bookmarks: [101, 102] })
+      fireEvent.change(screen.getByRole('combobox', { name: /tag filter/i }), { target: { value: 'DDD' } })
+      fireEvent.click(screen.getByRole('button', { name: /clear filters/i }))
+      expect(screen.getByText('Opening Keynote')).toBeInTheDocument()
+      expect(screen.getByText('Domain-Driven Design')).toBeInTheDocument()
+      expect(screen.queryByRole('button', { name: /clear filters/i })).not.toBeInTheDocument()
+    })
+
+    it('shows session count', () => {
+      renderView({ bookmarks: [101, 102] })
+      // 2 sessions on Day 1
+      expect(screen.getByText(/2 sessions/i)).toBeInTheDocument()
+    })
+
+    it('shows filtered session count when filter is active', () => {
+      renderView({ bookmarks: [101, 102] })
+      fireEvent.change(screen.getByRole('combobox', { name: /tag filter/i }), { target: { value: 'DDD' } })
+      expect(screen.getByText(/1 session/i)).toBeInTheDocument()
+      expect(screen.getByText(/filtered/i)).toBeInTheDocument()
     })
   })
 

@@ -74,9 +74,9 @@
   - [x] SW registered via `registerSW` in `main.tsx` (auto-update)
   - [x] `OfflineBanner` shown when browser is offline
 
-- [ ] Feature: filter controls in "My Schedule"
-  - [ ] Show the same tag and stage/room filter dropdowns in "My Schedule" as in the full schedule, scoped to the bookmarked sessions on the selected day
-  - [ ] Filters reflected in URL (shared `?tag=` and `?stage=` params, same as the full schedule)
+- [x] Feature: filter controls in "My Schedule"
+  - [x] Show the same tag and stage/room filter dropdowns in "My Schedule" as in the full schedule, scoped to the bookmarked sessions on the selected day
+  - [x] Filters reflected in URL (shared `?tag=` and `?stage=` params, same as the full schedule)
 
 - [x] Bug: "My Schedule" missing day tabs
   - [x] "My Schedule" now uses the same day-tab structure as the full schedule, sharing the `?day=` URL param
@@ -108,6 +108,9 @@
   - [ ] Option B (preferred) — In-app speaker page: derive speaker info from the existing schedule data (no scraping needed); create a speaker detail view listing all their talks, workshops, and other events; include a clearly labelled link to the speaker's page on craft-conf.com for full bio/details
 
 - [ ] Stretch: full text search across speakers, sessions, etc
+
+- [ ] Improvement: ensure the input box on ios doesn't allow the first character to be uppercase 
+- [ ] Improvement: improve the styling of the intial new/recover account screen be consistent with the rest and mobile friendly (no zooming to the box)
 
 - [ ] Stretch: Hide past events toggle
   - [ ] Add a persistent boolean preference (stored in the user's Automerge doc) to hide sessions whose end time has passed

@@ -6,6 +6,8 @@
  * - Bookmarked sessions grouped by conference day
  * - Sessions sorted chronologically within each day
  * - Overlap detection: warns when two bookmarked sessions overlap in time
+ * - Tag and stage/room filter dropdowns, scoped to bookmarked sessions on the selected day
+ * - Filters reflected in URL (?tag= and ?stage= params, shared with the full schedule)
  * - Remove bookmark button on each card
  * - Clicking a card opens the session detail view
  *
@@ -36,6 +38,7 @@ interface BookmarkedSession {
   stageName: string
   stageColor: string
   speakers: string[]
+  tags: string[]
   type: 'talk' | 'workshop'
   isKeynote: boolean
   overlaps: boolean
@@ -60,6 +63,26 @@ function toMinutes(time: string): number {
 /** Returns true if two time intervals [aStart, aEnd) and [bStart, bEnd) overlap. */
 function timesOverlap(aStart: string, aEnd: string, bStart: string, bEnd: string): boolean {
   return toMinutes(aStart) < toMinutes(bEnd) && toMinutes(bStart) < toMinutes(aEnd)
+}
+
+/** Collect unique sorted tag names from a list of bookmarked sessions. */
+function collectTagsFromSessions(sessions: BookmarkedSession[]): string[] {
+  const tags = new Set<string>()
+  for (const s of sessions) s.tags.forEach((t) => tags.add(t))
+  return Array.from(tags).sort()
+}
+
+/** Collect unique stage names (in schedule order) from a list of bookmarked sessions. */
+function collectStagesFromSessions(sessions: BookmarkedSession[]): string[] {
+  const seen = new Set<string>()
+  const stages: string[] = []
+  for (const s of sessions) {
+    if (!seen.has(s.stageName)) {
+      seen.add(s.stageName)
+      stages.push(s.stageName)
+    }
+  }
+  return stages
 }
 
 /**
@@ -128,6 +151,7 @@ function buildDayGroups(
       stageName: stage.name,
       stageColor: stage.color,
       speakers: src.speakers.map((s) => s.name),
+      tags: src.tags.map((t) => t.name),
       type: slot.type === 'workshop' ? 'workshop' : 'talk',
       isKeynote: 'is_keynote' in src ? (src.is_keynote as boolean) : false,
       overlaps: overlapSet.has(slotId),
@@ -148,6 +172,66 @@ function buildDayGroups(
 // ---------------------------------------------------------------------------
 // Sub-components
 // ---------------------------------------------------------------------------
+
+interface FiltersProps {
+  tags: string[]
+  stages: string[]
+  selectedTag: string
+  selectedStage: string
+  onTagChange: (tag: string) => void
+  onStageChange: (stage: string) => void
+}
+
+function Filters({ tags, stages, selectedTag, selectedStage, onTagChange, onStageChange }: FiltersProps) {
+  return (
+    <div className="session-filters" aria-label="Session filters">
+      <label className="filter-label" htmlFor="my-tag-filter">
+        Tag
+        <select
+          id="my-tag-filter"
+          aria-label="Tag filter"
+          className="filter-select"
+          value={selectedTag}
+          onChange={(e) => onTagChange(e.target.value)}
+        >
+          <option value="">All tags</option>
+          {tags.map((tag) => (
+            <option key={tag} value={tag}>
+              {tag}
+            </option>
+          ))}
+        </select>
+      </label>
+
+      <label className="filter-label" htmlFor="my-stage-filter">
+        Stage / Room
+        <select
+          id="my-stage-filter"
+          aria-label="Stage filter"
+          className="filter-select"
+          value={selectedStage}
+          onChange={(e) => onStageChange(e.target.value)}
+        >
+          <option value="">All stages</option>
+          {stages.map((stage) => (
+            <option key={stage} value={stage}>
+              {stage}
+            </option>
+          ))}
+        </select>
+      </label>
+
+      {(selectedTag || selectedStage) && (
+        <button
+          className="filter-clear"
+          onClick={() => { onTagChange(''); onStageChange('') }}
+        >
+          Clear filters
+        </button>
+      )}
+    </div>
+  )
+}
 
 interface DayTabsProps {
   days: { id: number; name: string }[]
@@ -272,7 +356,7 @@ export interface PersonalScheduleViewProps {
 
 export function PersonalScheduleView({ userDoc, handle, onOpenSession }: PersonalScheduleViewProps) {
   const { schedule, loading, error } = useScheduleContext()
-  const { params, setDay } = useSessionListParams()
+  const { params, setDay, setTag, setStage } = useSessionListParams()
 
   const handleDayChange = useCallback((index: number) => {
     setDay(index)
@@ -305,6 +389,18 @@ export function PersonalScheduleView({ userDoc, handle, onOpenSession }: Persona
   // Only show sessions for the currently selected day
   const currentGroup = allDayGroups.find((g) => g.dayId === currentDay.id) ?? null
 
+  // Filter options are derived from the bookmarked sessions on the current day
+  const daySessions = currentGroup?.sessions ?? []
+  const availableTags = collectTagsFromSessions(daySessions)
+  const availableStages = collectStagesFromSessions(daySessions)
+
+  // Apply active filters
+  const filteredSessions = daySessions.filter((s) => {
+    if (params.tag && !s.tags.includes(params.tag)) return false
+    if (params.stage && s.stageName !== params.stage) return false
+    return true
+  })
+
   function handleRemove(slotId: number) {
     if (!handle) return
     handle.change((doc) => {
@@ -316,6 +412,23 @@ export function PersonalScheduleView({ userDoc, handle, onOpenSession }: Persona
   return (
     <div className="personal-schedule-view">
       <DayTabs days={days} selectedIndex={dayIndex} onSelect={handleDayChange} />
+
+      {currentGroup && (
+        <div className="session-list-controls">
+          <Filters
+            tags={availableTags}
+            stages={availableStages}
+            selectedTag={params.tag}
+            selectedStage={params.stage}
+            onTagChange={setTag}
+            onStageChange={setStage}
+          />
+          <p className="session-count" aria-live="polite">
+            {filteredSessions.length} session{filteredSessions.length !== 1 ? 's' : ''}
+            {(params.tag || params.stage) ? ' (filtered)' : ''}
+          </p>
+        </div>
+      )}
 
       <div
         id={`my-day-panel-${dayIndex}`}
@@ -331,9 +444,13 @@ export function PersonalScheduleView({ userDoc, handle, onOpenSession }: Persona
                 : `No bookmarks for ${currentDay.name} yet.`}
             </p>
           </div>
+        ) : filteredSessions.length === 0 ? (
+          <div className="personal-schedule-empty">
+            <p className="personal-schedule-empty__message">No bookmarked sessions match the current filters.</p>
+          </div>
         ) : (
           <div className="personal-schedule-sessions">
-            {currentGroup.sessions.map((session) => (
+            {filteredSessions.map((session) => (
               <BookmarkedSessionCard
                 key={session.slotId}
                 session={session}
