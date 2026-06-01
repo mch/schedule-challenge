@@ -1,0 +1,232 @@
+/* ============================================================
+   Speaker Detail View
+   ============================================================ */
+
+.speaker-detail-view {
+  width: 100%;
+  text-align: left;
+  padding: 0 24px 48px;
+  box-sizing: border-box;
+
+  @media (max-width: 600px) {
+    padding: 0 12px 32px;
+  }
+}
+
+.speaker-detail-loading,
+.speaker-detail-error,
+.speaker-detail-not-found {
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.speaker-detail-error {
+  color: #e53e3e;
+}
+
+/* ---- Back button ---- */
+
+.speaker-detail-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent);
+  background: none;
+  border: none;
+  padding: 20px 0 16px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.15s;
+
+  &:hover {
+    opacity: 0.75;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+/* ---- Header ---- */
+
+.speaker-detail-header {
+  margin-bottom: 28px;
+}
+
+.speaker-detail-name {
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--text-h);
+  line-height: 130%;
+  letter-spacing: -0.3px;
+  margin: 0 0 10px;
+
+  @media (max-width: 600px) {
+    font-size: 22px;
+  }
+}
+
+.speaker-detail-profile-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+  padding: 7px 14px;
+  border: 1px solid var(--accent-border);
+  border-radius: 8px;
+  background: var(--accent-bg);
+  transition: background 0.15s;
+
+  &:hover {
+    background: var(--accent-border);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+/* ---- Sections ---- */
+
+.speaker-detail-section {
+  margin-bottom: 28px;
+}
+
+.speaker-detail-section-title {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--text);
+  margin: 0 0 12px;
+}
+
+.speaker-detail-no-sessions {
+  font-size: 15px;
+  color: var(--text);
+  padding: 12px 0;
+}
+
+/* ---- Session cards ---- */
+
+.speaker-sessions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.speaker-session-card {
+  border-left: 3px solid var(--stage-color, var(--border));
+  border-radius: 0 8px 8px 0;
+  background: var(--code-bg);
+  overflow: hidden;
+}
+
+.speaker-session-card__inner {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  background: none;
+  border: none;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: background 0.15s;
+
+  &:hover {
+    background: var(--accent-bg);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+}
+
+.speaker-session-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+/* Reuse .session-badge from SessionDetailView */
+.speaker-session-card .session-badge {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.speaker-session-card .session-badge--keynote {
+  background: var(--accent);
+  color: #fff;
+}
+
+.speaker-session-card .session-badge--workshop {
+  background: #0d9488;
+  color: #fff;
+}
+
+.speaker-session-card .session-badge--online {
+  background: #2563eb;
+  color: #fff;
+}
+
+.speaker-session-card__title {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-h);
+  line-height: 140%;
+  margin-bottom: 8px;
+}
+
+.speaker-session-card__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.speaker-session-card__time {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  color: var(--text-h);
+  background: var(--bg);
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.speaker-session-card__stage {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+  padding: 1px 7px;
+  border: 1px solid;
+  border-radius: 4px;
+}
+
+.speaker-session-card__day {
+  font-size: 12px;
+  color: var(--text);
+}

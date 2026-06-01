@@ -154,6 +154,7 @@ interface RenderOptions {
   handle?: DocHandle<UserDocument> | null
   userDoc?: UserDocument | null
   scheduleResult?: UseScheduleResult
+  onOpenSpeaker?: (slug: string) => void
 }
 
 function renderDetail({
@@ -162,6 +163,7 @@ function renderDetail({
   handle = null,
   userDoc = null,
   scheduleResult = makeScheduleResult(),
+  onOpenSpeaker,
 }: RenderOptions = {}) {
   return render(
     <ScheduleContext.Provider value={scheduleResult}>
@@ -170,6 +172,7 @@ function renderDetail({
         onClose={onClose}
         handle={handle}
         userDoc={userDoc}
+        onOpenSpeaker={onOpenSpeaker}
       />
     </ScheduleContext.Provider>,
   )
@@ -395,6 +398,36 @@ describe('SessionDetailView', () => {
     it('renders workshop stage', () => {
       renderDetail({ slotId: 103 })
       expect(screen.getByText('Workshop Room')).toBeInTheDocument()
+    })
+  })
+
+  describe('speaker links', () => {
+    it('renders speaker names as plain text when onOpenSpeaker is not provided', () => {
+      renderDetail()
+      // Names should appear as text, not buttons
+      expect(screen.getByText('Alice Smith')).toBeInTheDocument()
+      expect(screen.queryByRole('button', { name: /view speaker profile: Alice Smith/i })).not.toBeInTheDocument()
+    })
+
+    it('renders speaker names as buttons when onOpenSpeaker is provided', () => {
+      const onOpenSpeaker = vi.fn()
+      renderDetail({ onOpenSpeaker })
+      expect(screen.getByRole('button', { name: /view speaker profile: Alice Smith/i })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: /view speaker profile: Bob Jones/i })).toBeInTheDocument()
+    })
+
+    it('calls onOpenSpeaker with the speaker slug when a speaker button is clicked', () => {
+      const onOpenSpeaker = vi.fn()
+      renderDetail({ onOpenSpeaker })
+      fireEvent.click(screen.getByRole('button', { name: /view speaker profile: Alice Smith/i }))
+      expect(onOpenSpeaker).toHaveBeenCalledWith('alice-smith')
+    })
+
+    it('calls onOpenSpeaker with the correct slug for a second speaker', () => {
+      const onOpenSpeaker = vi.fn()
+      renderDetail({ onOpenSpeaker })
+      fireEvent.click(screen.getByRole('button', { name: /view speaker profile: Bob Jones/i }))
+      expect(onOpenSpeaker).toHaveBeenCalledWith('bob-jones')
     })
   })
 })

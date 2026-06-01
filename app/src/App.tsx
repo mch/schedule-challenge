@@ -3,9 +3,11 @@ import { IdentitySetup } from './components/IdentitySetup'
 import { PassphraseDisplay } from './components/PassphraseDisplay'
 import { SessionListView } from './components/SessionListView'
 import { SessionDetailView } from './components/SessionDetailView'
+import { SpeakerDetailView } from './components/SpeakerDetailView'
 import { PersonalScheduleView } from './components/PersonalScheduleView'
 import { useUserDoc } from './automerge/useUserDoc'
 import { useSessionDetailParam } from './schedule/useSessionDetailParam'
+import { useSpeakerParam } from './schedule/useSpeakerParam'
 import { useSessionListParams } from './schedule/useSessionListParams'
 import { OfflineBanner } from './pwa/OfflineBanner'
 import './App.css'
@@ -18,6 +20,7 @@ function App() {
   const docId = identity.status === 'ready' ? identity.docId : null
   const { doc, handle } = useUserDoc(docId)
   const { sessionId, openSession, closeSession } = useSessionDetailParam()
+  const { speakerSlug, openSpeaker, closeSpeaker } = useSpeakerParam()
 
   if (identity.status === 'loading') {
     return <div className="app-loading" aria-live="polite">Loading…</div>
@@ -31,8 +34,13 @@ function App() {
 
   function handleOpenSession(slotId: number) {
     openSession(slotId)
+    closeSpeaker()
     // Make sure we're showing the schedule view when a session detail opens
     if (view !== 'schedule') setView('schedule')
+  }
+
+  function handleOpenSpeaker(slug: string) {
+    openSpeaker(slug)
   }
 
   return (
@@ -61,12 +69,19 @@ function App() {
         </nav>
         <PassphraseDisplay passphrase={identity.passphrase} />
       </header>
-      {sessionId !== null ? (
+      {speakerSlug !== null ? (
+        <SpeakerDetailView
+          speakerSlug={speakerSlug}
+          onClose={closeSpeaker}
+          onOpenSession={handleOpenSession}
+        />
+      ) : sessionId !== null ? (
         <SessionDetailView
           slotId={sessionId}
           onClose={closeSession}
           handle={handle}
           userDoc={doc}
+          onOpenSpeaker={handleOpenSpeaker}
         />
       ) : view === 'myschedule' ? (
         <PersonalScheduleView

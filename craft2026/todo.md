@@ -103,9 +103,9 @@
   - [ ] Sync schedule updates through the sync server
   - [ ] Fall back to bundled schedule if sync is unavailable
 
-- [ ] Stretch: Speaker pages
+- [x] Stretch: Speaker pages
   - [ ] Option A — Scrape: fetch speaker bio and photo from craft-conf.com; add fields to schema/JSON; show on session detail view
-  - [ ] Option B (preferred) — In-app speaker page: derive speaker info from the existing schedule data (no scraping needed); create a speaker detail view listing all their talks, workshops, and other events; include a clearly labelled link to the speaker's page on craft-conf.com for full bio/details
+  - [x] Option B (preferred) — In-app speaker page: derive speaker info from the existing schedule data (no scraping needed); create a speaker detail view listing all their talks, workshops, and other events; include a clearly labelled link to the speaker's page on craft-conf.com for full bio/details
 
 - [ ] Stretch: full text search across speakers, sessions, etc
 
@@ -121,3 +121,5 @@
   - [ ] Integrate OIDC sign-in via `auth.home.halfbakery.xyz`
   - [ ] Link OIDC identity to Automerge document (replace or supplement passphrase)
   - [ ] Handle sign-in / sign-out flow in UI
+
+- [ ] Improvement: Add links to the official site for all sessions

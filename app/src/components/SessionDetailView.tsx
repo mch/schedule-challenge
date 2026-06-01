@@ -11,11 +11,13 @@
  *   - Bookmark button (toggle add/remove from personal schedule)
  *
  * Props:
- *   slotId    — the ID of the slot to display
- *   onClose   — called when the user navigates back
- *   handle    — Automerge DocHandle for the user doc (optional; bookmark
- *               button is disabled when null)
- *   userDoc   — current snapshot of the user document (or null)
+ *   slotId       — the ID of the slot to display
+ *   onClose      — called when the user navigates back
+ *   handle       — Automerge DocHandle for the user doc (optional; bookmark
+ *                  button is disabled when null)
+ *   userDoc      — current snapshot of the user document (or null)
+ *   onOpenSpeaker — optional callback; when provided, speaker names are
+ *                   rendered as buttons that open the speaker detail view
  */
 
 import type { DocHandle } from '@automerge/automerge-repo'
@@ -82,9 +84,10 @@ export interface SessionDetailViewProps {
   onClose: () => void
   handle: DocHandle<UserDocument> | null
   userDoc: UserDocument | null
+  onOpenSpeaker?: (slug: string) => void
 }
 
-export function SessionDetailView({ slotId, onClose, handle, userDoc }: SessionDetailViewProps) {
+export function SessionDetailView({ slotId, onClose, handle, userDoc, onOpenSpeaker }: SessionDetailViewProps) {
   const { schedule, loading, error } = useScheduleContext()
 
   if (loading) {
@@ -205,7 +208,17 @@ export function SessionDetailView({ slotId, onClose, handle, userDoc }: SessionD
           <ul className="session-detail-speakers">
             {speakers.map((speaker) => (
               <li key={speaker.slug} className="session-detail-speaker">
-                {speaker.name}
+                {onOpenSpeaker ? (
+                  <button
+                    className="session-detail-speaker-link"
+                    onClick={() => onOpenSpeaker(speaker.slug)}
+                    aria-label={`View speaker profile: ${speaker.name}`}
+                  >
+                    {speaker.name}
+                  </button>
+                ) : (
+                  speaker.name
+                )}
               </li>
             ))}
           </ul>
