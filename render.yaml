@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: schedule-challenge-craft-2026
+    runtime: static
+    rootDir: app
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
