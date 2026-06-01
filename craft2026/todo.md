@@ -124,7 +124,7 @@
 
 - [x] Improvement: Add links to the official site for all sessions
 - [x] Improvement: Colours to match the official site, but shifted in some way to make it clear this is not official
-- [ ] Improvement: Favicon and pwa icons to match official site better, but also shifted in some way to make it clear this is not official
+- [x] Improvement: Favicon and pwa icons to match official site better, but also shifted in some way to make it clear this is not official
 - [ ] Improvement: Make it possible to filter by tags
 - [ ] Improvement: Make it possible to filter by session type (talk vs workshop)
 - [ ] Improvement: Make the sync server configurable
