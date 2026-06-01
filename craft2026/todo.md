@@ -66,19 +66,37 @@
   - [x] Update `craft2026/update-schedule.py` (or equivalent scraper) to fetch `description` and `level` from each talk page on craft-conf.com and include them in the output
   - [x] Re-run the scraper and commit updated `craft2026/schedule.json` with real values
 
-- [ ] PWA / offline
-  - [ ] Service worker caches static assets and schedule data
-  - [ ] App is fully usable offline (view schedule, manage bookmarks)
-  - [ ] Syncs bookmarks when connectivity is restored
+- [x] PWA / offline
+  - [x] Service worker caches static assets and schedule data
+  - [x] App is fully usable offline (view schedule, manage bookmarks)
+  - [x] Syncs bookmarks when connectivity is restored
+  - [x] PWA icons (192×192, 512×512, apple-touch-icon)
+  - [x] SW registered via `registerSW` in `main.tsx` (auto-update)
+  - [x] `OfflineBanner` shown when browser is offline
+
+- [ ] Bug: "My Schedule" missing day tabs
+  - [ ] "My Schedule" currently shows all bookmarked sessions in one vertical list; it should use the same day-tab structure as the full schedule for consistency
+
+- [ ] Bug: "My Schedule" tab not reflected in URL
+  - [ ] Add a URL parameter (e.g. `?view=mine`) or use a distinct route when the "My Schedule" tab is active, so that navigating back from a talk detail page returns to "My Schedule" rather than the full schedule
 
 - [ ] Error handling
-  - [ ] Graceful UI when sync server is unreachable
+  - [x] Graceful UI when sync server is unreachable (offline banner + Automerge falls back to IndexedDB)
   - [ ] Graceful UI when schedule data fails to load
 
 - [ ] Stretch: Schedule in Automerge
   - [ ] Store `craft2026/schedule.json` contents in a shared read-only Automerge doc
   - [ ] Sync schedule updates through the sync server
   - [ ] Fall back to bundled schedule if sync is unavailable
+
+- [ ] Stretch: Speaker pages
+  - [ ] Option A — Scrape: fetch speaker bio and photo from craft-conf.com; add fields to schema/JSON; show on session detail view
+  - [ ] Option B (preferred) — In-app speaker page: derive speaker info from the existing schedule data (no scraping needed); create a speaker detail view listing all their talks, workshops, and other events; include a clearly labelled link to the speaker's page on craft-conf.com for full bio/details
+
+- [ ] Stretch: Hide past events toggle
+  - [ ] Add a persistent boolean preference (stored in the user's Automerge doc) to hide sessions whose end time has passed
+  - [ ] Show a toggle in the UI (e.g. in the filter bar) to enable/disable this; state syncs across devices via Automerge
+  - [ ] Apply the filter in both the full schedule and "My Schedule" views
 
 - [ ] Stretch: Pocket ID / OIDC
   - [ ] Integrate OIDC sign-in via `auth.home.halfbakery.xyz`
