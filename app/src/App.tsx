@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useIdentity } from './identity/useIdentity'
 import { IdentitySetup } from './components/IdentitySetup'
 import { PassphraseDisplay } from './components/PassphraseDisplay'
@@ -7,11 +6,14 @@ import { SessionDetailView } from './components/SessionDetailView'
 import { PersonalScheduleView } from './components/PersonalScheduleView'
 import { useUserDoc } from './automerge/useUserDoc'
 import { useSessionDetailParam } from './schedule/useSessionDetailParam'
+import { useSessionListParams } from './schedule/useSessionListParams'
+import { OfflineBanner } from './pwa/OfflineBanner'
 import './App.css'
 
 function App() {
   const { identity, confirm, generateNew } = useIdentity()
-  const [view, setView] = useState<'schedule' | 'personal'>('schedule')
+  const { params, setView } = useSessionListParams()
+  const view = params.view
 
   const docId = identity.status === 'ready' ? identity.docId : null
   const { doc, handle } = useUserDoc(docId)
@@ -30,11 +32,12 @@ function App() {
   function handleOpenSession(slotId: number) {
     openSession(slotId)
     // Make sure we're showing the schedule view when a session detail opens
-    setView('schedule')
+    if (view !== 'schedule') setView('schedule')
   }
 
   return (
     <main>
+      <OfflineBanner />
       <header className="app-header">
         <h1>Craft 2026</h1>
         <nav className="app-nav" aria-label="Main navigation">
@@ -46,9 +49,9 @@ function App() {
             Schedule
           </button>
           <button
-            className={`app-nav-tab${view === 'personal' ? ' app-nav-tab--active' : ''}`}
-            aria-pressed={view === 'personal'}
-            onClick={() => { closeSession(); setView('personal') }}
+            className={`app-nav-tab${view === 'myschedule' ? ' app-nav-tab--active' : ''}`}
+            aria-pressed={view === 'myschedule'}
+            onClick={() => { closeSession(); setView('myschedule') }}
           >
             My Schedule
             {doc !== null && doc.bookmarks.length > 0 && (
@@ -65,7 +68,7 @@ function App() {
           handle={handle}
           userDoc={doc}
         />
-      ) : view === 'personal' ? (
+      ) : view === 'myschedule' ? (
         <PersonalScheduleView
           userDoc={doc}
           handle={handle}

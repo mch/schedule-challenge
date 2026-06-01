@@ -13,7 +13,7 @@
  *   - Sessions not in the schedule (dangling bookmarks) are ignored
  */
 
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { PersonalScheduleView } from './PersonalScheduleView'
 import { ScheduleContext } from '../schedule/ScheduleContext'
@@ -181,6 +181,18 @@ function renderView({
 }
 
 // ---------------------------------------------------------------------------
+// Reset URL between tests
+// ---------------------------------------------------------------------------
+
+beforeEach(() => {
+  window.history.replaceState(null, '', '/')
+})
+
+afterEach(() => {
+  window.history.replaceState(null, '', '/')
+})
+
+// ---------------------------------------------------------------------------
 // Tests
 // ---------------------------------------------------------------------------
 
@@ -249,23 +261,44 @@ describe('PersonalScheduleView', () => {
   })
 
   describe('grouping by day', () => {
-    it('shows day heading for bookmarked sessions', () => {
+    it('shows a tab for every conference day', () => {
       renderView({ bookmarks: [101] })
-      expect(screen.getByText('Day 1')).toBeInTheDocument()
+      const tabs = screen.getAllByRole('tab')
+      expect(tabs).toHaveLength(2)
+      expect(tabs[0]).toHaveTextContent('Day 1')
+      expect(tabs[1]).toHaveTextContent('Day 2')
     })
 
-    it('shows sessions across multiple days under separate headings', () => {
-      renderView({ bookmarks: [101, 201] })
-      expect(screen.getByText('Day 1')).toBeInTheDocument()
-      expect(screen.getByText('Day 2')).toBeInTheDocument()
+    it('shows bookmarked session on the day tab it belongs to', () => {
+      renderView({ bookmarks: [101] })
       expect(screen.getByText('Opening Keynote')).toBeInTheDocument()
+    })
+
+    it('shows session on Day 2 tab when Day 2 tab is selected', () => {
+      renderView({ bookmarks: [201] })
+      // Day 1 tab is selected by default — Day 2 Keynote is not visible yet
+      expect(screen.queryByText('Day 2 Keynote')).not.toBeInTheDocument()
+      // Switch to Day 2
+      fireEvent.click(screen.getAllByRole('tab')[1])
       expect(screen.getByText('Day 2 Keynote')).toBeInTheDocument()
     })
 
-    it('only shows day headings for days that have bookmarks', () => {
-      renderView({ bookmarks: [201] })
-      expect(screen.queryByText('Day 1')).not.toBeInTheDocument()
-      expect(screen.getByText('Day 2')).toBeInTheDocument()
+    it('shows empty state for a day tab that has no bookmarks', () => {
+      renderView({ bookmarks: [101] })
+      // Switch to Day 2 — no bookmarks there
+      fireEvent.click(screen.getAllByRole('tab')[1])
+      expect(screen.getByText(/no bookmarks for day 2/i)).toBeInTheDocument()
+    })
+
+    it('shows sessions from both days when navigating between tabs', () => {
+      renderView({ bookmarks: [101, 201] })
+      // Day 1 visible by default
+      expect(screen.getByText('Opening Keynote')).toBeInTheDocument()
+      expect(screen.queryByText('Day 2 Keynote')).not.toBeInTheDocument()
+      // Switch to Day 2
+      fireEvent.click(screen.getAllByRole('tab')[1])
+      expect(screen.getByText('Day 2 Keynote')).toBeInTheDocument()
+      expect(screen.queryByText('Opening Keynote')).not.toBeInTheDocument()
     })
   })
 

@@ -10,6 +10,11 @@ import { ScheduleProvider } from './schedule/ScheduleContext'
 // vite-plugin-wasm handles the import; `?url` gives us the asset URL at build time.
 import wasmUrl from '@automerge/automerge/automerge.wasm?url'
 import * as Automerge from '@automerge/automerge/slim'
+import { registerSW } from 'virtual:pwa-register'
+
+// Register the service worker — it will auto-update in the background.
+// The page reloads automatically when a new SW takes over.
+registerSW({ immediate: true })
 
 Automerge.initializeWasm(wasmUrl).then(() => {
   const repo = createRepo()

@@ -16,8 +16,10 @@
  *   onOpenSession  — called with slotId when the user clicks a card
  */
 
+import { useCallback } from 'react'
 import type { DocHandle } from '@automerge/automerge-repo'
 import { useScheduleContext } from '../schedule/ScheduleContext'
+import { useSessionListParams } from '../schedule/useSessionListParams'
 import type { UserDocument } from '../types/user-document'
 import type { Day, Slot, Stage } from '../types/schedule'
 import './PersonalScheduleView.css'
@@ -147,6 +149,32 @@ function buildDayGroups(
 // Sub-components
 // ---------------------------------------------------------------------------
 
+interface DayTabsProps {
+  days: { id: number; name: string }[]
+  selectedIndex: number
+  onSelect: (index: number) => void
+}
+
+function DayTabs({ days, selectedIndex, onSelect }: DayTabsProps) {
+  return (
+    <div className="day-tabs" role="tablist" aria-label="Conference days">
+      {days.map((day, i) => (
+        <button
+          key={day.id}
+          role="tab"
+          aria-selected={i === selectedIndex}
+          aria-controls={`my-day-panel-${i}`}
+          id={`my-day-tab-${i}`}
+          className={`day-tab${i === selectedIndex ? ' day-tab--active' : ''}`}
+          onClick={() => onSelect(i)}
+        >
+          {day.name}
+        </button>
+      ))}
+    </div>
+  )
+}
+
 interface BookmarkedSessionCardProps {
   session: BookmarkedSession
   onOpen: (slotId: number) => void
@@ -244,6 +272,12 @@ export interface PersonalScheduleViewProps {
 
 export function PersonalScheduleView({ userDoc, handle, onOpenSession }: PersonalScheduleViewProps) {
   const { schedule, loading, error } = useScheduleContext()
+  const { params, setDay } = useSessionListParams()
+
+  const handleDayChange = useCallback((index: number) => {
+    setDay(index)
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }, [setDay])
 
   if (loading) {
     return (
@@ -261,18 +295,15 @@ export function PersonalScheduleView({ userDoc, handle, onOpenSession }: Persona
     )
   }
 
-  const bookmarks = userDoc?.bookmarks ?? []
-  const dayGroups = buildDayGroups(schedule, bookmarks)
+  const days = schedule.days
+  const dayIndex = Math.min(params.day, days.length - 1)
+  const currentDay = days[dayIndex]
 
-  if (dayGroups.length === 0) {
-    return (
-      <div className="personal-schedule-empty">
-        <p className="personal-schedule-empty__message">
-          No bookmarks yet — star sessions in the schedule to build your personal agenda.
-        </p>
-      </div>
-    )
-  }
+  const bookmarks = userDoc?.bookmarks ?? []
+  const allDayGroups = buildDayGroups(schedule, bookmarks)
+
+  // Only show sessions for the currently selected day
+  const currentGroup = allDayGroups.find((g) => g.dayId === currentDay.id) ?? null
 
   function handleRemove(slotId: number) {
     if (!handle) return
@@ -284,12 +315,25 @@ export function PersonalScheduleView({ userDoc, handle, onOpenSession }: Persona
 
   return (
     <div className="personal-schedule-view">
-      {dayGroups.map((group) => (
-        <section key={group.dayId} className="personal-schedule-day" aria-label={group.dayName}>
-          <h2 className="personal-schedule-day__heading">{group.dayName}</h2>
+      <DayTabs days={days} selectedIndex={dayIndex} onSelect={handleDayChange} />
 
+      <div
+        id={`my-day-panel-${dayIndex}`}
+        role="tabpanel"
+        aria-labelledby={`my-day-tab-${dayIndex}`}
+        className="personal-schedule-day-panel"
+      >
+        {!currentGroup ? (
+          <div className="personal-schedule-empty">
+            <p className="personal-schedule-empty__message">
+              {bookmarks.length === 0
+                ? 'No bookmarks yet — star sessions in the schedule to build your personal agenda.'
+                : `No bookmarks for ${currentDay.name} yet.`}
+            </p>
+          </div>
+        ) : (
           <div className="personal-schedule-sessions">
-            {group.sessions.map((session) => (
+            {currentGroup.sessions.map((session) => (
               <BookmarkedSessionCard
                 key={session.slotId}
                 session={session}
@@ -299,8 +343,8 @@ export function PersonalScheduleView({ userDoc, handle, onOpenSession }: Persona
               />
             ))}
           </div>
-        </section>
-      ))}
+        )}
+      </div>
     </div>
   )
 }

@@ -74,11 +74,25 @@
   - [x] SW registered via `registerSW` in `main.tsx` (auto-update)
   - [x] `OfflineBanner` shown when browser is offline
 
-- [ ] Bug: "My Schedule" missing day tabs
-  - [ ] "My Schedule" currently shows all bookmarked sessions in one vertical list; it should use the same day-tab structure as the full schedule for consistency
+- [ ] Feature: filter controls in "My Schedule"
+  - [ ] Show the same tag and stage/room filter dropdowns in "My Schedule" as in the full schedule, scoped to the bookmarked sessions on the selected day
+  - [ ] Filters reflected in URL (shared `?tag=` and `?stage=` params, same as the full schedule)
 
-- [ ] Bug: "My Schedule" tab not reflected in URL
-  - [ ] Add a URL parameter (e.g. `?view=mine`) or use a distinct route when the "My Schedule" tab is active, so that navigating back from a talk detail page returns to "My Schedule" rather than the full schedule
+- [x] Bug: "My Schedule" missing day tabs
+  - [x] "My Schedule" now uses the same day-tab structure as the full schedule, sharing the `?day=` URL param
+
+- [x] Bug: "My Schedule" tab not reflected in URL
+  - [x] Active view is now encoded as `?view=myschedule` (My Schedule) or omitted (Schedule, the default); navigating back from a session detail correctly restores the active view
+
+- [ ] Deployment to Render
+  - [ ] Follow https://vite.dev/guide/static-deploy#render to set up a Static Site on render.com
+  - [ ] Set build command to `npm run build` and publish directory to `dist` (from the `app/` subdirectory)
+  - [ ] Confirm the deployed URL works correctly with Vite's client-side routing (configure rewrite rule so all routes serve `index.html`)
+
+- [ ] Search engine exclusion
+  - [ ] Add `robots.txt` with `Disallow: /` for all crawlers
+  - [ ] Add `<meta name="robots" content="noindex, nofollow">` in `index.html`
+  - [ ] Verify the deployed site is not accidentally submitted to any search index
 
 - [ ] Error handling
   - [x] Graceful UI when sync server is unreachable (offline banner + Automerge falls back to IndexedDB)
