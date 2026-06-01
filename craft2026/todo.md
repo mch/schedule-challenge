@@ -109,8 +109,8 @@
 
 - [ ] Stretch: full text search across speakers, sessions, etc
 
-- [ ] Improvement: ensure the input box on ios doesn't allow the first character to be uppercase 
-- [ ] Improvement: improve the styling of the intial new/recover account screen be consistent with the rest and mobile friendly (no zooming to the box)
+- [x] Improvement: ensure the input box on ios doesn't allow the first character to be uppercase 
+- [x] Improvement: improve the styling of the intial new/recover account screen be consistent with the rest and mobile friendly (no zooming to the box)
 
 - [ ] Stretch: Hide past events toggle
   - [ ] Add a persistent boolean preference (stored in the user's Automerge doc) to hide sessions whose end time has passed
@@ -123,3 +123,4 @@
   - [ ] Handle sign-in / sign-out flow in UI
 
 - [ ] Improvement: Add links to the official site for all sessions
+- [ ] Improvement: Colours to match the official site 

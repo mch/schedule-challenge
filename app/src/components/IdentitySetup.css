@@ -1,0 +1,191 @@
+/* ============================================================
+   Identity Setup (first-run / account recovery screen)
+   ============================================================ */
+
+/* Full-page centred wrapper — takes up the entire viewport height */
+.identity-setup-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100svh;
+  padding: 24px 16px;
+  box-sizing: border-box;
+  background: var(--bg);
+}
+
+/* Card */
+.identity-setup {
+  width: 100%;
+  max-width: 440px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  box-sizing: border-box;
+  text-align: left;
+  box-shadow: var(--shadow);
+
+  @media (max-width: 480px) {
+    padding: 24px 20px;
+    border-radius: 10px;
+  }
+}
+
+.identity-setup h1 {
+  font-size: 28px;
+  letter-spacing: -0.5px;
+  margin: 0 0 12px;
+
+  @media (max-width: 480px) {
+    font-size: 24px;
+  }
+}
+
+.identity-setup p {
+  font-size: 15px;
+  line-height: 150%;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+
+/* Action buttons row */
+.identity-setup__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.identity-setup__actions button {
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--code-bg);
+  color: var(--text-h);
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.15s, border-color 0.15s;
+
+  &:first-child {
+    background: var(--accent);
+    color: #fff;
+    border-color: transparent;
+
+    &:hover:not(:disabled) {
+      background: color-mix(in srgb, var(--accent) 85%, #000);
+    }
+  }
+
+  &:not(:first-child):hover:not(:disabled) {
+    background: var(--border);
+    border-color: var(--text);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+/* Passphrase display (create mode) */
+.identity-setup__passphrase {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-top: 4px;
+}
+
+.identity-setup__passphrase code {
+  flex: 1;
+  font-size: 16px;
+  word-break: break-all;
+  background: none;
+  padding: 0;
+  color: var(--text-h);
+}
+
+.identity-setup__passphrase button {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent);
+  background: none;
+  border: 1px solid var(--accent-border);
+  border-radius: 6px;
+  padding: 5px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+  flex-shrink: 0;
+
+  &:hover {
+    background: var(--accent-bg);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+/* Recover form */
+.identity-setup form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.identity-setup label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* font-size >= 16px prevents iOS from zooming in on focus */
+.identity-setup input[type='text'] {
+  font: inherit;
+  font-size: 16px;
+  color: var(--text-h);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 11px 14px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+
+  &::placeholder {
+    color: var(--text);
+    opacity: 0.6;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-bg);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+/* Validation error */
+.identity-setup__error {
+  font-size: 13px;
+  color: #e53e3e;
+  margin: 8px 0 0;
+}

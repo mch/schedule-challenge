@@ -11,6 +11,19 @@ function makeProps(overrides?: Partial<Parameters<typeof IdentitySetup>[0]>) {
   }
 }
 
+describe('IdentitySetup — layout', () => {
+  it('renders a full-page centered wrapper with class identity-setup-page', () => {
+    render(<IdentitySetup {...makeProps()} />)
+    // The outermost wrapper must have the page-centering class
+    expect(document.querySelector('.identity-setup-page')).toBeInTheDocument()
+  })
+
+  it('renders the card container with class identity-setup', () => {
+    render(<IdentitySetup {...makeProps()} />)
+    expect(document.querySelector('.identity-setup')).toBeInTheDocument()
+  })
+})
+
 describe('IdentitySetup — choose screen', () => {
   it('shows welcome heading', () => {
     render(<IdentitySetup {...makeProps()} />)
@@ -62,6 +75,13 @@ describe('IdentitySetup — recover screen', () => {
     render(<IdentitySetup {...makeProps()} />)
     await user.click(screen.getByRole('button', { name: /enter existing passphrase/i }))
     expect(screen.getByLabelText(/passphrase/i)).toBeInTheDocument()
+  })
+
+  it('has autocapitalize="none" on the passphrase input', async () => {
+    const user = userEvent.setup()
+    render(<IdentitySetup {...makeProps()} />)
+    await user.click(screen.getByRole('button', { name: /enter existing passphrase/i }))
+    expect(screen.getByLabelText(/passphrase/i)).toHaveAttribute('autocapitalize', 'none')
   })
 
   it('submitting a passphrase calls onConfirm', async () => {
