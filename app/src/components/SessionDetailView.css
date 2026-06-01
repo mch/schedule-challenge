@@ -91,12 +91,12 @@
 }
 
 .session-badge--workshop {
-  background: #0d9488;
+  background: var(--accent-secondary, #1e2558);
   color: #fff;
 }
 
 .session-badge--online {
-  background: #2563eb;
+  background: var(--accent-secondary, #1e2558);
   color: #fff;
 }
 

@@ -123,9 +123,10 @@
   - [ ] Handle sign-in / sign-out flow in UI
 
 - [x] Improvement: Add links to the official site for all sessions
-- [ ] Improvement: Colours to match the official site, but shifted in some way to make it clear this is not official
+- [x] Improvement: Colours to match the official site, but shifted in some way to make it clear this is not official
 - [ ] Improvement: Favicon and pwa icons to match official site better, but also shifted in some way to make it clear this is not official
 - [ ] Improvement: Make it possible to filter by tags
 - [ ] Improvement: Make it possible to filter by session type (talk vs workshop)
 - [ ] Improvement: Make the sync server configurable
   - allow selecting between my internal one and the public example one
+- [ ] Improvement: Clicking the "Craft 2026" in the top left of any page should take you to the home page and reset the filters

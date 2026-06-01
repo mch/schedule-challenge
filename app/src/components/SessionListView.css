@@ -269,7 +269,7 @@
 }
 
 .session-badge--workshop {
-  background: #0d9488;
+  background: var(--accent-secondary, #1e2558);
   color: #fff;
 }
 
