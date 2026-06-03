@@ -2,6 +2,8 @@
    Personal Schedule View
    ============================================================ */
 
+@import './schedule-shared.css';
+
 .personal-schedule-view {
   width: 100%;
   text-align: left;
@@ -39,27 +41,6 @@
   color: #e53e3e;
 }
 
-/* ---- Day section ---- */
-
-.personal-schedule-day {
-  margin-bottom: 16px;
-}
-
-.personal-schedule-day__heading {
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.7px;
-  text-transform: uppercase;
-  color: var(--text);
-  padding: 20px 24px 10px;
-  margin: 0;
-  border-bottom: 1px solid var(--border);
-
-  @media (max-width: 600px) {
-    padding: 16px 12px 8px;
-  }
-}
-
 /* ---- Sessions list ---- */
 
 .personal-schedule-sessions {
@@ -73,60 +54,9 @@
   }
 }
 
-/* ---- Session card ---- */
+/* ---- Overlap variant ---- */
 
-.personal-session-card {
-  display: grid;
-  grid-template-columns: 90px 1fr auto;
-  gap: 0 12px;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--border);
-  cursor: pointer;
-  position: relative;
-  transition: background 0.12s;
-  align-items: start;
-
-  &::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: var(--stage-color, var(--border));
-    border-radius: 2px;
-  }
-
-  &:hover {
-    background: var(--code-bg);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-    border-radius: 2px;
-  }
-
-  @media (max-width: 600px) {
-    grid-template-columns: 72px 1fr auto;
-    gap: 0 8px;
-    padding: 12px 8px 12px;
-
-    &::before {
-      display: none;
-    }
-  }
-}
-
-.personal-session-card--keynote {
-  background: var(--accent-bg);
-
-  &:hover {
-    background: var(--accent-border);
-  }
-}
-
-.personal-session-card--overlap {
+.session-card--overlap {
   background: #fef9c3;
 
   &:hover {
@@ -135,7 +65,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  .personal-session-card--overlap {
+  .session-card--overlap {
     background: rgba(202, 138, 4, 0.15);
 
     &:hover {
@@ -144,64 +74,9 @@
   }
 }
 
-.personal-session-card__time {
-  font-size: 13px;
-  font-variant-numeric: tabular-nums;
-  color: var(--text);
-  padding-top: 2px;
-  white-space: nowrap;
-  padding-left: 12px;
+/* ---- Overlap badge ---- */
 
-  @media (max-width: 600px) {
-    padding-left: 0;
-    font-size: 12px;
-  }
-}
-
-.personal-session-card__body {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  min-width: 0;
-}
-
-.personal-session-card__title {
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--text-h);
-  margin: 0;
-  line-height: 140%;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 6px;
-}
-
-.personal-session-card__speakers {
-  font-size: 13px;
-  color: var(--text);
-  margin: 0;
-}
-
-.personal-session-card__meta {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 2px;
-}
-
-.personal-session-card__stage {
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--text);
-  padding: 2px 7px;
-  border: 1px solid;
-  border-radius: 4px;
-  white-space: nowrap;
-}
-
-.personal-session-card__overlap-badge {
+.session-card__overlap-badge {
   font-size: 11px;
   font-weight: 600;
   color: #92400e;
@@ -212,21 +87,15 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  .personal-session-card__overlap-badge {
+  .session-card__overlap-badge {
     background: rgba(202, 138, 4, 0.3);
     color: #fbbf24;
   }
 }
 
-/* ---- Actions column ---- */
+/* ---- Remove button ---- */
 
-.personal-session-card__actions {
-  display: flex;
-  align-items: flex-start;
-  padding-top: 2px;
-}
-
-.personal-session-card__remove {
+.session-card__remove {
   font: inherit;
   font-size: 18px;
   line-height: 1;

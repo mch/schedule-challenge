@@ -302,12 +302,12 @@ describe('SessionListView', () => {
   describe('tag filter', () => {
     it('renders tag filter select', () => {
       renderViewWithResult()
-      expect(screen.getByRole('combobox', { name: /^tag$/i })).toBeInTheDocument()
+      expect(screen.getByRole('combobox', { name: /tag filter/i })).toBeInTheDocument()
     })
 
     it('populates tag options from current day', () => {
       renderViewWithResult()
-      const select = screen.getByRole('combobox', { name: /^tag$/i }) as HTMLSelectElement
+      const select = screen.getByRole('combobox', { name: /tag filter/i }) as HTMLSelectElement
       const options = Array.from(select.options).map((o) => o.value)
       expect(options).toContain('architecture')
       expect(options).toContain('tdd')
@@ -315,7 +315,7 @@ describe('SessionListView', () => {
 
     it('filters sessions by selected tag', () => {
       renderViewWithResult()
-      const select = screen.getByRole('combobox', { name: /^tag$/i })
+      const select = screen.getByRole('combobox', { name: /tag filter/i })
       fireEvent.change(select, { target: { value: 'tdd' } })
       expect(screen.getByText('Hands-on TDD Workshop')).toBeInTheDocument()
       expect(screen.queryByText('Opening Keynote')).not.toBeInTheDocument()
@@ -334,12 +334,12 @@ describe('SessionListView', () => {
   describe('stage filter', () => {
     it('renders stage filter select', () => {
       renderViewWithResult()
-      expect(screen.getByRole('combobox', { name: /stage/i })).toBeInTheDocument()
+      expect(screen.getByRole('combobox', { name: /stage filter/i })).toBeInTheDocument()
     })
 
     it('populates stage options from current day', () => {
       renderViewWithResult()
-      const select = screen.getByRole('combobox', { name: /stage/i }) as HTMLSelectElement
+      const select = screen.getByRole('combobox', { name: /stage filter/i }) as HTMLSelectElement
       const options = Array.from(select.options).map((o) => o.value)
       expect(options).toContain('Main Stage')
       expect(options).toContain('Yellow Stage')
@@ -347,7 +347,7 @@ describe('SessionListView', () => {
 
     it('filters sessions by selected stage', () => {
       renderViewWithResult()
-      const select = screen.getByRole('combobox', { name: /stage/i })
+      const select = screen.getByRole('combobox', { name: /stage filter/i })
       fireEvent.change(select, { target: { value: 'Yellow Stage' } })
       expect(screen.getByText('Hands-on TDD Workshop')).toBeInTheDocument()
       expect(screen.queryByText('Opening Keynote')).not.toBeInTheDocument()
@@ -362,14 +362,14 @@ describe('SessionListView', () => {
 
     it('shows clear button when a filter is active', () => {
       renderViewWithResult()
-      fireEvent.change(screen.getByRole('combobox', { name: /^tag$/i }), { target: { value: 'tdd' } })
+      fireEvent.change(screen.getByRole('combobox', { name: /tag filter/i }), { target: { value: 'tdd' } })
       expect(screen.getByText(/clear filters/i)).toBeInTheDocument()
     })
 
     it('clears both filters when clear is clicked', () => {
       renderViewWithResult()
-      fireEvent.change(screen.getByRole('combobox', { name: /^tag$/i }), { target: { value: 'tdd' } })
-      fireEvent.change(screen.getByRole('combobox', { name: /stage/i }), { target: { value: 'Yellow Stage' } })
+      fireEvent.change(screen.getByRole('combobox', { name: /tag filter/i }), { target: { value: 'tdd' } })
+      fireEvent.change(screen.getByRole('combobox', { name: /stage filter/i }), { target: { value: 'Yellow Stage' } })
       fireEvent.click(screen.getByText(/clear filters/i))
       // All Day 1 sessions visible again
       expect(screen.getByText('Opening Keynote')).toBeInTheDocument()
@@ -386,7 +386,7 @@ describe('SessionListView', () => {
 
     it('shows filtered count with "(filtered)" label', () => {
       renderViewWithResult()
-      fireEvent.change(screen.getByRole('combobox', { name: /^tag$/i }), { target: { value: 'tdd' } })
+      fireEvent.change(screen.getByRole('combobox', { name: /tag filter/i }), { target: { value: 'tdd' } })
       expect(screen.getByText('1 session (filtered)')).toBeInTheDocument()
     })
   })
@@ -394,7 +394,7 @@ describe('SessionListView', () => {
   describe('URL param persistence', () => {
     it('updates URL when a filter changes', async () => {
       renderViewWithResult()
-      fireEvent.change(screen.getByRole('combobox', { name: /^tag$/i }), { target: { value: 'tdd' } })
+      fireEvent.change(screen.getByRole('combobox', { name: /tag filter/i }), { target: { value: 'tdd' } })
       await waitFor(() => {
         expect(window.location.search).toContain('tag=tdd')
       })

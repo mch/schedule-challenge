@@ -143,5 +143,5 @@
   - opening the PWA when it has been saved to home screen fails
   - if the app is already loaded when going offline, it seems fine 
 
-- [ ] Improvement: the styling of "Schedule" and "My Schedule" are subtly different.
+- [x] Improvement: the styling of "Schedule" and "My Schedule" are subtly different.
   - Extract common styles for reuse

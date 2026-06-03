@@ -24,6 +24,7 @@ import { useScheduleContext } from '../schedule/ScheduleContext'
 import { useSessionListParams } from '../schedule/useSessionListParams'
 import type { UserDocument } from '../types/user-document'
 import type { Day, Slot, Stage } from '../types/schedule'
+import { DayTabs, Filters } from './ScheduleShared'
 import './PersonalScheduleView.css'
 
 // ---------------------------------------------------------------------------
@@ -173,117 +174,6 @@ function buildDayGroups(
 // Sub-components
 // ---------------------------------------------------------------------------
 
-interface FiltersProps {
-  tags: string[]
-  stages: string[]
-  selectedTag: string
-  selectedStage: string
-  hidePastEvents: boolean
-  onTagChange: (tag: string) => void
-  onStageChange: (stage: string) => void
-  onToggleHidePastEvents: () => void
-  hidePastEventsDisabled: boolean
-}
-
-function Filters({
-  tags,
-  stages,
-  selectedTag,
-  selectedStage,
-  hidePastEvents,
-  onTagChange,
-  onStageChange,
-  onToggleHidePastEvents,
-  hidePastEventsDisabled,
-}: FiltersProps) {
-  return (
-    <div className="session-filters" aria-label="Session filters">
-      <label className="filter-label" htmlFor="my-tag-filter">
-        Tag
-        <select
-          id="my-tag-filter"
-          aria-label="Tag filter"
-          className="filter-select"
-          value={selectedTag}
-          onChange={(e) => onTagChange(e.target.value)}
-        >
-          <option value="">All tags</option>
-          {tags.map((tag) => (
-            <option key={tag} value={tag}>
-              {tag}
-            </option>
-          ))}
-        </select>
-      </label>
-
-      <label className="filter-label" htmlFor="my-stage-filter">
-        Stage / Room
-        <select
-          id="my-stage-filter"
-          aria-label="Stage filter"
-          className="filter-select"
-          value={selectedStage}
-          onChange={(e) => onStageChange(e.target.value)}
-        >
-          <option value="">All stages</option>
-          {stages.map((stage) => (
-            <option key={stage} value={stage}>
-              {stage}
-            </option>
-          ))}
-        </select>
-      </label>
-
-      <label className="filter-label filter-label--toggle">
-        <input
-          type="checkbox"
-          className="filter-toggle"
-          checked={hidePastEvents}
-          onChange={onToggleHidePastEvents}
-          disabled={hidePastEventsDisabled}
-          aria-label="Hide past events"
-        />
-        Hide past events
-      </label>
-
-      {(selectedTag || selectedStage) && (
-        <button
-          className="filter-clear"
-          onClick={() => { onTagChange(''); onStageChange('') }}
-        >
-          Clear filters
-        </button>
-      )}
-    </div>
-  )
-}
-
-interface DayTabsProps {
-  days: { id: number; name: string }[]
-  selectedIndex: number
-  onSelect: (index: number) => void
-}
-
-function DayTabs({ days, selectedIndex, onSelect }: DayTabsProps) {
-  return (
-    <div className="day-tabs" role="tablist" aria-label="Conference days">
-      {days.map((day, i) => (
-        <button
-          key={day.id}
-          role="tab"
-          aria-selected={i === selectedIndex}
-          aria-controls={`my-day-panel-${i}`}
-          id={`my-day-tab-${i}`}
-          className={`day-tab${i === selectedIndex ? ' day-tab--active' : ''}`}
-          onClick={() => onSelect(i)}
-        >
-          {day.name}
-        </button>
-      ))}
-    </div>
-  )
-}
-
 interface BookmarkedSessionCardProps {
   session: BookmarkedSession
   onOpen: (slotId: number) => void
@@ -308,7 +198,7 @@ function BookmarkedSessionCard({ session, onOpen, onRemove, removeDisabled }: Bo
 
   return (
     <article
-      className={`personal-session-card${session.isKeynote ? ' personal-session-card--keynote' : ''}${session.overlaps ? ' personal-session-card--overlap' : ''}`}
+      className={`session-card session-card--clickable${session.isKeynote ? ' session-card--keynote' : ''}${session.overlaps ? ' session-card--overlap' : ''}`}
       style={stageStyle}
       data-slot-id={session.slotId}
       onClick={() => onOpen(session.slotId)}
@@ -317,12 +207,12 @@ function BookmarkedSessionCard({ session, onOpen, onRemove, removeDisabled }: Bo
       aria-label={`View details for ${session.title}`}
       onKeyDown={handleKeyDown}
     >
-      <div className="personal-session-card__time">
+      <div className="session-card__time">
         {session.startTime}–{session.endTime}
       </div>
 
-      <div className="personal-session-card__body">
-        <h3 className="personal-session-card__title">
+      <div className="session-card__body">
+        <h3 className="session-card__title">
           {session.isKeynote && (
             <span className="session-badge session-badge--keynote">Keynote</span>
           )}
@@ -333,30 +223,30 @@ function BookmarkedSessionCard({ session, onOpen, onRemove, removeDisabled }: Bo
         </h3>
 
         {session.speakers.length > 0 && (
-          <p className="personal-session-card__speakers">
+          <p className="session-card__speakers">
             {session.speakers.join(', ')}
           </p>
         )}
 
-        <div className="personal-session-card__meta">
+        <div className="session-card__meta">
           <span
-            className="personal-session-card__stage"
+            className="session-card__stage"
             style={{ borderColor: `#${session.stageColor}` }}
           >
             {session.stageName}
           </span>
 
           {session.overlaps && (
-            <span className="personal-session-card__overlap-badge" aria-label="Overlaps with another bookmarked session">
+            <span className="session-card__overlap-badge" aria-label="Overlaps with another bookmarked session">
               ⚠ overlap
             </span>
           )}
         </div>
       </div>
 
-      <div className="personal-session-card__actions">
+      <div className="session-card__actions">
         <button
-          className="personal-session-card__remove"
+          className="session-card__remove"
           aria-label="Remove from personal schedule"
           disabled={removeDisabled}
           onClick={handleRemoveClick}
@@ -447,7 +337,7 @@ export function PersonalScheduleView({ userDoc, handle, onOpenSession, nowMs }: 
 
   return (
     <div className="personal-schedule-view">
-      <DayTabs days={days} selectedIndex={dayIndex} onSelect={handleDayChange} />
+      <DayTabs days={days} selectedIndex={dayIndex} onSelect={handleDayChange} idPrefix="my-day" />
 
       {currentGroup && (
         <div className="session-list-controls">
@@ -466,6 +356,7 @@ export function PersonalScheduleView({ userDoc, handle, onOpenSession, nowMs }: 
               })
             }}
             hidePastEventsDisabled={handle === null}
+            idPrefix="my-"
           />
           <p className="session-count" aria-live="polite">
             {filteredSessions.length} session{filteredSessions.length !== 1 ? 's' : ''}

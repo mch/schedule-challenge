@@ -16,6 +16,7 @@ import { useScheduleContext } from '../schedule/ScheduleContext'
 import { useSessionListParams } from '../schedule/useSessionListParams'
 import type { UserDocument } from '../types/user-document'
 import type { Day } from '../types/schedule'
+import { DayTabs, Filters } from './ScheduleShared'
 import './SessionListView.css'
 
 // ---------------------------------------------------------------------------
@@ -100,115 +101,6 @@ function collectStages(day: Day): string[] {
 // ---------------------------------------------------------------------------
 // Sub-components
 // ---------------------------------------------------------------------------
-
-interface DayTabsProps {
-  days: { id: number; name: string }[]
-  selectedIndex: number
-  onSelect: (index: number) => void
-}
-
-function DayTabs({ days, selectedIndex, onSelect }: DayTabsProps) {
-  return (
-    <div className="day-tabs" role="tablist" aria-label="Conference days">
-      {days.map((day, i) => (
-        <button
-          key={day.id}
-          role="tab"
-          aria-selected={i === selectedIndex}
-          aria-controls={`day-panel-${i}`}
-          id={`day-tab-${i}`}
-          className={`day-tab${i === selectedIndex ? ' day-tab--active' : ''}`}
-          onClick={() => onSelect(i)}
-        >
-          {day.name}
-        </button>
-      ))}
-    </div>
-  )
-}
-
-interface FiltersProps {
-  tags: string[]
-  stages: string[]
-  selectedTag: string
-  selectedStage: string
-  hidePastEvents: boolean
-  onTagChange: (tag: string) => void
-  onStageChange: (stage: string) => void
-  onToggleHidePastEvents: () => void
-  hidePastEventsDisabled: boolean
-}
-
-function Filters({
-  tags,
-  stages,
-  selectedTag,
-  selectedStage,
-  hidePastEvents,
-  onTagChange,
-  onStageChange,
-  onToggleHidePastEvents,
-  hidePastEventsDisabled,
-}: FiltersProps) {
-  return (
-    <div className="session-filters" aria-label="Session filters">
-      <label className="filter-label" htmlFor="tag-filter">
-        Tag
-        <select
-          id="tag-filter"
-          className="filter-select"
-          value={selectedTag}
-          onChange={(e) => onTagChange(e.target.value)}
-        >
-          <option value="">All tags</option>
-          {tags.map((tag) => (
-            <option key={tag} value={tag}>
-              {tag}
-            </option>
-          ))}
-        </select>
-      </label>
-
-      <label className="filter-label" htmlFor="stage-filter">
-        Stage / Room
-        <select
-          id="stage-filter"
-          className="filter-select"
-          value={selectedStage}
-          onChange={(e) => onStageChange(e.target.value)}
-        >
-          <option value="">All stages</option>
-          {stages.map((stage) => (
-            <option key={stage} value={stage}>
-              {stage}
-            </option>
-          ))}
-        </select>
-      </label>
-
-      <label className="filter-label filter-label--toggle">
-        <input
-          type="checkbox"
-          className="filter-toggle"
-          checked={hidePastEvents}
-          onChange={onToggleHidePastEvents}
-          disabled={hidePastEventsDisabled}
-          aria-label="Hide past events"
-        />
-        Hide past events
-      </label>
-
-      {(selectedTag || selectedStage) && (
-        <button
-          className="filter-clear"
-          onClick={() => { onTagChange(''); onStageChange('') }}
-        >
-          Clear filters
-        </button>
-      )}
-    </div>
-  )
-}
 
 interface SessionCardProps {
   session: SessionInfo
