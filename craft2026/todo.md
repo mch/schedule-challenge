@@ -109,6 +109,18 @@
 
 - [ ] Stretch: full text search across speakers, sessions, etc
 
+- [ ] Improvement: Migrate navigation to wouter
+   - [ ] Add `wouter` dependency
+   - [ ] Write `AppRouter` integration tests (verify view rendering per URL)
+   - [ ] Create `RouterLayer` wrapper component with wouter `<Route>` declarations
+   - [ ] Replace `useSessionListParams`'s `view` dispatch with wouter view routing
+   - [ ] Replace `?session=` overlay with path-based `/session/:id` route
+   - [ ] Replace `?speaker=` overlay with path-based `/speaker/:slug` route
+   - [ ] Update nav buttons to use wouter `<Link>` / `useNavigate`
+   - [ ] Remove `useSessionDetailParam`, `useSpeakerParam` and `view` handling from `useSessionListParams`
+   - [ ] Verify all existing component tests still pass
+   - [ ] Verify e2e tests still pass
+
 - [x] Improvement: ensure the input box on ios doesn't allow the first character to be uppercase 
 - [x] Improvement: improve the styling of the intial new/recover account screen be consistent with the rest and mobile friendly (no zooming to the box)
 
