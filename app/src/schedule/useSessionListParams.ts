@@ -50,7 +50,7 @@ function readParams(search: string): SessionListParams {
           : 'schedule'
   return {
     view,
-    day: isNaN(day) || day < 0 ? 0 : day,
+    day: Number.isNaN(day) || day < 0 ? 0 : day,
     tag: sp.get('tag') ?? '',
     stage: sp.get('stage') ?? '',
     speakersSearch: sp.get('speakersSearch') ?? '',

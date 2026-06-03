@@ -312,7 +312,7 @@ describe('SessionListView', () => {
 
     it('sessions are sorted by start time', () => {
       renderViewWithResult()
-      const cards = screen.getAllByRole('button', { name: /view details for/i })
+      const cards = screen.getAllByRole('article', { name: /view details for/i })
       const times = cards.map(
         (c) => c.querySelector('.session-card__time')?.textContent ?? '',
       )

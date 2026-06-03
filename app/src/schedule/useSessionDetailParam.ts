@@ -19,7 +19,7 @@ function readSessionId(search: string): number | null {
   const raw = sp.get('session')
   if (!raw) return null
   const id = parseInt(raw, 10)
-  return isNaN(id) ? null : id
+  return Number.isNaN(id) ? null : id
 }
 
 export interface UseSessionDetailParamResult {

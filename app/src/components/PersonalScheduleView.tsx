@@ -217,8 +217,6 @@ function BookmarkedSessionCard({
       style={stageStyle}
       data-slot-id={session.slotId}
       onClick={() => onOpen(session.slotId)}
-      role="article"
-      tabIndex={0}
       aria-label={`View details for ${session.title}`}
       onKeyDown={handleKeyDown}
     >
