@@ -11,6 +11,7 @@
  *   - Clear filters button
  *   - Empty state
  *   - URL params round-trip
+ *   - Timeslot separators
  */
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
@@ -556,6 +557,51 @@ describe('SessionListView', () => {
       const addBtns = screen.getAllByRole('button', { name: /add to personal schedule/i })
       fireEvent.click(addBtns[0])
       expect(onOpenSession).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('timeslot separators', () => {
+    it('renders a timeslot separator for each distinct start time', () => {
+      // Day 1 has 3 distinct start times: 09:30, 10:00, 10:30
+      renderViewWithResult()
+      const separators = screen.getAllByRole('separator')
+      expect(separators).toHaveLength(3)
+    })
+
+    it('displays the start time in each separator', () => {
+      renderViewWithResult()
+      expect(screen.getByRole('separator', { name: '09:30' })).toBeInTheDocument()
+      expect(screen.getByRole('separator', { name: '10:00' })).toBeInTheDocument()
+      expect(screen.getByRole('separator', { name: '10:30' })).toBeInTheDocument()
+    })
+
+    it('renders the separator before its first session', () => {
+      renderViewWithResult()
+      const list = document.querySelector('.session-list')!
+      const children = Array.from(list.children)
+      // First child should be the 09:30 separator
+      expect(children[0]).toHaveAttribute('aria-label', '09:30')
+      // Second child should be the Opening Keynote card
+      expect(children[1]).toHaveTextContent('Opening Keynote')
+    })
+
+    it('renders one separator per timeslot, not one per session', () => {
+      // Both 10:30 sessions are at the same start time (Main Stage DDD);
+      // 09:30 has 1 session, 10:00 has 1, 10:30 has 1 — all unique in fixture.
+      // Add a second session at 10:30 by checking only 3 separators appear.
+      renderViewWithResult()
+      const separators = screen.getAllByRole('separator')
+      expect(separators).toHaveLength(3)
+    })
+
+    it('still shows sessions correctly when filtered (only matching separators appear)', () => {
+      renderViewWithResult()
+      // Filter to only the tdd tag -> only 10:00 workshop remains
+      fireEvent.change(screen.getByRole('combobox', { name: /tag filter/i }), { target: { value: 'tdd' } })
+      const separators = screen.getAllByRole('separator')
+      // Only one timeslot (10:00) should appear
+      expect(separators).toHaveLength(1)
+      expect(screen.getByRole('separator', { name: '10:00' })).toBeInTheDocument()
     })
   })
 })

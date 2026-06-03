@@ -298,9 +298,22 @@ export function SessionListView({ onOpenSession, handle = null, userDoc = null, 
         {filteredSessions.length === 0 ? (
           <p className="session-list-empty">No sessions match the current filters.</p>
         ) : (
-          filteredSessions.map((session) => {
+          filteredSessions.reduce<React.ReactNode[]>((nodes, session, idx) => {
             const isBookmarked = userDoc?.bookmarks.includes(session.slotId) ?? false
-            return (
+            const isNewSlot = idx === 0 || filteredSessions[idx - 1].startTime !== session.startTime
+            if (isNewSlot) {
+              nodes.push(
+                <div
+                  key={`timeslot-${session.startTime}`}
+                  role="separator"
+                  aria-label={session.startTime}
+                  className="timeslot-separator"
+                >
+                  <span className="timeslot-separator__time">{session.startTime}</span>
+                </div>
+              )
+            }
+            nodes.push(
               <SessionCard
                 key={session.slotId}
                 session={session}
@@ -320,7 +333,8 @@ export function SessionListView({ onOpenSession, handle = null, userDoc = null, 
                 }}
               />
             )
-          })
+            return nodes
+          }, [])
         )}
       </div>
     </div>

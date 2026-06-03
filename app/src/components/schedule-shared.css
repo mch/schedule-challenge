@@ -327,6 +327,41 @@
   color: #fff;
 }
 
+/* ---- Timeslot separator ---- */
+
+.timeslot-separator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 12px 6px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg);
+  border-bottom: 2px solid var(--accent);
+
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--accent-border);
+  }
+
+  @media (max-width: 600px) {
+    padding: 16px 8px 4px;
+  }
+}
+
+.timeslot-separator__time {
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.5px;
+  color: var(--accent);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
 /* ---- Tags ---- */
 
 .session-tag {

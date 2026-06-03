@@ -132,7 +132,7 @@
   - show connection status for the sync server (e.g. green circle if connection is good, red if the server is unreachable in any way)
   - if the public server is selected, show a warning that data is not encrypted and may not be long term durable
 - [ ] Improvement: Clicking the "Craft 2026" in the top left of any page should take you to the home page and reset the filters
-- [ ] Improvement: The timeslots on the schedule should have some differentiation and should pop a little more 
+- [x] Improvement: The timeslots on the schedule should have some differentiation and should pop a little more 
   - currently you have to keep an eye on the details within the session listings to see when the time changes 
   - the user need is that I want to be able to see when I get to a new timeslot when I've already picked the session I want for a slot and am scrolling to the next slot.
 - [x] Improvement: move the passphrase to a separate page available through a hamburger menu 

@@ -385,15 +385,31 @@ export function PersonalScheduleView({ userDoc, handle, onOpenSession, nowMs }: 
           </div>
         ) : (
           <div className="personal-schedule-sessions">
-            {filteredSessions.map((session) => (
-              <BookmarkedSessionCard
-                key={session.slotId}
-                session={session}
-                onOpen={onOpenSession}
-                onRemove={handleRemove}
-                removeDisabled={handle === null}
-              />
-            ))}
+            {filteredSessions.reduce<React.ReactNode[]>((nodes, session, idx) => {
+              const isNewSlot = idx === 0 || filteredSessions[idx - 1].startTime !== session.startTime
+              if (isNewSlot) {
+                nodes.push(
+                  <div
+                    key={`timeslot-${session.startTime}`}
+                    role="separator"
+                    aria-label={session.startTime}
+                    className="timeslot-separator"
+                  >
+                    <span className="timeslot-separator__time">{session.startTime}</span>
+                  </div>
+                )
+              }
+              nodes.push(
+                <BookmarkedSessionCard
+                  key={session.slotId}
+                  session={session}
+                  onOpen={onOpenSession}
+                  onRemove={handleRemove}
+                  removeDisabled={handle === null}
+                />
+              )
+              return nodes
+            }, [])}
           </div>
         )}
       </div>
