@@ -154,3 +154,6 @@
 - [x] Improvement: in the schedule item, the session time should be vertically aligned to the title
 
 - [x] Improvement: scroll positions need to be saved before navigating, and restored when navigation back
+
+- [x] Bug: I have to hit back twice to get back to the session list after clicking into a session.
+  - Fixed: `closeSession` and `closeSpeaker` now use `replaceState` instead of `pushState`, so closing a detail view no longer adds a spurious history entry.

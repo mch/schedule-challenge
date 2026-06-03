@@ -51,11 +51,10 @@ export function useSpeakerParam(): UseSpeakerParamResult {
   }, [])
 
   const closeSpeaker = useCallback(() => {
-    saveScrollToState()
     const sp = new URLSearchParams(window.location.search)
     sp.delete('speaker')
     const qs = sp.toString()
-    window.history.pushState(null, '', window.location.pathname + (qs ? `?${qs}` : ''))
+    window.history.replaceState(window.history.state ?? null, '', window.location.pathname + (qs ? `?${qs}` : ''))
     window.dispatchEvent(new Event(CHANGE_EVENT))
   }, [])
 

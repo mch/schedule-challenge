@@ -47,6 +47,21 @@ describe('useSessionDetailParam', () => {
     expect(sp.get('tag')).toBe('tdd')
   })
 
+  it('closeSession does not add a new history entry (uses replaceState)', () => {
+    window.history.replaceState(null, '', '/')
+    const lengthBefore = window.history.length
+    const { result } = renderHook(() => useSessionDetailParam())
+    act(() => {
+      result.current.openSession(101)  // pushState — length+1
+    })
+    const lengthAfterOpen = window.history.length
+    expect(lengthAfterOpen).toBe(lengthBefore + 1)
+    act(() => {
+      result.current.closeSession()  // should replaceState — length unchanged
+    })
+    expect(window.history.length).toBe(lengthAfterOpen)
+  })
+
   it('closeSession removes the session param', () => {
     window.history.replaceState(null, '', '/?session=101')
     const { result } = renderHook(() => useSessionDetailParam())

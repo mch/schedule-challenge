@@ -48,6 +48,21 @@ describe('useSpeakerParam', () => {
     expect(sp.get('session')).toBe('42')
   })
 
+  it('closeSpeaker does not add a new history entry (uses replaceState)', () => {
+    window.history.replaceState(null, '', '/')
+    const lengthBefore = window.history.length
+    const { result } = renderHook(() => useSpeakerParam())
+    act(() => {
+      result.current.openSpeaker('alice-smith')  // pushState — length+1
+    })
+    const lengthAfterOpen = window.history.length
+    expect(lengthAfterOpen).toBe(lengthBefore + 1)
+    act(() => {
+      result.current.closeSpeaker()  // should replaceState — length unchanged
+    })
+    expect(window.history.length).toBe(lengthAfterOpen)
+  })
+
   it('closeSpeaker removes the speaker param', () => {
     window.history.replaceState(null, '', '/?speaker=alice-smith')
     const { result } = renderHook(() => useSpeakerParam())
