@@ -10,7 +10,6 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
       manifest: {
         name: 'Craft 2026 Schedule',
         short_name: 'Craft 2026',
@@ -38,8 +37,12 @@ export default defineConfig({
         ],
       },
       workbox: {
-        // Cache schedule data alongside static assets
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,json}'],
+        // Cache schedule data and WASM module alongside static assets.
+        // maximumFileSizeToCacheInBytes raised to 4 MiB to cover automerge.wasm (~2.75 MiB).
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,json,wasm}'],
+        maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
+        navigateFallback: 'index.html',
+        navigateFallbackDenylist: [/^\/sw\.js$/, /^\/workbox-.*\.js$/],
       },
     }),
   ],
