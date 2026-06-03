@@ -1,4 +1,4 @@
-import type { AutomergeUrl } from '@automerge/automerge-repo'
+import type { AutomergeUrl, Repo } from '@automerge/automerge-repo'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -51,8 +51,7 @@ const fakeRepo = {
 
 function wrapper({ children }: { children: ReactNode }) {
   return (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    <RepoProvider repo={fakeRepo as any}>{children}</RepoProvider>
+    <RepoProvider repo={fakeRepo as unknown as Repo}>{children}</RepoProvider>
   )
 }
 
