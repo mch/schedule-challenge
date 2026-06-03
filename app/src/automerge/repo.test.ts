@@ -20,7 +20,12 @@ vi.mock('@automerge/automerge-repo', () => ({
   }),
 }))
 
-import { createRepo, SYNC_SERVER_URL } from './repo'
+import {
+  createRepo,
+  SYNC_SERVER_URL,
+  PUBLIC_SYNC_SERVER_URL,
+  HALFBAKERY_SYNC_SERVER_URL,
+} from './repo'
 import { Repo } from '@automerge/automerge-repo'
 import { IndexedDBStorageAdapter } from '@automerge/automerge-repo-storage-indexeddb'
 import { BrowserWebSocketClientAdapter } from '@automerge/automerge-repo-network-websocket'
@@ -31,9 +36,14 @@ describe('createRepo', () => {
   })
 
   it('returns a Repo instance', () => {
-    const repo = createRepo()
+    const { repo } = createRepo()
     expect(Repo).toHaveBeenCalledOnce()
     expect(repo).toBeDefined()
+  })
+
+  it('returns the network adapter', () => {
+    const { networkAdapter } = createRepo()
+    expect(networkAdapter).toBeDefined()
   })
 
   it('creates a Repo with IndexedDB storage', () => {
@@ -43,14 +53,32 @@ describe('createRepo', () => {
     expect(opts.storage).toBeDefined()
   })
 
-  it('creates a Repo with a WebSocket adapter pointing at the sync server', () => {
+  it('defaults to the public sync server when no URL is given', () => {
     createRepo()
-    expect(BrowserWebSocketClientAdapter).toHaveBeenCalledWith(SYNC_SERVER_URL)
+    expect(BrowserWebSocketClientAdapter).toHaveBeenCalledWith(PUBLIC_SYNC_SERVER_URL)
     const opts = (Repo as unknown as ReturnType<typeof vi.fn>).mock.calls[0][0]
     expect(opts.network).toHaveLength(1)
   })
 
-  it('SYNC_SERVER_URL points at the correct host', () => {
+  it('uses a custom URL when one is provided', () => {
+    createRepo('wss://custom.example.com')
+    expect(BrowserWebSocketClientAdapter).toHaveBeenCalledWith('wss://custom.example.com')
+  })
+
+  it('uses the halfbakery server when that constant is passed', () => {
+    createRepo(HALFBAKERY_SYNC_SERVER_URL)
+    expect(BrowserWebSocketClientAdapter).toHaveBeenCalledWith(HALFBAKERY_SYNC_SERVER_URL)
+  })
+
+  it('PUBLIC_SYNC_SERVER_URL points at the public Automerge server', () => {
+    expect(PUBLIC_SYNC_SERVER_URL).toBe('wss://sync.automerge.org')
+  })
+
+  it('HALFBAKERY_SYNC_SERVER_URL points at the halfbakery server', () => {
+    expect(HALFBAKERY_SYNC_SERVER_URL).toBe('wss://sync.home.halfbakery.xyz')
+  })
+
+  it('SYNC_SERVER_URL (deprecated) still resolves to the halfbakery server', () => {
     expect(SYNC_SERVER_URL).toBe('wss://sync.home.halfbakery.xyz')
   })
 })

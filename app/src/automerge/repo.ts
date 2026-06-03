@@ -1,9 +1,10 @@
 /**
  * Creates and returns a singleton Automerge Repo wired up with:
  *   - IndexedDB storage (offline persistence)
- *   - WebSocket sync to sync.home.halfbakery.xyz
+ *   - WebSocket sync to a configurable sync server
  *
- * Call `createRepo()` once at app start (after the Wasm module is ready).
+ * Call `createRepo(url)` once at app start (after the Wasm module is ready).
+ * If no URL is provided the public Automerge sync server is used.
  *
  * ### Database naming
  * We use "craft2026" as the IndexedDB database name (rather than the default
@@ -18,14 +19,37 @@ import { Repo } from '@automerge/automerge-repo'
 import { IndexedDBStorageAdapter } from '@automerge/automerge-repo-storage-indexeddb'
 import { BrowserWebSocketClientAdapter } from '@automerge/automerge-repo-network-websocket'
 
-export const SYNC_SERVER_URL = 'wss://sync.home.halfbakery.xyz'
+/** The public Automerge sync server — free to use but data is not encrypted. */
+export const PUBLIC_SYNC_SERVER_URL = 'wss://sync.automerge.org'
+
+/** The private halfbakery sync server. */
+export const HALFBAKERY_SYNC_SERVER_URL = 'wss://sync.home.halfbakery.xyz'
+
+/**
+ * @deprecated Use PUBLIC_SYNC_SERVER_URL or HALFBAKERY_SYNC_SERVER_URL instead.
+ * Kept for backwards compatibility with existing tests.
+ */
+export const SYNC_SERVER_URL = HALFBAKERY_SYNC_SERVER_URL
 
 /** IndexedDB database name — distinct from the library default to avoid stale schema issues. */
 export const IDB_DATABASE_NAME = 'craft2026'
 
-export function createRepo(): Repo {
-  return new Repo({
+export interface RepoWithAdapter {
+  repo: Repo
+  /** The WebSocket network adapter wired to the repo (can be queried for connection status). */
+  networkAdapter: BrowserWebSocketClientAdapter
+}
+
+/**
+ * Creates a Repo using the given sync server URL.
+ * Defaults to the public Automerge sync server if no URL is supplied.
+ * Returns both the Repo and the network adapter so callers can observe connection status.
+ */
+export function createRepo(syncServerUrl: string = PUBLIC_SYNC_SERVER_URL): RepoWithAdapter {
+  const networkAdapter = new BrowserWebSocketClientAdapter(syncServerUrl)
+  const repo = new Repo({
     storage: new IndexedDBStorageAdapter(IDB_DATABASE_NAME),
-    network: [new BrowserWebSocketClientAdapter(SYNC_SERVER_URL)],
+    network: [networkAdapter],
   })
+  return { repo, networkAdapter }
 }

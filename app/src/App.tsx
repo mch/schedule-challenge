@@ -12,11 +12,26 @@ import { useSessionDetailParam } from './schedule/useSessionDetailParam'
 import { useSpeakerParam } from './schedule/useSpeakerParam'
 import { useSessionListParams } from './schedule/useSessionListParams'
 import { OfflineBanner } from './pwa/OfflineBanner'
+import { saveSyncServerUrl } from './automerge/syncServerStorage'
+import type { NetworkAdapterLike } from './components/SyncServerSettings'
 import './App.css'
 
-function App() {
+interface AppProps {
+  initialSyncServerUrl: string
+  initialNetworkAdapter: NetworkAdapterLike
+}
+
+function App({ initialSyncServerUrl, initialNetworkAdapter }: AppProps) {
   const { identity, confirm, generateNew } = useIdentity()
   const [settingsOpen, setSettingsOpen] = useState(false)
+  const [syncServerUrl, setSyncServerUrl] = useState(initialSyncServerUrl)
+
+  function handleSyncServerUrlChange(url: string) {
+    saveSyncServerUrl(url)
+    setSyncServerUrl(url)
+    // Reload the page so a fresh Repo is created with the new URL.
+    window.location.reload()
+  }
   const { params, setView } = useSessionListParams()
   const view = params.view
 
@@ -93,6 +108,9 @@ function App() {
         <SettingsView
           passphrase={identity.passphrase}
           onClose={() => setSettingsOpen(false)}
+          syncServerUrl={syncServerUrl}
+          onSyncServerUrlChange={handleSyncServerUrlChange}
+          networkAdapter={initialNetworkAdapter}
         />
       ) : speakerSlug !== null ? (
         <SpeakerDetailView

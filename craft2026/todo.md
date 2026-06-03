@@ -126,11 +126,12 @@
 - [x] Improvement: Colours to match the official site, but shifted in some way to make it clear this is not official
 - [x] Improvement: Favicon and pwa icons to match official site better, but also shifted in some way to make it clear this is not official
 - [ ] Improvement: Make it possible to filter by session type (talk vs workshop)
-- [ ] Improvement: Make the sync server configurable
+- [x] Improvement: Make the sync server configurable
   - allow selecting between my internal one and the public example one (wss://sync.automerge.org)
   - allow the user to input their own sync server url 
   - show connection status for the sync server (e.g. green circle if connection is good, red if the server is unreachable in any way)
   - if the public server is selected, show a warning that data is not encrypted and may not be long term durable
+  - make the public one the default
 - [ ] Improvement: Clicking the "Craft 2026" in the top left of any page should take you to the home page and reset the filters
 - [x] Improvement: The timeslots on the schedule should have some differentiation and should pop a little more 
   - currently you have to keep an eye on the details within the session listings to see when the time changes 

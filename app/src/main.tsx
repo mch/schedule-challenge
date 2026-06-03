@@ -2,7 +2,8 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
-import { createRepo } from './automerge/repo'
+import { createRepo, PUBLIC_SYNC_SERVER_URL } from './automerge/repo'
+import { loadSyncServerUrl } from './automerge/syncServerStorage'
 import { RepoProvider } from './automerge/RepoContext'
 import { ScheduleProvider } from './schedule/ScheduleContext'
 
@@ -17,13 +18,17 @@ import { registerSW } from 'virtual:pwa-register'
 registerSW({ immediate: true })
 
 Automerge.initializeWasm(wasmUrl).then(() => {
-  const repo = createRepo()
+  const initialSyncUrl = loadSyncServerUrl() ?? PUBLIC_SYNC_SERVER_URL
+  const { repo, networkAdapter } = createRepo(initialSyncUrl)
 
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
       <RepoProvider repo={repo}>
         <ScheduleProvider>
-          <App />
+          <App
+            initialSyncServerUrl={initialSyncUrl}
+            initialNetworkAdapter={networkAdapter}
+          />
         </ScheduleProvider>
       </RepoProvider>
     </StrictMode>,
