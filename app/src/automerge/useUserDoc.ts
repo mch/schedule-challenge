@@ -43,15 +43,14 @@ export function useUserDoc(docId: AutomergeUrl | null): UseUserDocResult {
   useEffect(() => {
     if (!docId) return
 
+    const resolvedDocId = docId
     let cancelled = false
 
     async function init() {
       // `repo.find()` resolves to a ready handle, or rejects if unavailable
       // (the default `allowableStates` is ['ready']).
       // Ask for both so we can bootstrap the doc ourselves if needed.
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const handle = (await (repo as any).find(docId, {
+      const handle = (await repo.find(resolvedDocId, {
         allowableStates: ['ready', 'unavailable'],
       })) as DocHandle<UserDocument>
 
@@ -61,7 +60,7 @@ export function useUserDoc(docId: AutomergeUrl | null): UseUserDocResult {
         // Doc has never been written anywhere. Bootstrap it at the
         // deterministic docId using repo.import(), which transitions the
         // handle to 'ready' via the internal update/doneLoading path.
-        const { documentId } = parseAutomergeUrl(docId!)
+        const { documentId } = parseAutomergeUrl(resolvedDocId)
         const emptyDoc = A.change(A.init() as A.Doc<UserDocument>, (d) => {
           ;(d as UserDocument).bookmarks = DEFAULT_USER_DOCUMENT.bookmarks
           ;(d as UserDocument).hidePastEvents =
