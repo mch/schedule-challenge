@@ -1,7 +1,7 @@
-import { describe, it, expect, beforeEach } from 'vitest'
-import { renderHook, act, waitFor } from '@testing-library/react'
-import { useIdentity } from './useIdentity'
+import { act, renderHook, waitFor } from '@testing-library/react'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { clearPassphrase, savePassphrase } from './storage'
+import { useIdentity } from './useIdentity'
 
 beforeEach(() => {
   localStorage.clear()
@@ -41,7 +41,9 @@ describe('useIdentity', () => {
       expect(result.current.identity.docId).toMatch(/^automerge:/)
     }
     // Also persisted to storage
-    expect(localStorage.getItem('craft2026:passphrase')).toBe('area-army-atom-aunt')
+    expect(localStorage.getItem('craft2026:passphrase')).toBe(
+      'area-army-atom-aunt',
+    )
   })
 
   it('confirm() trims whitespace from passphrase', async () => {
@@ -60,15 +62,21 @@ describe('useIdentity', () => {
   it('confirm() with same passphrase produces same docId', async () => {
     const { result: r1 } = renderHook(() => useIdentity())
     await waitFor(() => expect(r1.current.identity.status).toBe('new'))
-    await act(async () => { await r1.current.confirm('bark-barn-base-bath') })
+    await act(async () => {
+      await r1.current.confirm('bark-barn-base-bath')
+    })
 
     clearPassphrase()
     const { result: r2 } = renderHook(() => useIdentity())
     await waitFor(() => expect(r2.current.identity.status).toBe('new'))
-    await act(async () => { await r2.current.confirm('bark-barn-base-bath') })
+    await act(async () => {
+      await r2.current.confirm('bark-barn-base-bath')
+    })
 
-    const docId1 = r1.current.identity.status === 'ready' ? r1.current.identity.docId : null
-    const docId2 = r2.current.identity.status === 'ready' ? r2.current.identity.docId : null
+    const docId1 =
+      r1.current.identity.status === 'ready' ? r1.current.identity.docId : null
+    const docId2 =
+      r2.current.identity.status === 'ready' ? r2.current.identity.docId : null
     expect(docId1).toBe(docId2)
   })
 

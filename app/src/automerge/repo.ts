@@ -16,8 +16,8 @@
  * correct schema.
  */
 import { Repo } from '@automerge/automerge-repo'
-import { IndexedDBStorageAdapter } from '@automerge/automerge-repo-storage-indexeddb'
 import { BrowserWebSocketClientAdapter } from '@automerge/automerge-repo-network-websocket'
+import { IndexedDBStorageAdapter } from '@automerge/automerge-repo-storage-indexeddb'
 
 /** The public Automerge sync server — free to use but data is not encrypted. */
 export const PUBLIC_SYNC_SERVER_URL = 'wss://sync.automerge.org'
@@ -45,7 +45,9 @@ export interface RepoWithAdapter {
  * Defaults to the public Automerge sync server if no URL is supplied.
  * Returns both the Repo and the network adapter so callers can observe connection status.
  */
-export function createRepo(syncServerUrl: string = PUBLIC_SYNC_SERVER_URL): RepoWithAdapter {
+export function createRepo(
+  syncServerUrl: string = PUBLIC_SYNC_SERVER_URL,
+): RepoWithAdapter {
   const networkAdapter = new BrowserWebSocketClientAdapter(syncServerUrl)
   const repo = new Repo({
     storage: new IndexedDBStorageAdapter(IDB_DATABASE_NAME),

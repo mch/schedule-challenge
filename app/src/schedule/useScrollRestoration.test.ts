@@ -8,8 +8,8 @@
  * - Scroll to top when a popstate event fires and the new state has no saved scroll
  */
 
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
-import { renderHook, act } from '@testing-library/react'
+import { act, renderHook } from '@testing-library/react'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { useScrollRestoration } from './useScrollRestoration'
 
 const scrollToSpy = vi.spyOn(window, 'scrollTo')
@@ -18,7 +18,11 @@ beforeEach(() => {
   window.history.replaceState(null, '', '/')
   scrollToSpy.mockClear()
   // Simulate scrollY being 0 initially
-  Object.defineProperty(window, 'scrollY', { value: 0, configurable: true, writable: true })
+  Object.defineProperty(window, 'scrollY', {
+    value: 0,
+    configurable: true,
+    writable: true,
+  })
 })
 
 afterEach(() => {
@@ -50,7 +54,9 @@ describe('useScrollRestoration', () => {
 
     act(() => {
       window.history.pushState({ scrollY: 500 }, '', '/?session=1')
-      window.dispatchEvent(new PopStateEvent('popstate', { state: { scrollY: 500 } }))
+      window.dispatchEvent(
+        new PopStateEvent('popstate', { state: { scrollY: 500 } }),
+      )
     })
     expect(scrollToSpy).toHaveBeenCalledWith({ top: 500, behavior: 'instant' })
   })
@@ -70,7 +76,11 @@ describe('useScrollRestoration', () => {
 describe('saveScrollToState', () => {
   it('saves current scrollY into history.state via replaceState', async () => {
     const { saveScrollToState } = await import('./useScrollRestoration')
-    Object.defineProperty(window, 'scrollY', { value: 250, configurable: true, writable: true })
+    Object.defineProperty(window, 'scrollY', {
+      value: 250,
+      configurable: true,
+      writable: true,
+    })
 
     saveScrollToState()
 
@@ -80,10 +90,17 @@ describe('saveScrollToState', () => {
   it('preserves other state properties when saving scroll', async () => {
     const { saveScrollToState } = await import('./useScrollRestoration')
     window.history.replaceState({ someOtherKey: 'preserved' }, '', '/')
-    Object.defineProperty(window, 'scrollY', { value: 100, configurable: true, writable: true })
+    Object.defineProperty(window, 'scrollY', {
+      value: 100,
+      configurable: true,
+      writable: true,
+    })
 
     saveScrollToState()
 
-    expect(window.history.state).toMatchObject({ someOtherKey: 'preserved', scrollY: 100 })
+    expect(window.history.state).toMatchObject({
+      someOtherKey: 'preserved',
+      scrollY: 100,
+    })
   })
 })

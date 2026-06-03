@@ -1,5 +1,8 @@
-import { useState, useEffect, useRef } from 'react'
-import { PUBLIC_SYNC_SERVER_URL, HALFBAKERY_SYNC_SERVER_URL } from '../automerge/repo'
+import { useEffect, useRef, useState } from 'react'
+import {
+  HALFBAKERY_SYNC_SERVER_URL,
+  PUBLIC_SYNC_SERVER_URL,
+} from '../automerge/repo'
 import './SyncServerSettings.css'
 
 type Preset = 'public' | 'halfbakery' | 'custom'

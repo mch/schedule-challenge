@@ -1,10 +1,10 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import type { AutomergeUrl } from '@automerge/automerge-repo'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import type { ReactNode } from 'react'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import type { UserDocument } from '../types/user-document'
 import { RepoProvider } from './RepoContext'
 import { useUserDoc } from './useUserDoc'
-import type { AutomergeUrl } from '@automerge/automerge-repo'
-import type { UserDocument } from '../types/user-document'
 
 // ---------------------------------------------------------------------------
 // Helpers to build a fake DocHandle matching the current automerge-repo API:
@@ -73,7 +73,10 @@ describe('useUserDoc', () => {
   })
 
   it('returns the doc when find resolves with a ready handle', async () => {
-    const existingDoc: UserDocument = { bookmarks: [1, 2, 3], hidePastEvents: false }
+    const existingDoc: UserDocument = {
+      bookmarks: [1, 2, 3],
+      hidePastEvents: false,
+    }
     fakeReadyHandle = makeFakeHandle(existingDoc)
     fakeRepo.find.mockResolvedValue(fakeReadyHandle)
 
@@ -85,7 +88,10 @@ describe('useUserDoc', () => {
 
   it('bootstraps a brand-new doc via repo.import() when handle is unavailable', async () => {
     const unavailableHandle = makeFakeHandle(undefined)
-    const bootstrappedDoc: UserDocument = { bookmarks: [], hidePastEvents: false }
+    const bootstrappedDoc: UserDocument = {
+      bookmarks: [],
+      hidePastEvents: false,
+    }
     const bootstrappedHandle = makeFakeHandle(bootstrappedDoc)
 
     // First find() returns unavailable; second returns the bootstrapped handle
@@ -134,9 +140,15 @@ describe('useUserDoc', () => {
     fakeReadyHandle = makeFakeHandle(existingDoc)
 
     let resolveFn!: (h: typeof fakeReadyHandle) => void
-    fakeRepo.find.mockReturnValue(new Promise<typeof fakeReadyHandle>((r) => { resolveFn = r }))
+    fakeRepo.find.mockReturnValue(
+      new Promise<typeof fakeReadyHandle>((r) => {
+        resolveFn = r
+      }),
+    )
 
-    const { result, unmount } = renderHook(() => useUserDoc(FAKE_DOC_URL), { wrapper })
+    const { result, unmount } = renderHook(() => useUserDoc(FAKE_DOC_URL), {
+      wrapper,
+    })
     expect(result.current.doc).toBeNull()
 
     unmount()

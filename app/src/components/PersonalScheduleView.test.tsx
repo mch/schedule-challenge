@@ -17,21 +17,27 @@
  *   - Filtered session count shown
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
-import { PersonalScheduleView } from './PersonalScheduleView'
-import { ScheduleContext } from '../schedule/ScheduleContext'
-import type { Schedule } from '../types/schedule'
-import type { UseScheduleResult } from '../schedule/useSchedule'
-import type { UserDocument } from '../types/user-document'
 import type { DocHandle } from '@automerge/automerge-repo'
+import { fireEvent, render, screen } from '@testing-library/react'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { ScheduleContext } from '../schedule/ScheduleContext'
+import type { UseScheduleResult } from '../schedule/useSchedule'
+import type { Schedule } from '../types/schedule'
+import type { UserDocument } from '../types/user-document'
+import { PersonalScheduleView } from './PersonalScheduleView'
 
 // ---------------------------------------------------------------------------
 // Fixture schedule — 2 days
 // ---------------------------------------------------------------------------
 
 const FIXTURE_SCHEDULE: Schedule = {
-  conference: { id: 'craft', name: 'Craft', year: 2026, date: 'June 4-5', location: 'Budapest' },
+  conference: {
+    id: 'craft',
+    name: 'Craft',
+    year: 2026,
+    date: 'June 4-5',
+    location: 'Budapest',
+  },
   days: [
     {
       id: 1,
@@ -136,7 +142,9 @@ const FIXTURE_SCHEDULE: Schedule = {
 // Helpers
 // ---------------------------------------------------------------------------
 
-function makeScheduleResult(overrides?: Partial<UseScheduleResult>): UseScheduleResult {
+function makeScheduleResult(
+  overrides?: Partial<UseScheduleResult>,
+): UseScheduleResult {
   return {
     schedule: FIXTURE_SCHEDULE,
     loading: false,
@@ -203,7 +211,9 @@ afterEach(() => {
 describe('PersonalScheduleView', () => {
   describe('loading / error states', () => {
     it('shows loading message while schedule is loading', () => {
-      renderView({ scheduleResult: { schedule: null, loading: true, error: null } })
+      renderView({
+        scheduleResult: { schedule: null, loading: true, error: null },
+      })
       expect(screen.getByText(/loading/i)).toBeInTheDocument()
     })
 
@@ -352,12 +362,16 @@ describe('PersonalScheduleView', () => {
   describe('filter controls', () => {
     it('renders a tag filter dropdown', () => {
       renderView({ bookmarks: [101] })
-      expect(screen.getByRole('combobox', { name: /tag filter/i })).toBeInTheDocument()
+      expect(
+        screen.getByRole('combobox', { name: /tag filter/i }),
+      ).toBeInTheDocument()
     })
 
     it('renders a stage filter dropdown', () => {
       renderView({ bookmarks: [101] })
-      expect(screen.getByRole('combobox', { name: /stage filter/i })).toBeInTheDocument()
+      expect(
+        screen.getByRole('combobox', { name: /stage filter/i }),
+      ).toBeInTheDocument()
     })
 
     it('tag dropdown lists tags from bookmarked sessions on the current day only', () => {
@@ -386,7 +400,9 @@ describe('PersonalScheduleView', () => {
 
     it('filters sessions by selected stage', () => {
       renderView({ bookmarks: [101, 103] })
-      const stageSelect = screen.getByRole('combobox', { name: /stage filter/i })
+      const stageSelect = screen.getByRole('combobox', {
+        name: /stage filter/i,
+      })
       fireEvent.change(stageSelect, { target: { value: 'Workshop Room' } })
       expect(screen.getByText('TDD Workshop')).toBeInTheDocument()
       expect(screen.queryByText('Opening Keynote')).not.toBeInTheDocument()
@@ -401,7 +417,9 @@ describe('PersonalScheduleView', () => {
 
     it('reflects stage filter in URL as ?stage= param', () => {
       renderView({ bookmarks: [101, 103] })
-      const stageSelect = screen.getByRole('combobox', { name: /stage filter/i })
+      const stageSelect = screen.getByRole('combobox', {
+        name: /stage filter/i,
+      })
       fireEvent.change(stageSelect, { target: { value: 'Main Stage' } })
       expect(window.location.search).toContain('stage=Main+Stage')
     })
@@ -410,21 +428,29 @@ describe('PersonalScheduleView', () => {
       renderView({ bookmarks: [101, 102] })
       const tagSelect = screen.getByRole('combobox', { name: /tag filter/i })
       fireEvent.change(tagSelect, { target: { value: 'DDD' } })
-      expect(screen.getByRole('button', { name: /clear filters/i })).toBeInTheDocument()
+      expect(
+        screen.getByRole('button', { name: /clear filters/i }),
+      ).toBeInTheDocument()
     })
 
     it('does not show "Clear filters" button when no filter is active', () => {
       renderView({ bookmarks: [101, 102] })
-      expect(screen.queryByRole('button', { name: /clear filters/i })).not.toBeInTheDocument()
+      expect(
+        screen.queryByRole('button', { name: /clear filters/i }),
+      ).not.toBeInTheDocument()
     })
 
     it('clear filters button resets both filters', () => {
       renderView({ bookmarks: [101, 102] })
-      fireEvent.change(screen.getByRole('combobox', { name: /tag filter/i }), { target: { value: 'DDD' } })
+      fireEvent.change(screen.getByRole('combobox', { name: /tag filter/i }), {
+        target: { value: 'DDD' },
+      })
       fireEvent.click(screen.getByRole('button', { name: /clear filters/i }))
       expect(screen.getByText('Opening Keynote')).toBeInTheDocument()
       expect(screen.getByText('Domain-Driven Design')).toBeInTheDocument()
-      expect(screen.queryByRole('button', { name: /clear filters/i })).not.toBeInTheDocument()
+      expect(
+        screen.queryByRole('button', { name: /clear filters/i }),
+      ).not.toBeInTheDocument()
     })
 
     it('shows session count', () => {
@@ -435,7 +461,9 @@ describe('PersonalScheduleView', () => {
 
     it('shows filtered session count when filter is active', () => {
       renderView({ bookmarks: [101, 102] })
-      fireEvent.change(screen.getByRole('combobox', { name: /tag filter/i }), { target: { value: 'DDD' } })
+      fireEvent.change(screen.getByRole('combobox', { name: /tag filter/i }), {
+        target: { value: 'DDD' },
+      })
       expect(screen.getByText(/1 session/i)).toBeInTheDocument()
       expect(screen.getByText(/filtered/i)).toBeInTheDocument()
     })
@@ -451,14 +479,18 @@ describe('PersonalScheduleView', () => {
 
     it('is disabled when no handle is provided', () => {
       renderView({ bookmarks: [101], handle: null })
-      const btn = screen.getByRole('button', { name: /remove from personal schedule/i })
+      const btn = screen.getByRole('button', {
+        name: /remove from personal schedule/i,
+      })
       expect(btn).toBeDisabled()
     })
 
     it('calls handle.change to remove the bookmark when clicked', () => {
       const { handle, doc } = makeFakeHandle([101, 102])
       renderView({ handle, userDoc: doc })
-      const removeButtons = screen.getAllByRole('button', { name: /remove from personal schedule/i })
+      const removeButtons = screen.getAllByRole('button', {
+        name: /remove from personal schedule/i,
+      })
       fireEvent.click(removeButtons[0])
       expect(handle.change).toHaveBeenCalledOnce()
     })
@@ -467,7 +499,9 @@ describe('PersonalScheduleView', () => {
       const { handle, doc } = makeFakeHandle([101])
       const onOpenSession = vi.fn()
       renderView({ handle, userDoc: doc, onOpenSession })
-      const btn = screen.getByRole('button', { name: /remove from personal schedule/i })
+      const btn = screen.getByRole('button', {
+        name: /remove from personal schedule/i,
+      })
       fireEvent.click(btn)
       expect(onOpenSession).not.toHaveBeenCalled()
     })

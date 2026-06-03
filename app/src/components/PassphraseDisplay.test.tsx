@@ -1,6 +1,6 @@
-import { describe, it, expect, vi } from 'vitest'
-import { render, screen, fireEvent, act } from '@testing-library/react'
+import { act, fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { describe, expect, it, vi } from 'vitest'
 import { PassphraseDisplay } from './PassphraseDisplay'
 
 const PASSPHRASE = 'able-acid-aged-also'
@@ -8,7 +8,9 @@ const PASSPHRASE = 'able-acid-aged-also'
 describe('PassphraseDisplay', () => {
   it('renders a reveal button', () => {
     render(<PassphraseDisplay passphrase={PASSPHRASE} />)
-    expect(screen.getByRole('button', { name: /reveal passphrase/i })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: /reveal passphrase/i }),
+    ).toBeInTheDocument()
   })
 
   it('passphrase is blurred by default', () => {
@@ -19,7 +21,9 @@ describe('PassphraseDisplay', () => {
 
   it('copy button is disabled when passphrase is hidden', () => {
     render(<PassphraseDisplay passphrase={PASSPHRASE} />)
-    expect(screen.getByRole('button', { name: /copy passphrase/i })).toBeDisabled()
+    expect(
+      screen.getByRole('button', { name: /copy passphrase/i }),
+    ).toBeDisabled()
   })
 
   it('clicking reveal shows the passphrase', async () => {
@@ -34,7 +38,9 @@ describe('PassphraseDisplay', () => {
     const user = userEvent.setup()
     render(<PassphraseDisplay passphrase={PASSPHRASE} />)
     await user.click(screen.getByRole('button', { name: /reveal passphrase/i }))
-    expect(screen.getByRole('button', { name: /copy passphrase/i })).not.toBeDisabled()
+    expect(
+      screen.getByRole('button', { name: /copy passphrase/i }),
+    ).not.toBeDisabled()
   })
 
   it('clicking reveal then hide re-blurs the passphrase', async () => {

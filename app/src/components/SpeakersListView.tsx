@@ -10,8 +10,8 @@
 
 import { useMemo } from 'react'
 import { useScheduleContext } from '../schedule/ScheduleContext'
-import { useSessionListParams } from '../schedule/useSessionListParams'
 import { useScrollRestoration } from '../schedule/useScrollRestoration'
+import { useSessionListParams } from '../schedule/useSessionListParams'
 import type { Schedule, Speaker } from '../types/schedule'
 import './SpeakersListView.css'
 
@@ -66,7 +66,10 @@ function SpeakerCard({ speaker, onOpen }: SpeakerCardProps) {
         aria-label={`View ${speaker.name}'s sessions`}
       >
         <span className="speaker-list-card__name">{speaker.name}</span>
-        <span className="speaker-list-card__count" aria-label={`${speaker.sessionCount} session${speaker.sessionCount !== 1 ? 's' : ''}`}>
+        <span
+          className="speaker-list-card__count"
+          aria-label={`${speaker.sessionCount} session${speaker.sessionCount !== 1 ? 's' : ''}`}
+        >
           {speaker.sessionCount} session{speaker.sessionCount !== 1 ? 's' : ''}
         </span>
       </button>

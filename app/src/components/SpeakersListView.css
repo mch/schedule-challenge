@@ -78,7 +78,9 @@
   border: 1px solid var(--border);
   border-radius: 8px;
   outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
 
   &::placeholder {
     color: var(--text);

@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { renderHook, waitFor } from '@testing-library/react'
-import { useSchedule } from './useSchedule'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Schedule } from '../types/schedule'
+import { useSchedule } from './useSchedule'
 
 // Minimal valid schedule fixture used across tests
 const MOCK_SCHEDULE: Schedule = {
@@ -82,7 +82,9 @@ describe('useSchedule', () => {
     expect(result.current.schedule).not.toBeNull()
     expect(result.current.schedule?.conference.name).toBe('Craft')
     expect(result.current.schedule?.days).toHaveLength(1)
-    expect(result.current.schedule?.days[0].stages[0].slots[0].talk?.title).toBe('Example Talk')
+    expect(
+      result.current.schedule?.days[0].stages[0].slots[0].talk?.title,
+    ).toBe('Example Talk')
   })
 
   it('returns an error when the server responds with a non-ok status', async () => {
@@ -114,21 +116,34 @@ describe('useSchedule', () => {
   })
 
   it('re-fetches when the url changes', async () => {
-    const schedule2 = { ...MOCK_SCHEDULE, conference: { ...MOCK_SCHEDULE.conference, year: 2027 } }
+    const schedule2 = {
+      ...MOCK_SCHEDULE,
+      conference: { ...MOCK_SCHEDULE.conference, year: 2027 },
+    }
 
     vi.mocked(fetch)
-      .mockResolvedValueOnce({ ok: true, json: async () => MOCK_SCHEDULE } as Response)
-      .mockResolvedValueOnce({ ok: true, json: async () => schedule2 } as Response)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => MOCK_SCHEDULE,
+      } as Response)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => schedule2,
+      } as Response)
 
     const { result, rerender } = renderHook(({ url }) => useSchedule(url), {
       initialProps: { url: '/schedule.json' },
     })
 
-    await waitFor(() => expect(result.current.schedule?.conference.year).toBe(2026))
+    await waitFor(() =>
+      expect(result.current.schedule?.conference.year).toBe(2026),
+    )
 
     rerender({ url: '/schedule-v2.json' })
 
-    await waitFor(() => expect(result.current.schedule?.conference.year).toBe(2027))
+    await waitFor(() =>
+      expect(result.current.schedule?.conference.year).toBe(2027),
+    )
     expect(fetch).toHaveBeenCalledTimes(2)
   })
 

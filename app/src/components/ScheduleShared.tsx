@@ -17,7 +17,12 @@ export interface DayTabsProps {
   idPrefix?: string
 }
 
-export function DayTabs({ days, selectedIndex, onSelect, idPrefix = 'day' }: DayTabsProps) {
+export function DayTabs({
+  days,
+  selectedIndex,
+  onSelect,
+  idPrefix = 'day',
+}: DayTabsProps) {
   return (
     <div className="day-tabs" role="tablist" aria-label="Conference days">
       {days.map((day, i) => (
@@ -123,7 +128,10 @@ export function Filters({
       {(selectedTag || selectedStage) && (
         <button
           className="filter-clear"
-          onClick={() => { onTagChange(''); onStageChange('') }}
+          onClick={() => {
+            onTagChange('')
+            onStageChange('')
+          }}
         >
           Clear filters
         </button>

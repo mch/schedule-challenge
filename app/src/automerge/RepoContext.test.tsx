@@ -1,7 +1,7 @@
-import { describe, it, expect, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
-import { RepoProvider, useRepo } from './RepoContext'
 import type { Repo } from '@automerge/automerge-repo'
+import { render, screen } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
+import { RepoProvider, useRepo } from './RepoContext'
 
 // A minimal fake Repo for testing.
 const fakeRepo = { id: 'fake-repo' } as unknown as Repo
@@ -24,7 +24,9 @@ describe('RepoProvider / useRepo', () => {
   it('throws when useRepo is called outside a provider', () => {
     // Suppress the React error boundary noise in test output.
     const spy = vi.spyOn(console, 'error').mockImplementation(() => {})
-    expect(() => render(<Inspector />)).toThrow('useRepo must be used within a <RepoProvider>')
+    expect(() => render(<Inspector />)).toThrow(
+      'useRepo must be used within a <RepoProvider>',
+    )
     spy.mockRestore()
   })
 })

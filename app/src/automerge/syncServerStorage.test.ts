@@ -1,8 +1,8 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import {
+  clearSyncServerUrl,
   loadSyncServerUrl,
   saveSyncServerUrl,
-  clearSyncServerUrl,
 } from './syncServerStorage'
 
 describe('syncServerStorage', () => {

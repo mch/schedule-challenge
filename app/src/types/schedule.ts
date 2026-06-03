@@ -28,7 +28,7 @@ export interface GlobalSlot {
   title: string
   description?: string | null
   start_time: string // HH:MM
-  end_time: string   // HH:MM
+  end_time: string // HH:MM
 }
 
 export interface Stage {
@@ -45,7 +45,7 @@ export interface Slot {
   type: SlotType
   topic?: string | null
   start_time: string // HH:MM
-  end_time: string   // HH:MM
+  end_time: string // HH:MM
   title?: string | null // only for type=text
   description?: string | null
   talk?: Talk | null

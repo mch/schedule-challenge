@@ -23,8 +23,8 @@
 import type { DocHandle } from '@automerge/automerge-repo'
 import { useScheduleContext } from '../schedule/ScheduleContext'
 import { useScrollRestoration } from '../schedule/useScrollRestoration'
-import type { UserDocument } from '../types/user-document'
 import type { Day, Slot, Stage } from '../types/schedule'
+import type { UserDocument } from '../types/user-document'
 import './SessionDetailView.css'
 
 // ---------------------------------------------------------------------------
@@ -37,7 +37,10 @@ interface FoundSlot {
   day: Day
 }
 
-function findSlot(schedule: ReturnType<typeof useScheduleContext>['schedule'], slotId: number): FoundSlot | null {
+function findSlot(
+  schedule: ReturnType<typeof useScheduleContext>['schedule'],
+  slotId: number,
+): FoundSlot | null {
   if (!schedule) return null
   for (const day of schedule.days) {
     for (const stage of day.stages) {
@@ -59,14 +62,22 @@ interface BookmarkButtonProps {
   onToggle: () => void
 }
 
-function BookmarkButton({ isBookmarked, disabled, onToggle }: BookmarkButtonProps) {
+function BookmarkButton({
+  isBookmarked,
+  disabled,
+  onToggle,
+}: BookmarkButtonProps) {
   return (
     <button
       className={`bookmark-button${isBookmarked ? ' bookmark-button--active' : ''}`}
       onClick={onToggle}
       disabled={disabled}
       aria-pressed={isBookmarked}
-      aria-label={isBookmarked ? 'Remove from personal schedule' : 'Add to personal schedule'}
+      aria-label={
+        isBookmarked
+          ? 'Remove from personal schedule'
+          : 'Add to personal schedule'
+      }
     >
       <span className="bookmark-button__icon" aria-hidden="true">
         {isBookmarked ? '★' : '☆'}
@@ -88,7 +99,13 @@ export interface SessionDetailViewProps {
   onOpenSpeaker?: (slug: string) => void
 }
 
-export function SessionDetailView({ slotId, onClose, handle, userDoc, onOpenSpeaker }: SessionDetailViewProps) {
+export function SessionDetailView({
+  slotId,
+  onClose,
+  handle,
+  userDoc,
+  onOpenSpeaker,
+}: SessionDetailViewProps) {
   useScrollRestoration()
   const { schedule, loading, error } = useScheduleContext()
   const domain = schedule?.conference.domain ?? 'craft-conf.com'
@@ -129,10 +146,13 @@ export function SessionDetailView({ slotId, onClose, handle, userDoc, onOpenSpea
   const type: 'talk' | 'workshop' | 'text' = slot.type
   const isKeynote: boolean = talk ? talk.is_keynote : false
   const isOnline: boolean = talk ? talk.is_online : false
-  const description: string | null = (talk?.description != null ? talk.description : null) ?? slot.description ?? null
-  const level: string | null = talk ? talk.level ?? null : null
-  const videoUrl: string | null = talk ? talk.video_url ?? null : null
-  const slidesUrl: string | null = talk ? talk.slides_url ?? null : null
+  const description: string | null =
+    (talk?.description != null ? talk.description : null) ??
+    slot.description ??
+    null
+  const level: string | null = talk ? (talk.level ?? null) : null
+  const videoUrl: string | null = talk ? (talk.video_url ?? null) : null
+  const slidesUrl: string | null = talk ? (talk.slides_url ?? null) : null
   const title: string = src?.title ?? slot.title ?? `Slot ${slot.id}`
   const speakers = src?.speakers ?? []
   const tags = src?.tags ?? []
@@ -157,12 +177,18 @@ export function SessionDetailView({ slotId, onClose, handle, userDoc, onOpenSpea
     })
   }
 
-  const stageStyle = { '--stage-color': `#${stage.color}` } as React.CSSProperties
+  const stageStyle = {
+    '--stage-color': `#${stage.color}`,
+  } as React.CSSProperties
 
   return (
     <div className="session-detail-view" style={stageStyle}>
       {/* Back navigation */}
-      <button className="session-detail-back" onClick={onClose} aria-label="Back to schedule">
+      <button
+        className="session-detail-back"
+        onClick={onClose}
+        aria-label="Back to schedule"
+      >
         ← Back to schedule
       </button>
 
@@ -170,10 +196,14 @@ export function SessionDetailView({ slotId, onClose, handle, userDoc, onOpenSpea
       <header className="session-detail-header">
         <div className="session-detail-badges">
           {isKeynote && (
-            <span className="session-badge session-badge--keynote">Keynote</span>
+            <span className="session-badge session-badge--keynote">
+              Keynote
+            </span>
           )}
           {type === 'workshop' && (
-            <span className="session-badge session-badge--workshop">Workshop</span>
+            <span className="session-badge session-badge--workshop">
+              Workshop
+            </span>
           )}
           {isOnline && (
             <span className="session-badge session-badge--online">Online</span>
@@ -253,9 +283,20 @@ export function SessionDetailView({ slotId, onClose, handle, userDoc, onOpenSpea
           <h3 className="session-detail-section-title">Tags</h3>
           <ul className="session-detail-tags" aria-label="Session tags">
             {tags.map((tag) => (
-              <li key={tag.id} className={`session-tag${tag.is_trending ? ' session-tag--trending' : ''}`}>
+              <li
+                key={tag.id}
+                className={`session-tag${tag.is_trending ? ' session-tag--trending' : ''}`}
+              >
                 {tag.name}
-                {tag.is_trending && <span className="session-tag-trending-mark" aria-label="Trending"> 🔥</span>}
+                {tag.is_trending && (
+                  <span
+                    className="session-tag-trending-mark"
+                    aria-label="Trending"
+                  >
+                    {' '}
+                    🔥
+                  </span>
+                )}
               </li>
             ))}
           </ul>
@@ -268,17 +309,32 @@ export function SessionDetailView({ slotId, onClose, handle, userDoc, onOpenSpea
           <h3 className="session-detail-section-title">Resources</h3>
           <div className="session-detail-links">
             {officialUrl && (
-              <a href={officialUrl} target="_blank" rel="noopener noreferrer" className="session-detail-link">
+              <a
+                href={officialUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="session-detail-link"
+              >
                 🔗 Official session page
               </a>
             )}
             {videoUrl && (
-              <a href={videoUrl} target="_blank" rel="noopener noreferrer" className="session-detail-link">
+              <a
+                href={videoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="session-detail-link"
+              >
                 ▶ Watch video
               </a>
             )}
             {slidesUrl && (
-              <a href={slidesUrl} target="_blank" rel="noopener noreferrer" className="session-detail-link">
+              <a
+                href={slidesUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="session-detail-link"
+              >
                 📄 View slides
               </a>
             )}

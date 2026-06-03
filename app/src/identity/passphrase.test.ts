@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { generatePassphrase, passphraseToDocId } from './passphrase'
 import { WORDLIST } from './wordlist'
 
@@ -20,7 +20,9 @@ describe('generatePassphrase', () => {
   })
 
   it('produces different passphrases on each call (with overwhelming probability)', () => {
-    const results = new Set(Array.from({ length: 20 }, () => generatePassphrase()))
+    const results = new Set(
+      Array.from({ length: 20 }, () => generatePassphrase()),
+    )
     // All 20 should be unique — collision probability is negligibly small
     expect(results.size).toBe(20)
   })

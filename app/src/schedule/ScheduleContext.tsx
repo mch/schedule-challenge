@@ -12,8 +12,8 @@
  * The provider fetches `/schedule.json` once on mount. An optional `url` prop
  * allows overriding the source (useful in tests).
  */
-import { createContext, useContext, type ReactNode } from 'react'
-import { useSchedule, type UseScheduleResult } from './useSchedule'
+import { createContext, type ReactNode, useContext } from 'react'
+import { type UseScheduleResult, useSchedule } from './useSchedule'
 
 export const ScheduleContext = createContext<UseScheduleResult | null>(null)
 
@@ -25,7 +25,11 @@ export interface ScheduleProviderProps {
 
 export function ScheduleProvider({ children, url }: ScheduleProviderProps) {
   const value = useSchedule(url)
-  return <ScheduleContext.Provider value={value}>{children}</ScheduleContext.Provider>
+  return (
+    <ScheduleContext.Provider value={value}>
+      {children}
+    </ScheduleContext.Provider>
+  )
 }
 
 /**
@@ -35,7 +39,9 @@ export function ScheduleProvider({ children, url }: ScheduleProviderProps) {
 export function useScheduleContext(): UseScheduleResult {
   const ctx = useContext(ScheduleContext)
   if (ctx === null) {
-    throw new Error('useScheduleContext must be used within a <ScheduleProvider>')
+    throw new Error(
+      'useScheduleContext must be used within a <ScheduleProvider>',
+    )
   }
   return ctx
 }

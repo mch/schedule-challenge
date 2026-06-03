@@ -10,8 +10,9 @@
  * Then in components:
  *   const repo = useRepo()
  */
-import { createContext, useContext, type ReactNode } from 'react'
+
 import type { Repo } from '@automerge/automerge-repo'
+import { createContext, type ReactNode, useContext } from 'react'
 
 const RepoContext = createContext<Repo | null>(null)
 

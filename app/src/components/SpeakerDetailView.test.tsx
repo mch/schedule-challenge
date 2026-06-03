@@ -14,12 +14,12 @@
  *   - Speaker with no sessions shows appropriate message
  */
 
-import { describe, it, expect, vi } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
-import { SpeakerDetailView } from './SpeakerDetailView'
+import { fireEvent, render, screen } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
 import { ScheduleContext } from '../schedule/ScheduleContext'
-import type { Schedule } from '../types/schedule'
 import type { UseScheduleResult } from '../schedule/useSchedule'
+import type { Schedule } from '../types/schedule'
+import { SpeakerDetailView } from './SpeakerDetailView'
 
 // ---------------------------------------------------------------------------
 // Fixture schedule — two days, multiple speakers
@@ -140,7 +140,9 @@ const FIXTURE_SCHEDULE: Schedule = {
 // Helpers
 // ---------------------------------------------------------------------------
 
-function makeScheduleResult(overrides?: Partial<UseScheduleResult>): UseScheduleResult {
+function makeScheduleResult(
+  overrides?: Partial<UseScheduleResult>,
+): UseScheduleResult {
   return {
     schedule: FIXTURE_SCHEDULE,
     loading: false,
@@ -180,13 +182,19 @@ function renderSpeaker({
 describe('SpeakerDetailView', () => {
   describe('loading / error states', () => {
     it('shows loading message while schedule is loading', () => {
-      renderSpeaker({ scheduleResult: { schedule: null, loading: true, error: null } })
+      renderSpeaker({
+        scheduleResult: { schedule: null, loading: true, error: null },
+      })
       expect(screen.getByText(/loading schedule/i)).toBeInTheDocument()
     })
 
     it('shows error message when schedule fails to load', () => {
       renderSpeaker({
-        scheduleResult: { schedule: null, loading: false, error: new Error('Network error') } as UseScheduleResult,
+        scheduleResult: {
+          schedule: null,
+          loading: false,
+          error: new Error('Network error'),
+        } as UseScheduleResult,
       })
       expect(screen.getByRole('alert')).toHaveTextContent(/network error/i)
     })
@@ -214,13 +222,20 @@ describe('SpeakerDetailView', () => {
   describe('speaker header', () => {
     it('renders the speaker name', () => {
       renderSpeaker()
-      expect(screen.getByRole('heading', { name: 'Alice Smith' })).toBeInTheDocument()
+      expect(
+        screen.getByRole('heading', { name: 'Alice Smith' }),
+      ).toBeInTheDocument()
     })
 
     it('renders a link to the speaker profile on craft-conf.com', () => {
       renderSpeaker()
-      const link = screen.getByRole('link', { name: /full profile on craft-conf\.com/i })
-      expect(link).toHaveAttribute('href', 'https://craft-conf.com/2026/speaker/alice-smith')
+      const link = screen.getByRole('link', {
+        name: /full profile on craft-conf\.com/i,
+      })
+      expect(link).toHaveAttribute(
+        'href',
+        'https://craft-conf.com/2026/speaker/alice-smith',
+      )
       expect(link).toHaveAttribute('target', '_blank')
       expect(link).toHaveAttribute('rel', 'noopener noreferrer')
     })
@@ -304,14 +319,20 @@ describe('SpeakerDetailView', () => {
     it('calls onOpenSession with the slot ID when a session card is clicked', () => {
       const onOpenSession = vi.fn()
       renderSpeaker({ onOpenSession })
-      fireEvent.click(screen.getByRole('button', { name: /view session: Opening Keynote/i }))
+      fireEvent.click(
+        screen.getByRole('button', { name: /view session: Opening Keynote/i }),
+      )
       expect(onOpenSession).toHaveBeenCalledWith(101)
     })
 
     it('calls onOpenSession for the workshop card', () => {
       const onOpenSession = vi.fn()
       renderSpeaker({ onOpenSession })
-      fireEvent.click(screen.getByRole('button', { name: /view session: Hands-on TDD Workshop/i }))
+      fireEvent.click(
+        screen.getByRole('button', {
+          name: /view session: Hands-on TDD Workshop/i,
+        }),
+      )
       expect(onOpenSession).toHaveBeenCalledWith(103)
     })
   })

@@ -24,7 +24,10 @@ export function PassphraseDisplay({ passphrase }: PassphraseDisplayProps) {
       <code
         className="passphrase-display__value"
         aria-label={revealed ? 'Your passphrase' : 'Passphrase hidden'}
-        style={{ filter: revealed ? 'none' : 'blur(6px)', userSelect: revealed ? 'text' : 'none' }}
+        style={{
+          filter: revealed ? 'none' : 'blur(6px)',
+          userSelect: revealed ? 'text' : 'none',
+        }}
       >
         {passphrase}
       </code>

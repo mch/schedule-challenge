@@ -1,8 +1,8 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { render, renderHook, screen, waitFor } from '@testing-library/react'
 import type { ReactNode } from 'react'
-import { ScheduleProvider, useScheduleContext } from './ScheduleContext'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Schedule } from '../types/schedule'
+import { ScheduleProvider, useScheduleContext } from './ScheduleContext'
 
 const MOCK_SCHEDULE: Schedule = {
   conference: {
@@ -34,7 +34,7 @@ describe('ScheduleProvider / useScheduleContext', () => {
     // suppress React error boundary noise in test output
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
     expect(() => renderHook(() => useScheduleContext())).toThrow(
-      'useScheduleContext must be used within a <ScheduleProvider>'
+      'useScheduleContext must be used within a <ScheduleProvider>',
     )
     consoleSpy.mockRestore()
   })
@@ -88,7 +88,7 @@ describe('ScheduleProvider / useScheduleContext', () => {
     render(
       <ScheduleProvider url="/test-schedule.json">
         <Child />
-      </ScheduleProvider>
+      </ScheduleProvider>,
     )
 
     await waitFor(() => screen.getByTestId('conf-name'))

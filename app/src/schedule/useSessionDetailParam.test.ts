@@ -2,8 +2,8 @@
  * Tests for useSessionDetailParam.
  */
 
-import { describe, it, expect, beforeEach, afterEach } from 'vitest'
-import { renderHook, act } from '@testing-library/react'
+import { act, renderHook } from '@testing-library/react'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { useSessionDetailParam } from './useSessionDetailParam'
 
 beforeEach(() => {
@@ -52,12 +52,12 @@ describe('useSessionDetailParam', () => {
     const lengthBefore = window.history.length
     const { result } = renderHook(() => useSessionDetailParam())
     act(() => {
-      result.current.openSession(101)  // pushState — length+1
+      result.current.openSession(101) // pushState — length+1
     })
     const lengthAfterOpen = window.history.length
     expect(lengthAfterOpen).toBe(lengthBefore + 1)
     act(() => {
-      result.current.closeSession()  // should replaceState — length unchanged
+      result.current.closeSession() // should replaceState — length unchanged
     })
     expect(window.history.length).toBe(lengthAfterOpen)
   })

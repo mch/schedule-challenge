@@ -27,7 +27,9 @@
   padding: 14px 20px 12px;
   margin-bottom: -2px;
   cursor: pointer;
-  transition: color 0.15s, border-color 0.15s;
+  transition:
+    color 0.15s,
+    border-color 0.15s;
   border-radius: 4px 4px 0 0;
 
   &:hover {
@@ -163,7 +165,7 @@
   align-items: first baseline;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     top: 0;
@@ -291,7 +293,9 @@
   padding: 2px 4px;
   cursor: pointer;
   border-radius: 4px;
-  transition: opacity 0.15s, color 0.15s;
+  transition:
+    opacity 0.15s,
+    color 0.15s;
 
   &:focus-visible {
     outline: 2px solid var(--accent);
@@ -340,7 +344,7 @@
   background: var(--bg);
 
   &::before {
-    content: '';
+    content: "";
     flex: 0 0 24px;
     height: 1px;
     background: var(--accent-border);
@@ -348,7 +352,7 @@
   }
 
   &::after {
-    content: '';
+    content: "";
     flex: 1;
     height: 1px;
     background: var(--accent-border);

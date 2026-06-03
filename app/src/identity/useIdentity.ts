@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
 import type { AutomergeUrl } from '@automerge/automerge-repo'
+import { useEffect, useState } from 'react'
 import { generatePassphrase, passphraseToDocId } from './passphrase'
 import { loadPassphrase, savePassphrase } from './storage'
 

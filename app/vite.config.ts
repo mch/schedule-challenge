@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import wasm from 'vite-plugin-wasm'
 
@@ -13,7 +13,8 @@ export default defineConfig({
       manifest: {
         name: 'Craft 2026 Schedule',
         short_name: 'Craft 2026',
-        description: 'Personal schedule app for Craft Conference 2026, Budapest',
+        description:
+          'Personal schedule app for Craft Conference 2026, Budapest',
         theme_color: '#ff4d00',
         background_color: '#ffffff',
         display: 'standalone',

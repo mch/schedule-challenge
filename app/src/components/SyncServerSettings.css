@@ -34,7 +34,9 @@
   border-radius: 8px;
   cursor: pointer;
   background: var(--bg);
-  transition: border-color 0.15s, background 0.15s;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
 
   &:has(input:checked) {
     border-color: var(--accent);
@@ -46,7 +48,7 @@
     background: var(--code-bg);
   }
 
-  & input[type='radio'] {
+  & input[type="radio"] {
     width: 16px;
     height: 16px;
     margin: 0;

@@ -15,8 +15,13 @@ export function OfflineBanner() {
 
   return (
     <div className="offline-banner" role="status" aria-live="polite">
-      <span className="offline-banner__icon" aria-hidden="true">✈︎</span>
-      <span>You're offline — schedule and bookmarks are available, sync will resume when you reconnect.</span>
+      <span className="offline-banner__icon" aria-hidden="true">
+        ✈︎
+      </span>
+      <span>
+        You're offline — schedule and bookmarks are available, sync will resume
+        when you reconnect.
+      </span>
     </div>
   )
 }

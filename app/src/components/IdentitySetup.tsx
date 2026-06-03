@@ -58,7 +58,10 @@ export function IdentitySetup({ onConfirm, generateNew }: IdentitySetupProps) {
       <div className="identity-setup-page">
         <div className="identity-setup" role="main">
           <h1>Welcome to Craft 2026</h1>
-          <p>Your personal schedule is stored locally and synced privately using a passphrase.</p>
+          <p>
+            Your personal schedule is stored locally and synced privately using
+            a passphrase.
+          </p>
           <div className="identity-setup__actions">
             <button type="button" onClick={() => setMode('create')}>
               Create new account
@@ -78,12 +81,17 @@ export function IdentitySetup({ onConfirm, generateNew }: IdentitySetupProps) {
         <div className="identity-setup" role="main">
           <h1>Your passphrase</h1>
           <p>
-            This is your unique passphrase. Write it down — you&apos;ll need it to access your
-            schedule on other devices or after clearing your browser data.
+            This is your unique passphrase. Write it down — you&apos;ll need it
+            to access your schedule on other devices or after clearing your
+            browser data.
           </p>
           <div className="identity-setup__passphrase">
             <code aria-label="Your passphrase">{generatedPassphrase}</code>
-            <button type="button" onClick={handleCopy} aria-label="Copy passphrase">
+            <button
+              type="button"
+              onClick={handleCopy}
+              aria-label="Copy passphrase"
+            >
               {copied ? 'Copied!' : 'Copy'}
             </button>
           </div>
@@ -91,7 +99,11 @@ export function IdentitySetup({ onConfirm, generateNew }: IdentitySetupProps) {
             <button type="button" onClick={handleCreate} disabled={submitting}>
               {submitting ? 'Saving…' : "I've saved it — continue"}
             </button>
-            <button type="button" onClick={() => setMode('choose')} disabled={submitting}>
+            <button
+              type="button"
+              onClick={() => setMode('choose')}
+              disabled={submitting}
+            >
               Back
             </button>
           </div>
@@ -118,12 +130,20 @@ export function IdentitySetup({ onConfirm, generateNew }: IdentitySetupProps) {
             spellCheck={false}
             disabled={submitting}
           />
-          {error && <p role="alert" className="identity-setup__error">{error}</p>}
+          {error && (
+            <p role="alert" className="identity-setup__error">
+              {error}
+            </p>
+          )}
           <div className="identity-setup__actions">
             <button type="submit" disabled={submitting}>
               {submitting ? 'Loading…' : 'Recover account'}
             </button>
-            <button type="button" onClick={() => setMode('choose')} disabled={submitting}>
+            <button
+              type="button"
+              onClick={() => setMode('choose')}
+              disabled={submitting}
+            >
               Back
             </button>
           </div>

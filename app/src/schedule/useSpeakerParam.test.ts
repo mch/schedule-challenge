@@ -2,8 +2,8 @@
  * Tests for useSpeakerParam.
  */
 
-import { describe, it, expect, beforeEach, afterEach } from 'vitest'
-import { renderHook, act } from '@testing-library/react'
+import { act, renderHook } from '@testing-library/react'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { useSpeakerParam } from './useSpeakerParam'
 
 beforeEach(() => {
@@ -53,12 +53,12 @@ describe('useSpeakerParam', () => {
     const lengthBefore = window.history.length
     const { result } = renderHook(() => useSpeakerParam())
     act(() => {
-      result.current.openSpeaker('alice-smith')  // pushState — length+1
+      result.current.openSpeaker('alice-smith') // pushState — length+1
     })
     const lengthAfterOpen = window.history.length
     expect(lengthAfterOpen).toBe(lengthBefore + 1)
     act(() => {
-      result.current.closeSpeaker()  // should replaceState — length unchanged
+      result.current.closeSpeaker() // should replaceState — length unchanged
     })
     expect(window.history.length).toBe(lengthAfterOpen)
   })
@@ -74,7 +74,11 @@ describe('useSpeakerParam', () => {
   })
 
   it('closeSpeaker preserves other URL params', () => {
-    window.history.replaceState(null, '', '/?speaker=alice-smith&day=1&session=42')
+    window.history.replaceState(
+      null,
+      '',
+      '/?speaker=alice-smith&day=1&session=42',
+    )
     const { result } = renderHook(() => useSpeakerParam())
     act(() => {
       result.current.closeSpeaker()

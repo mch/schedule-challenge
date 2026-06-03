@@ -10,13 +10,13 @@
  * - Scroll position preserved on navigation and refresh
  */
 
-import { useRef, useCallback } from 'react'
 import type { DocHandle } from '@automerge/automerge-repo'
+import { useCallback, useRef } from 'react'
 import { useScheduleContext } from '../schedule/ScheduleContext'
 import { useScrollRestoration } from '../schedule/useScrollRestoration'
 import { useSessionListParams } from '../schedule/useSessionListParams'
-import type { UserDocument } from '../types/user-document'
 import type { Day } from '../types/schedule'
+import type { UserDocument } from '../types/user-document'
 import { DayTabs, Filters } from './ScheduleShared'
 import './SessionListView.css'
 
@@ -97,8 +97,16 @@ interface SessionCardProps {
   bookmarkDisabled: boolean
 }
 
-function SessionCard({ session, onOpen, isBookmarked, onToggleBookmark, bookmarkDisabled }: SessionCardProps) {
-  const stageStyle = { '--stage-color': `#${session.stageColor}` } as React.CSSProperties
+function SessionCard({
+  session,
+  onOpen,
+  isBookmarked,
+  onToggleBookmark,
+  bookmarkDisabled,
+}: SessionCardProps) {
+  const stageStyle = {
+    '--stage-color': `#${session.stageColor}`,
+  } as React.CSSProperties
 
   function handleBookmarkClick(e: React.MouseEvent) {
     e.stopPropagation()
@@ -114,7 +122,12 @@ function SessionCard({ session, onOpen, isBookmarked, onToggleBookmark, bookmark
       role="button"
       tabIndex={0}
       aria-label={`View details for ${session.title}`}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen(session.slotId) } }}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          onOpen(session.slotId)
+        }
+      }}
     >
       <div className="session-card__time">
         {session.startTime}–{session.endTime}
@@ -122,8 +135,16 @@ function SessionCard({ session, onOpen, isBookmarked, onToggleBookmark, bookmark
 
       <div className="session-card__body">
         <h3 className="session-card__title">
-          {session.isKeynote && <span className="session-badge session-badge--keynote">Keynote</span>}
-          {session.type === 'workshop' && <span className="session-badge session-badge--workshop">Workshop</span>}
+          {session.isKeynote && (
+            <span className="session-badge session-badge--keynote">
+              Keynote
+            </span>
+          )}
+          {session.type === 'workshop' && (
+            <span className="session-badge session-badge--workshop">
+              Workshop
+            </span>
+          )}
           {session.title}
         </h3>
 
@@ -156,7 +177,11 @@ function SessionCard({ session, onOpen, isBookmarked, onToggleBookmark, bookmark
       <div className="session-card__bookmark">
         <button
           className={`session-card__bookmark-btn${isBookmarked ? ' session-card__bookmark-btn--active' : ''}`}
-          aria-label={isBookmarked ? 'Remove from personal schedule' : 'Add to personal schedule'}
+          aria-label={
+            isBookmarked
+              ? 'Remove from personal schedule'
+              : 'Add to personal schedule'
+          }
           aria-pressed={isBookmarked}
           disabled={bookmarkDisabled}
           onClick={handleBookmarkClick}
@@ -181,16 +206,24 @@ export interface SessionListViewProps {
   nowMs?: number
 }
 
-export function SessionListView({ onOpenSession, handle = null, userDoc = null, nowMs }: SessionListViewProps = {}) {
+export function SessionListView({
+  onOpenSession,
+  handle = null,
+  userDoc = null,
+  nowMs,
+}: SessionListViewProps = {}) {
   const { schedule, loading, error } = useScheduleContext()
   const { params, setDay, setTag, setStage } = useSessionListParams()
   const listRef = useRef<HTMLDivElement>(null)
 
   useScrollRestoration()
 
-  const handleDayChange = useCallback((index: number) => {
-    setDay(index)
-  }, [setDay])
+  const handleDayChange = useCallback(
+    (index: number) => {
+      setDay(index)
+    },
+    [setDay],
+  )
 
   if (loading) {
     return (
@@ -234,7 +267,11 @@ export function SessionListView({ onOpenSession, handle = null, userDoc = null, 
 
   return (
     <div className="session-list-view">
-      <DayTabs days={days} selectedIndex={dayIndex} onSelect={handleDayChange} />
+      <DayTabs
+        days={days}
+        selectedIndex={dayIndex}
+        onSelect={handleDayChange}
+      />
 
       <div className="session-list-controls">
         <Filters
@@ -254,8 +291,9 @@ export function SessionListView({ onOpenSession, handle = null, userDoc = null, 
           hidePastEventsDisabled={handle === null}
         />
         <p className="session-count" aria-live="polite">
-          {filteredSessions.length} session{filteredSessions.length !== 1 ? 's' : ''}
-          {(params.tag || params.stage) ? ' (filtered)' : ''}
+          {filteredSessions.length} session
+          {filteredSessions.length !== 1 ? 's' : ''}
+          {params.tag || params.stage ? ' (filtered)' : ''}
         </p>
       </div>
 
@@ -267,11 +305,16 @@ export function SessionListView({ onOpenSession, handle = null, userDoc = null, 
         ref={listRef}
       >
         {filteredSessions.length === 0 ? (
-          <p className="session-list-empty">No sessions match the current filters.</p>
+          <p className="session-list-empty">
+            No sessions match the current filters.
+          </p>
         ) : (
           filteredSessions.reduce<React.ReactNode[]>((nodes, session, idx) => {
-            const isBookmarked = userDoc?.bookmarks.includes(session.slotId) ?? false
-            const isNewSlot = idx === 0 || filteredSessions[idx - 1].startTime !== session.startTime
+            const isBookmarked =
+              userDoc?.bookmarks.includes(session.slotId) ?? false
+            const isNewSlot =
+              idx === 0 ||
+              filteredSessions[idx - 1].startTime !== session.startTime
             if (isNewSlot) {
               nodes.push(
                 <div
@@ -280,8 +323,10 @@ export function SessionListView({ onOpenSession, handle = null, userDoc = null, 
                   aria-label={session.startTime}
                   className="timeslot-separator"
                 >
-                  <span className="timeslot-separator__time">{session.startTime}</span>
-                </div>
+                  <span className="timeslot-separator__time">
+                    {session.startTime}
+                  </span>
+                </div>,
               )
             }
             nodes.push(
@@ -302,7 +347,7 @@ export function SessionListView({ onOpenSession, handle = null, userDoc = null, 
                     }
                   })
                 }}
-              />
+              />,
             )
             return nodes
           }, [])

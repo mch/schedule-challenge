@@ -15,7 +15,7 @@
 
 import { useScheduleContext } from '../schedule/ScheduleContext'
 import { useScrollRestoration } from '../schedule/useScrollRestoration'
-import type { Day, Slot, Stage, Speaker } from '../types/schedule'
+import type { Day, Slot, Speaker, Stage } from '../types/schedule'
 import './SpeakerDetailView.css'
 
 // ---------------------------------------------------------------------------
@@ -60,10 +60,7 @@ function findSpeakerSessions(
   return { speaker: foundSpeaker, sessions }
 }
 
-function speakerProfileUrl(
-  domain: string | undefined,
-  slug: string,
-): string {
+function speakerProfileUrl(domain: string | undefined, slug: string): string {
   const host = domain ?? 'craft-conf.com'
   return `https://${host}/2026/speaker/${slug}`
 }
@@ -79,15 +76,14 @@ interface SessionCardProps {
 
 function SessionCard({ session, onOpen }: SessionCardProps) {
   const { slot, stage, day, title, type } = session
-  const stageStyle = { '--stage-color': `#${stage.color}` } as React.CSSProperties
+  const stageStyle = {
+    '--stage-color': `#${stage.color}`,
+  } as React.CSSProperties
   const isKeynote = slot.talk?.is_keynote ?? false
   const isOnline = slot.talk?.is_online ?? false
 
   return (
-    <li
-      className="speaker-session-card"
-      style={stageStyle}
-    >
+    <li className="speaker-session-card" style={stageStyle}>
       <button
         className="speaker-session-card__inner"
         onClick={() => onOpen(slot.id)}
@@ -95,10 +91,14 @@ function SessionCard({ session, onOpen }: SessionCardProps) {
       >
         <div className="speaker-session-card__badges">
           {isKeynote && (
-            <span className="session-badge session-badge--keynote">Keynote</span>
+            <span className="session-badge session-badge--keynote">
+              Keynote
+            </span>
           )}
           {type === 'workshop' && (
-            <span className="session-badge session-badge--workshop">Workshop</span>
+            <span className="session-badge session-badge--workshop">
+              Workshop
+            </span>
           )}
           {isOnline && (
             <span className="session-badge session-badge--online">Online</span>
@@ -174,7 +174,11 @@ export function SpeakerDetailView({
   return (
     <div className="speaker-detail-view">
       {/* Back navigation */}
-      <button className="speaker-detail-back" onClick={onClose} aria-label="Back">
+      <button
+        className="speaker-detail-back"
+        onClick={onClose}
+        aria-label="Back"
+      >
         ← Back
       </button>
 
@@ -205,7 +209,9 @@ export function SpeakerDetailView({
           </ul>
         </section>
       ) : (
-        <p className="speaker-detail-no-sessions">No sessions found for this speaker.</p>
+        <p className="speaker-detail-no-sessions">
+          No sessions found for this speaker.
+        </p>
       )}
     </div>
   )

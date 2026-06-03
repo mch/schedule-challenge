@@ -11,8 +11,8 @@
  *   - popstate triggers a re-read of params
  */
 
-import { describe, it, expect, beforeEach, afterEach } from 'vitest'
-import { renderHook, act } from '@testing-library/react'
+import { act, renderHook } from '@testing-library/react'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { useSessionListParams } from './useSessionListParams'
 
 beforeEach(() => {

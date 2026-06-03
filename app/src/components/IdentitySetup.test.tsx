@@ -1,6 +1,6 @@
-import { describe, it, expect, vi } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { describe, expect, it, vi } from 'vitest'
 import { IdentitySetup } from './IdentitySetup'
 
 function makeProps(overrides?: Partial<Parameters<typeof IdentitySetup>[0]>) {
@@ -27,13 +27,19 @@ describe('IdentitySetup — layout', () => {
 describe('IdentitySetup — choose screen', () => {
   it('shows welcome heading', () => {
     render(<IdentitySetup {...makeProps()} />)
-    expect(screen.getByRole('heading', { name: /welcome/i })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: /welcome/i }),
+    ).toBeInTheDocument()
   })
 
   it('shows "Create new account" and "Enter existing passphrase" buttons', () => {
     render(<IdentitySetup {...makeProps()} />)
-    expect(screen.getByRole('button', { name: /create new account/i })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /enter existing passphrase/i })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: /create new account/i }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: /enter existing passphrase/i }),
+    ).toBeInTheDocument()
   })
 })
 
@@ -41,8 +47,12 @@ describe('IdentitySetup — create screen', () => {
   it('shows the generated passphrase', async () => {
     const user = userEvent.setup()
     render(<IdentitySetup {...makeProps()} />)
-    await user.click(screen.getByRole('button', { name: /create new account/i }))
-    expect(screen.getByLabelText(/your passphrase/i)).toHaveTextContent('able-acid-aged-also')
+    await user.click(
+      screen.getByRole('button', { name: /create new account/i }),
+    )
+    expect(screen.getByLabelText(/your passphrase/i)).toHaveTextContent(
+      'able-acid-aged-also',
+    )
   })
 
   it('calls generateNew() exactly once on mount', () => {
@@ -55,7 +65,9 @@ describe('IdentitySetup — create screen', () => {
     const user = userEvent.setup()
     const props = makeProps()
     render(<IdentitySetup {...props} />)
-    await user.click(screen.getByRole('button', { name: /create new account/i }))
+    await user.click(
+      screen.getByRole('button', { name: /create new account/i }),
+    )
     await user.click(screen.getByRole('button', { name: /i've saved it/i }))
     expect(props.onConfirm).toHaveBeenCalledWith('able-acid-aged-also')
   })
@@ -63,9 +75,13 @@ describe('IdentitySetup — create screen', () => {
   it('"Back" button returns to the choose screen', async () => {
     const user = userEvent.setup()
     render(<IdentitySetup {...makeProps()} />)
-    await user.click(screen.getByRole('button', { name: /create new account/i }))
+    await user.click(
+      screen.getByRole('button', { name: /create new account/i }),
+    )
     await user.click(screen.getByRole('button', { name: /back/i }))
-    expect(screen.getByRole('heading', { name: /welcome/i })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: /welcome/i }),
+    ).toBeInTheDocument()
   })
 })
 
@@ -73,40 +89,59 @@ describe('IdentitySetup — recover screen', () => {
   it('shows a passphrase input field', async () => {
     const user = userEvent.setup()
     render(<IdentitySetup {...makeProps()} />)
-    await user.click(screen.getByRole('button', { name: /enter existing passphrase/i }))
+    await user.click(
+      screen.getByRole('button', { name: /enter existing passphrase/i }),
+    )
     expect(screen.getByLabelText(/passphrase/i)).toBeInTheDocument()
   })
 
   it('has autocapitalize="none" on the passphrase input', async () => {
     const user = userEvent.setup()
     render(<IdentitySetup {...makeProps()} />)
-    await user.click(screen.getByRole('button', { name: /enter existing passphrase/i }))
-    expect(screen.getByLabelText(/passphrase/i)).toHaveAttribute('autocapitalize', 'none')
+    await user.click(
+      screen.getByRole('button', { name: /enter existing passphrase/i }),
+    )
+    expect(screen.getByLabelText(/passphrase/i)).toHaveAttribute(
+      'autocapitalize',
+      'none',
+    )
   })
 
   it('submitting a passphrase calls onConfirm', async () => {
     const user = userEvent.setup()
     const props = makeProps()
     render(<IdentitySetup {...props} />)
-    await user.click(screen.getByRole('button', { name: /enter existing passphrase/i }))
+    await user.click(
+      screen.getByRole('button', { name: /enter existing passphrase/i }),
+    )
     await user.type(screen.getByLabelText(/passphrase/i), 'bark-barn-base-bath')
     await user.click(screen.getByRole('button', { name: /recover account/i }))
-    await waitFor(() => expect(props.onConfirm).toHaveBeenCalledWith('bark-barn-base-bath'))
+    await waitFor(() =>
+      expect(props.onConfirm).toHaveBeenCalledWith('bark-barn-base-bath'),
+    )
   })
 
   it('shows an error when submitting an empty passphrase', async () => {
     const user = userEvent.setup()
     render(<IdentitySetup {...makeProps()} />)
-    await user.click(screen.getByRole('button', { name: /enter existing passphrase/i }))
+    await user.click(
+      screen.getByRole('button', { name: /enter existing passphrase/i }),
+    )
     await user.click(screen.getByRole('button', { name: /recover account/i }))
-    expect(screen.getByRole('alert')).toHaveTextContent(/enter your passphrase/i)
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      /enter your passphrase/i,
+    )
   })
 
   it('"Back" button returns to choose screen', async () => {
     const user = userEvent.setup()
     render(<IdentitySetup {...makeProps()} />)
-    await user.click(screen.getByRole('button', { name: /enter existing passphrase/i }))
+    await user.click(
+      screen.getByRole('button', { name: /enter existing passphrase/i }),
+    )
     await user.click(screen.getByRole('button', { name: /back/i }))
-    expect(screen.getByRole('heading', { name: /welcome/i })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: /welcome/i }),
+    ).toBeInTheDocument()
   })
 })

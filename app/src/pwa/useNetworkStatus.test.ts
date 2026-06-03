@@ -1,5 +1,5 @@
-import { renderHook, act } from '@testing-library/react'
-import { describe, it, expect, beforeEach, afterEach } from 'vitest'
+import { act, renderHook } from '@testing-library/react'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { useNetworkStatus } from './useNetworkStatus'
 
 describe('useNetworkStatus', () => {
@@ -17,19 +17,28 @@ describe('useNetworkStatus', () => {
   })
 
   it('returns true when navigator.onLine is true', () => {
-    Object.defineProperty(navigator, 'onLine', { value: true, configurable: true })
+    Object.defineProperty(navigator, 'onLine', {
+      value: true,
+      configurable: true,
+    })
     const { result } = renderHook(() => useNetworkStatus())
     expect(result.current).toBe(true)
   })
 
   it('returns false when navigator.onLine is false', () => {
-    Object.defineProperty(navigator, 'onLine', { value: false, configurable: true })
+    Object.defineProperty(navigator, 'onLine', {
+      value: false,
+      configurable: true,
+    })
     const { result } = renderHook(() => useNetworkStatus())
     expect(result.current).toBe(false)
   })
 
   it('updates when the browser goes offline', () => {
-    Object.defineProperty(navigator, 'onLine', { value: true, configurable: true })
+    Object.defineProperty(navigator, 'onLine', {
+      value: true,
+      configurable: true,
+    })
     const { result } = renderHook(() => useNetworkStatus())
     expect(result.current).toBe(true)
 
@@ -40,7 +49,10 @@ describe('useNetworkStatus', () => {
   })
 
   it('updates when the browser comes back online', () => {
-    Object.defineProperty(navigator, 'onLine', { value: false, configurable: true })
+    Object.defineProperty(navigator, 'onLine', {
+      value: false,
+      configurable: true,
+    })
     const { result } = renderHook(() => useNetworkStatus())
     expect(result.current).toBe(false)
 

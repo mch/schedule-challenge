@@ -1,8 +1,11 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import {
+  HALFBAKERY_SYNC_SERVER_URL,
+  PUBLIC_SYNC_SERVER_URL,
+} from '../automerge/repo'
 import { SyncServerSettings } from './SyncServerSettings'
-import { PUBLIC_SYNC_SERVER_URL, HALFBAKERY_SYNC_SERVER_URL } from '../automerge/repo'
 
 function makeAdapter(open: boolean) {
   return { socket: { readyState: open ? WebSocket.OPEN : WebSocket.CLOSED } }
@@ -44,19 +47,27 @@ describe('SyncServerSettings', () => {
     render(
       <SyncServerSettings {...baseProps} currentUrl={PUBLIC_SYNC_SERVER_URL} />,
     )
-    expect(screen.getByRole('radio', { name: /public automerge/i })).toBeChecked()
+    expect(
+      screen.getByRole('radio', { name: /public automerge/i }),
+    ).toBeChecked()
   })
 
   it('selects the halfbakery preset when currentUrl matches', () => {
     render(
-      <SyncServerSettings {...baseProps} currentUrl={HALFBAKERY_SYNC_SERVER_URL} />,
+      <SyncServerSettings
+        {...baseProps}
+        currentUrl={HALFBAKERY_SYNC_SERVER_URL}
+      />,
     )
     expect(screen.getByRole('radio', { name: /halfbakery/i })).toBeChecked()
   })
 
   it('selects "custom" when currentUrl does not match any preset', () => {
     render(
-      <SyncServerSettings {...baseProps} currentUrl="wss://my-own.example.com" />,
+      <SyncServerSettings
+        {...baseProps}
+        currentUrl="wss://my-own.example.com"
+      />,
     )
     expect(screen.getByRole('radio', { name: /custom/i })).toBeChecked()
   })
@@ -72,7 +83,10 @@ describe('SyncServerSettings', () => {
 
   it('does not show the warning when halfbakery server is selected', () => {
     render(
-      <SyncServerSettings {...baseProps} currentUrl={HALFBAKERY_SYNC_SERVER_URL} />,
+      <SyncServerSettings
+        {...baseProps}
+        currentUrl={HALFBAKERY_SYNC_SERVER_URL}
+      />,
     )
     expect(screen.queryByRole('alert')).not.toBeInTheDocument()
   })
@@ -81,16 +95,23 @@ describe('SyncServerSettings', () => {
 
   it('shows a text input when custom is selected', () => {
     render(
-      <SyncServerSettings {...baseProps} currentUrl="wss://custom.example.com" />,
+      <SyncServerSettings
+        {...baseProps}
+        currentUrl="wss://custom.example.com"
+      />,
     )
-    expect(screen.getByRole('textbox', { name: /server url/i })).toBeInTheDocument()
+    expect(
+      screen.getByRole('textbox', { name: /server url/i }),
+    ).toBeInTheDocument()
   })
 
   it('does not show the text input when a preset is selected', () => {
     render(
       <SyncServerSettings {...baseProps} currentUrl={PUBLIC_SYNC_SERVER_URL} />,
     )
-    expect(screen.queryByRole('textbox', { name: /server url/i })).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('textbox', { name: /server url/i }),
+    ).not.toBeInTheDocument()
   })
 
   it('populates the custom input with the current URL', () => {
@@ -169,10 +190,7 @@ describe('SyncServerSettings', () => {
 
   it('shows a "connected" indicator when the adapter is ready', async () => {
     render(
-      <SyncServerSettings
-        {...baseProps}
-        networkAdapter={makeAdapter(true)}
-      />,
+      <SyncServerSettings {...baseProps} networkAdapter={makeAdapter(true)} />,
     )
     await waitFor(() =>
       expect(screen.getByTitle(/connected/i)).toBeInTheDocument(),
@@ -181,10 +199,7 @@ describe('SyncServerSettings', () => {
 
   it('shows a "disconnected" indicator when the adapter is not ready', async () => {
     render(
-      <SyncServerSettings
-        {...baseProps}
-        networkAdapter={makeAdapter(false)}
-      />,
+      <SyncServerSettings {...baseProps} networkAdapter={makeAdapter(false)} />,
     )
     await waitFor(() =>
       expect(screen.getByTitle(/disconnected/i)).toBeInTheDocument(),

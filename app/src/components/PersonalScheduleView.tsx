@@ -18,13 +18,13 @@
  *   onOpenSession  — called with slotId when the user clicks a card
  */
 
-import { useCallback } from 'react'
 import type { DocHandle } from '@automerge/automerge-repo'
+import { useCallback } from 'react'
 import { useScheduleContext } from '../schedule/ScheduleContext'
 import { useScrollRestoration } from '../schedule/useScrollRestoration'
 import { useSessionListParams } from '../schedule/useSessionListParams'
-import type { UserDocument } from '../types/user-document'
 import type { Day, Slot, Stage } from '../types/schedule'
+import type { UserDocument } from '../types/user-document'
 import { DayTabs, Filters } from './ScheduleShared'
 import './PersonalScheduleView.css'
 
@@ -63,8 +63,15 @@ function toMinutes(time: string): number {
 }
 
 /** Returns true if two time intervals [aStart, aEnd) and [bStart, bEnd) overlap. */
-function timesOverlap(aStart: string, aEnd: string, bStart: string, bEnd: string): boolean {
-  return toMinutes(aStart) < toMinutes(bEnd) && toMinutes(bStart) < toMinutes(aEnd)
+function timesOverlap(
+  aStart: string,
+  aEnd: string,
+  bStart: string,
+  bEnd: string,
+): boolean {
+  return (
+    toMinutes(aStart) < toMinutes(bEnd) && toMinutes(bStart) < toMinutes(aEnd)
+  )
 }
 
 /** Collect unique sorted tag names from a list of bookmarked sessions. */
@@ -182,8 +189,15 @@ interface BookmarkedSessionCardProps {
   removeDisabled: boolean
 }
 
-function BookmarkedSessionCard({ session, onOpen, onRemove, removeDisabled }: BookmarkedSessionCardProps) {
-  const stageStyle = { '--stage-color': `#${session.stageColor}` } as React.CSSProperties
+function BookmarkedSessionCard({
+  session,
+  onOpen,
+  onRemove,
+  removeDisabled,
+}: BookmarkedSessionCardProps) {
+  const stageStyle = {
+    '--stage-color': `#${session.stageColor}`,
+  } as React.CSSProperties
 
   function handleKeyDown(e: React.KeyboardEvent) {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -215,10 +229,14 @@ function BookmarkedSessionCard({ session, onOpen, onRemove, removeDisabled }: Bo
       <div className="session-card__body">
         <h3 className="session-card__title">
           {session.isKeynote && (
-            <span className="session-badge session-badge--keynote">Keynote</span>
+            <span className="session-badge session-badge--keynote">
+              Keynote
+            </span>
           )}
           {session.type === 'workshop' && (
-            <span className="session-badge session-badge--workshop">Workshop</span>
+            <span className="session-badge session-badge--workshop">
+              Workshop
+            </span>
           )}
           {session.title}
         </h3>
@@ -238,7 +256,10 @@ function BookmarkedSessionCard({ session, onOpen, onRemove, removeDisabled }: Bo
           </span>
 
           {session.overlaps && (
-            <span className="session-card__overlap-badge" aria-label="Overlaps with another bookmarked session">
+            <span
+              className="session-card__overlap-badge"
+              aria-label="Overlaps with another bookmarked session"
+            >
               ⚠ overlap
             </span>
           )}
@@ -272,15 +293,23 @@ export interface PersonalScheduleViewProps {
   nowMs?: number
 }
 
-export function PersonalScheduleView({ userDoc, handle, onOpenSession, nowMs }: PersonalScheduleViewProps) {
+export function PersonalScheduleView({
+  userDoc,
+  handle,
+  onOpenSession,
+  nowMs,
+}: PersonalScheduleViewProps) {
   const { schedule, loading, error } = useScheduleContext()
   const { params, setDay, setTag, setStage } = useSessionListParams()
 
   useScrollRestoration()
 
-  const handleDayChange = useCallback((index: number) => {
-    setDay(index)
-  }, [setDay])
+  const handleDayChange = useCallback(
+    (index: number) => {
+      setDay(index)
+    },
+    [setDay],
+  )
 
   if (loading) {
     return (
@@ -306,7 +335,8 @@ export function PersonalScheduleView({ userDoc, handle, onOpenSession, nowMs }: 
   const allDayGroups = buildDayGroups(schedule, bookmarks)
 
   // Only show sessions for the currently selected day
-  const currentGroup = allDayGroups.find((g) => g.dayId === currentDay.id) ?? null
+  const currentGroup =
+    allDayGroups.find((g) => g.dayId === currentDay.id) ?? null
 
   // Filter options are derived from the bookmarked sessions on the current day
   const daySessions = currentGroup?.sessions ?? []
@@ -339,7 +369,12 @@ export function PersonalScheduleView({ userDoc, handle, onOpenSession, nowMs }: 
 
   return (
     <div className="personal-schedule-view">
-      <DayTabs days={days} selectedIndex={dayIndex} onSelect={handleDayChange} idPrefix="my-day" />
+      <DayTabs
+        days={days}
+        selectedIndex={dayIndex}
+        onSelect={handleDayChange}
+        idPrefix="my-day"
+      />
 
       {currentGroup && (
         <div className="session-list-controls">
@@ -361,8 +396,9 @@ export function PersonalScheduleView({ userDoc, handle, onOpenSession, nowMs }: 
             idPrefix="my-"
           />
           <p className="session-count" aria-live="polite">
-            {filteredSessions.length} session{filteredSessions.length !== 1 ? 's' : ''}
-            {(params.tag || params.stage) ? ' (filtered)' : ''}
+            {filteredSessions.length} session
+            {filteredSessions.length !== 1 ? 's' : ''}
+            {params.tag || params.stage ? ' (filtered)' : ''}
           </p>
         </div>
       )}
@@ -383,35 +419,44 @@ export function PersonalScheduleView({ userDoc, handle, onOpenSession, nowMs }: 
           </div>
         ) : filteredSessions.length === 0 ? (
           <div className="personal-schedule-empty">
-            <p className="personal-schedule-empty__message">No bookmarked sessions match the current filters.</p>
+            <p className="personal-schedule-empty__message">
+              No bookmarked sessions match the current filters.
+            </p>
           </div>
         ) : (
           <div className="personal-schedule-sessions">
-            {filteredSessions.reduce<React.ReactNode[]>((nodes, session, idx) => {
-              const isNewSlot = idx === 0 || filteredSessions[idx - 1].startTime !== session.startTime
-              if (isNewSlot) {
+            {filteredSessions.reduce<React.ReactNode[]>(
+              (nodes, session, idx) => {
+                const isNewSlot =
+                  idx === 0 ||
+                  filteredSessions[idx - 1].startTime !== session.startTime
+                if (isNewSlot) {
+                  nodes.push(
+                    <div
+                      key={`timeslot-${session.startTime}`}
+                      role="separator"
+                      aria-label={session.startTime}
+                      className="timeslot-separator"
+                    >
+                      <span className="timeslot-separator__time">
+                        {session.startTime}
+                      </span>
+                    </div>,
+                  )
+                }
                 nodes.push(
-                  <div
-                    key={`timeslot-${session.startTime}`}
-                    role="separator"
-                    aria-label={session.startTime}
-                    className="timeslot-separator"
-                  >
-                    <span className="timeslot-separator__time">{session.startTime}</span>
-                  </div>
+                  <BookmarkedSessionCard
+                    key={session.slotId}
+                    session={session}
+                    onOpen={onOpenSession}
+                    onRemove={handleRemove}
+                    removeDisabled={handle === null}
+                  />,
                 )
-              }
-              nodes.push(
-                <BookmarkedSessionCard
-                  key={session.slotId}
-                  session={session}
-                  onOpen={onOpenSession}
-                  onRemove={handleRemove}
-                  removeDisabled={handle === null}
-                />
-              )
-              return nodes
-            }, [])}
+                return nodes
+              },
+              [],
+            )}
           </div>
         )}
       </div>

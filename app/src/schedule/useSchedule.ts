@@ -30,7 +30,9 @@ export function useSchedule(url = '/schedule.json'): UseScheduleResult {
     fetch(url)
       .then((res) => {
         if (!res.ok) {
-          throw new Error(`Failed to load schedule: ${res.status} ${res.statusText}`)
+          throw new Error(
+            `Failed to load schedule: ${res.status} ${res.statusText}`,
+          )
         }
         return res.json() as Promise<Schedule>
       })

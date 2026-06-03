@@ -13,12 +13,12 @@
  *   - Search is scoped to the input value (clearing search restores full list)
  */
 
-import { describe, it, expect, vi } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
-import { SpeakersListView } from './SpeakersListView'
+import { fireEvent, render, screen } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
 import { ScheduleContext } from '../schedule/ScheduleContext'
-import type { Schedule } from '../types/schedule'
 import type { UseScheduleResult } from '../schedule/useSchedule'
+import type { Schedule } from '../types/schedule'
+import { SpeakersListView } from './SpeakersListView'
 
 // ---------------------------------------------------------------------------
 // Fixture schedule
@@ -154,13 +154,23 @@ function renderView({
 describe('SpeakersListView', () => {
   describe('loading / error states', () => {
     it('shows loading message while schedule is loading', () => {
-      renderView({ scheduleResult: { schedule: null, loading: true, error: null } as UseScheduleResult })
+      renderView({
+        scheduleResult: {
+          schedule: null,
+          loading: true,
+          error: null,
+        } as UseScheduleResult,
+      })
       expect(screen.getByText(/loading schedule/i)).toBeInTheDocument()
     })
 
     it('shows error message when schedule fails to load', () => {
       renderView({
-        scheduleResult: { schedule: null, loading: false, error: new Error('Network error') } as UseScheduleResult,
+        scheduleResult: {
+          schedule: null,
+          loading: false,
+          error: new Error('Network error'),
+        } as UseScheduleResult,
       })
       expect(screen.getByRole('alert')).toHaveTextContent(/network error/i)
     })
@@ -169,7 +179,9 @@ describe('SpeakersListView', () => {
   describe('speaker list', () => {
     it('renders the speakers list heading', () => {
       renderView()
-      expect(screen.getByRole('heading', { name: /speakers/i })).toBeInTheDocument()
+      expect(
+        screen.getByRole('heading', { name: /speakers/i }),
+      ).toBeInTheDocument()
     })
 
     it('shows the total speaker count in the subtitle', () => {
@@ -188,7 +200,11 @@ describe('SpeakersListView', () => {
     it('renders speakers sorted alphabetically', () => {
       renderView()
       const buttons = screen.getAllByRole('button')
-      const names = buttons.map((btn) => btn.querySelector('.speaker-list-card__name')?.textContent).filter(Boolean)
+      const names = buttons
+        .map(
+          (btn) => btn.querySelector('.speaker-list-card__name')?.textContent,
+        )
+        .filter(Boolean)
       expect(names).toEqual(['Alice Smith', 'Bob Jones', 'Zara Young'])
     })
 
@@ -218,12 +234,16 @@ describe('SpeakersListView', () => {
   describe('search', () => {
     it('renders the search input', () => {
       renderView()
-      expect(screen.getByRole('searchbox', { name: /search speakers/i })).toBeInTheDocument()
+      expect(
+        screen.getByRole('searchbox', { name: /search speakers/i }),
+      ).toBeInTheDocument()
     })
 
     it('filters speakers by name (case-insensitive)', () => {
       renderView()
-      fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'alice' } })
+      fireEvent.change(screen.getByRole('searchbox'), {
+        target: { value: 'alice' },
+      })
       expect(screen.getByText('Alice Smith')).toBeInTheDocument()
       expect(screen.queryByText('Bob Jones')).not.toBeInTheDocument()
       expect(screen.queryByText('Zara Young')).not.toBeInTheDocument()
@@ -241,14 +261,20 @@ describe('SpeakersListView', () => {
 
     it('shows no-match message when search has no results', () => {
       renderView()
-      fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'zzz-no-match' } })
+      fireEvent.change(screen.getByRole('searchbox'), {
+        target: { value: 'zzz-no-match' },
+      })
       expect(screen.getByText(/no speakers match/i)).toBeInTheDocument()
     })
 
     it('does not show the list when search has no results', () => {
       renderView()
-      fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'zzz-no-match' } })
-      expect(screen.queryByRole('list', { name: /speakers/i })).not.toBeInTheDocument()
+      fireEvent.change(screen.getByRole('searchbox'), {
+        target: { value: 'zzz-no-match' },
+      })
+      expect(
+        screen.queryByRole('list', { name: /speakers/i }),
+      ).not.toBeInTheDocument()
     })
   })
 })

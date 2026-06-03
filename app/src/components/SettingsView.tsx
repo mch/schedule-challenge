@@ -1,7 +1,7 @@
-import { PassphraseDisplay } from './PassphraseDisplay'
-import { SyncServerSettings } from './SyncServerSettings'
-import type { NetworkAdapterLike } from './SyncServerSettings'
 import { useScrollRestoration } from '../schedule/useScrollRestoration'
+import { PassphraseDisplay } from './PassphraseDisplay'
+import type { NetworkAdapterLike } from './SyncServerSettings'
+import { SyncServerSettings } from './SyncServerSettings'
 import './SettingsView.css'
 
 interface SettingsViewProps {
@@ -43,8 +43,9 @@ export function SettingsView({
       <section className="settings-view__section">
         <h3 className="settings-view__section-title">Your passphrase</h3>
         <p className="settings-view__section-desc">
-          This passphrase identifies your personal schedule and syncs it across devices.
-          Keep it somewhere safe — it&rsquo;s the only way to recover your bookmarks.
+          This passphrase identifies your personal schedule and syncs it across
+          devices. Keep it somewhere safe — it&rsquo;s the only way to recover
+          your bookmarks.
         </p>
         <PassphraseDisplay passphrase={passphrase} />
       </section>

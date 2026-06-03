@@ -41,10 +41,13 @@ function readParams(search: string): SessionListParams {
   const day = parseInt(sp.get('day') ?? '0', 10)
   const rawView = sp.get('view')
   const view: ScheduleView =
-    rawView === 'myschedule' ? 'myschedule' :
-    rawView === 'speakers' ? 'speakers' :
-    rawView === 'settings' ? 'settings' :
-    'schedule'
+    rawView === 'myschedule'
+      ? 'myschedule'
+      : rawView === 'speakers'
+        ? 'speakers'
+        : rawView === 'settings'
+          ? 'settings'
+          : 'schedule'
   return {
     view,
     day: isNaN(day) || day < 0 ? 0 : day,
@@ -54,11 +57,14 @@ function readParams(search: string): SessionListParams {
   }
 }
 
-function buildSearch(current: string, updates: Partial<SessionListParams>): string {
+function buildSearch(
+  current: string,
+  updates: Partial<SessionListParams>,
+): string {
   const sp = new URLSearchParams(current)
   if (updates.view !== undefined) {
     if (updates.view === 'schedule') sp.delete('view')
-    else sp.set('view', updates.view)  // 'myschedule' | 'speakers' | 'settings'
+    else sp.set('view', updates.view) // 'myschedule' | 'speakers' | 'settings'
   }
   if (updates.day !== undefined) {
     if (updates.day === 0) sp.delete('day')
@@ -110,7 +116,10 @@ export function useSessionListParams(): UseSessionListParamsResult {
   const setDay = useCallback((day: number) => push({ day }), [push])
   const setTag = useCallback((tag: string) => push({ tag }), [push])
   const setStage = useCallback((stage: string) => push({ stage }), [push])
-  const setSpeakersSearch = useCallback((speakersSearch: string) => push({ speakersSearch }), [push])
+  const setSpeakersSearch = useCallback(
+    (speakersSearch: string) => push({ speakersSearch }),
+    [push],
+  )
 
   return { params, setView, setDay, setTag, setStage, setSpeakersSearch }
 }

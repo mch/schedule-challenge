@@ -9,7 +9,7 @@
  *   - "handle.doc is not a function" (API mismatch: doc() became synchronous)
  *   - "Document … is unavailable" unhandled rejection (new doc not initialised)
  */
-import { test, expect, type Page, type ConsoleMessage } from '@playwright/test'
+import { type ConsoleMessage, expect, type Page, test } from '@playwright/test'
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -43,14 +43,16 @@ test.describe('App boot — first-time visitor', () => {
     await context.addInitScript(() => localStorage.clear())
   })
 
-  test('renders the identity setup screen without JS errors', async ({ page }) => {
+  test('renders the identity setup screen without JS errors', async ({
+    page,
+  }) => {
     const getErrors = collectErrors(page)
 
     await page.goto('/')
 
     // The identity setup screen should appear (first-time visitor)
     await expect(
-      page.getByRole('heading', { name: /welcome to craft 2026/i })
+      page.getByRole('heading', { name: /welcome to craft 2026/i }),
     ).toBeVisible({ timeout: 10_000 })
 
     expect(getErrors()).toEqual([])
@@ -70,21 +72,23 @@ test.describe('App boot — first-time visitor', () => {
     const errors = getErrors().filter(
       // Filter out expected network errors from the sync server not being
       // reachable in test environment
-      (e) => !e.includes('WebSocket') && !e.includes('wss://')
+      (e) => !e.includes('WebSocket') && !e.includes('wss://'),
     )
     expect(errors).toEqual([])
   })
 })
 
 test.describe('App boot — returning visitor (existing passphrase)', () => {
-  test('loads the schedule view without JS errors after confirming identity', async ({ page }) => {
+  test('loads the schedule view without JS errors after confirming identity', async ({
+    page,
+  }) => {
     const getErrors = collectErrors(page)
 
     await page.goto('/')
 
     // Wait for the identity setup UI
     await expect(
-      page.getByText(/create.*account|generate|new account/i).first()
+      page.getByText(/create.*account|generate|new account/i).first(),
     ).toBeVisible({ timeout: 10_000 })
 
     // Click "Create new account" to start the flow
@@ -95,7 +99,7 @@ test.describe('App boot — returning visitor (existing passphrase)', () => {
 
     // After confirming, the main app view should appear
     await expect(
-      page.getByRole('heading', { name: /craft 2026/i })
+      page.getByRole('heading', { name: /craft 2026/i }),
     ).toBeVisible({ timeout: 10_000 })
 
     // Allow async Automerge initialisation to complete
@@ -103,16 +107,18 @@ test.describe('App boot — returning visitor (existing passphrase)', () => {
 
     // The schedule nav tab should be visible — the main app is loaded
     await expect(
-      page.getByRole('button', { name: /schedule/i }).first()
+      page.getByRole('button', { name: /schedule/i }).first(),
     ).toBeVisible({ timeout: 5_000 })
 
     const errors = getErrors().filter(
-      (e) => !e.includes('WebSocket') && !e.includes('wss://')
+      (e) => !e.includes('WebSocket') && !e.includes('wss://'),
     )
     expect(errors).toEqual([])
   })
 
-  test('no "handle.doc is not a function" error in console', async ({ page }) => {
+  test('no "handle.doc is not a function" error in console', async ({
+    page,
+  }) => {
     const docErrors: string[] = []
 
     page.on('pageerror', (err) => {
@@ -121,7 +127,10 @@ test.describe('App boot — returning visitor (existing passphrase)', () => {
       }
     })
     page.on('console', (msg) => {
-      if (msg.type() === 'error' && msg.text().includes('handle.doc is not a function')) {
+      if (
+        msg.type() === 'error' &&
+        msg.text().includes('handle.doc is not a function')
+      ) {
         docErrors.push(msg.text())
       }
     })
@@ -133,7 +142,9 @@ test.describe('App boot — returning visitor (existing passphrase)', () => {
     expect(docErrors).toEqual([])
   })
 
-  test('no "Document … is unavailable" unhandled rejection', async ({ page }) => {
+  test('no "Document … is unavailable" unhandled rejection', async ({
+    page,
+  }) => {
     const unavailableErrors: string[] = []
 
     page.on('pageerror', (err) => {

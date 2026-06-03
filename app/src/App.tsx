@@ -1,19 +1,19 @@
 import { useState } from 'react'
-import { useIdentity } from './identity/useIdentity'
-import { IdentitySetup } from './components/IdentitySetup'
-import { SettingsView } from './components/SettingsView'
-import { SessionListView } from './components/SessionListView'
-import { SessionDetailView } from './components/SessionDetailView'
-import { SpeakerDetailView } from './components/SpeakerDetailView'
-import { PersonalScheduleView } from './components/PersonalScheduleView'
-import { SpeakersListView } from './components/SpeakersListView'
-import { useUserDoc } from './automerge/useUserDoc'
-import { useSessionDetailParam } from './schedule/useSessionDetailParam'
-import { useSpeakerParam } from './schedule/useSpeakerParam'
-import { useSessionListParams } from './schedule/useSessionListParams'
-import { OfflineBanner } from './pwa/OfflineBanner'
 import { saveSyncServerUrl } from './automerge/syncServerStorage'
+import { useUserDoc } from './automerge/useUserDoc'
+import { IdentitySetup } from './components/IdentitySetup'
+import { PersonalScheduleView } from './components/PersonalScheduleView'
+import { SessionDetailView } from './components/SessionDetailView'
+import { SessionListView } from './components/SessionListView'
+import { SettingsView } from './components/SettingsView'
+import { SpeakerDetailView } from './components/SpeakerDetailView'
+import { SpeakersListView } from './components/SpeakersListView'
 import type { NetworkAdapterLike } from './components/SyncServerSettings'
+import { useIdentity } from './identity/useIdentity'
+import { OfflineBanner } from './pwa/OfflineBanner'
+import { useSessionDetailParam } from './schedule/useSessionDetailParam'
+import { useSessionListParams } from './schedule/useSessionListParams'
+import { useSpeakerParam } from './schedule/useSpeakerParam'
 import './App.css'
 
 interface AppProps {
@@ -40,7 +40,11 @@ function App({ initialSyncServerUrl, initialNetworkAdapter }: AppProps) {
   const { speakerSlug, openSpeaker, closeSpeaker } = useSpeakerParam()
 
   if (identity.status === 'loading') {
-    return <div className="app-loading" aria-live="polite">Loading…</div>
+    return (
+      <div className="app-loading" aria-live="polite">
+        Loading…
+      </div>
+    )
   }
 
   if (identity.status === 'new') {
@@ -69,14 +73,22 @@ function App({ initialSyncServerUrl, initialNetworkAdapter }: AppProps) {
           <button
             className={`app-nav-tab${view === 'schedule' ? ' app-nav-tab--active' : ''}`}
             aria-pressed={view === 'schedule'}
-            onClick={() => { closeSession(); closeSpeaker(); setView('schedule') }}
+            onClick={() => {
+              closeSession()
+              closeSpeaker()
+              setView('schedule')
+            }}
           >
             Schedule
           </button>
           <button
             className={`app-nav-tab${view === 'myschedule' ? ' app-nav-tab--active' : ''}`}
             aria-pressed={view === 'myschedule'}
-            onClick={() => { closeSession(); closeSpeaker(); setView('myschedule') }}
+            onClick={() => {
+              closeSession()
+              closeSpeaker()
+              setView('myschedule')
+            }}
           >
             My Schedule
             {doc !== null && doc.bookmarks.length > 0 && (
@@ -86,7 +98,11 @@ function App({ initialSyncServerUrl, initialNetworkAdapter }: AppProps) {
           <button
             className={`app-nav-tab${view === 'speakers' ? ' app-nav-tab--active' : ''}`}
             aria-pressed={view === 'speakers'}
-            onClick={() => { closeSession(); closeSpeaker(); setView('speakers') }}
+            onClick={() => {
+              closeSession()
+              closeSpeaker()
+              setView('speakers')
+            }}
           >
             Speakers
           </button>
@@ -94,7 +110,11 @@ function App({ initialSyncServerUrl, initialNetworkAdapter }: AppProps) {
             className={`app-nav-tab app-nav-tab--gear${view === 'settings' ? ' app-nav-tab--active' : ''}`}
             aria-pressed={view === 'settings'}
             aria-label="Settings"
-            onClick={() => { closeSession(); closeSpeaker(); setView('settings') }}
+            onClick={() => {
+              closeSession()
+              closeSpeaker()
+              setView('settings')
+            }}
           >
             ⚙
           </button>

@@ -1,6 +1,6 @@
-import { WORDLIST } from './wordlist'
-import { stringifyAutomergeUrl } from '@automerge/automerge-repo'
 import type { AutomergeUrl, BinaryDocumentId } from '@automerge/automerge-repo'
+import { stringifyAutomergeUrl } from '@automerge/automerge-repo'
+import { WORDLIST } from './wordlist'
 
 const WORD_COUNT = 4
 
@@ -21,11 +21,17 @@ export function generatePassphrase(): string {
  * Uses SHA-256 of the UTF-8 passphrase; takes the first 16 bytes as the
  * binary document ID and encodes it as a bs58check-based Automerge URL.
  */
-export async function passphraseToDocId(passphrase: string): Promise<AutomergeUrl> {
+export async function passphraseToDocId(
+  passphrase: string,
+): Promise<AutomergeUrl> {
   const encoder = new TextEncoder()
   const data = encoder.encode(passphrase)
   const hashBuffer = await crypto.subtle.digest('SHA-256', data)
   // Use first 16 bytes as document ID (same size as a UUID)
-  const binaryDocId = new Uint8Array(hashBuffer, 0, 16) as unknown as BinaryDocumentId
+  const binaryDocId = new Uint8Array(
+    hashBuffer,
+    0,
+    16,
+  ) as unknown as BinaryDocumentId
   return stringifyAutomergeUrl(binaryDocId)
 }

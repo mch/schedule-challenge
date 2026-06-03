@@ -22,21 +22,28 @@
  *     of talk.description
  */
 
-import { describe, it, expect, vi } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
-import { SessionDetailView } from './SessionDetailView'
-import { ScheduleContext } from '../schedule/ScheduleContext'
-import type { Schedule } from '../types/schedule'
-import type { UseScheduleResult } from '../schedule/useSchedule'
-import type { UserDocument } from '../types/user-document'
 import type { DocHandle } from '@automerge/automerge-repo'
+import { fireEvent, render, screen } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
+import { ScheduleContext } from '../schedule/ScheduleContext'
+import type { UseScheduleResult } from '../schedule/useSchedule'
+import type { Schedule } from '../types/schedule'
+import type { UserDocument } from '../types/user-document'
+import { SessionDetailView } from './SessionDetailView'
 
 // ---------------------------------------------------------------------------
 // Fixture schedule
 // ---------------------------------------------------------------------------
 
 const FIXTURE_SCHEDULE: Schedule = {
-  conference: { id: 'craft', name: 'Craft', year: 2026, date: 'June 4-5', location: 'Budapest', domain: 'craft-conf.com' },
+  conference: {
+    id: 'craft',
+    name: 'Craft',
+    year: 2026,
+    date: 'June 4-5',
+    location: 'Budapest',
+    domain: 'craft-conf.com',
+  },
   days: [
     {
       id: 1,
@@ -127,7 +134,9 @@ const FIXTURE_SCHEDULE: Schedule = {
 // Helpers
 // ---------------------------------------------------------------------------
 
-function makeScheduleResult(overrides?: Partial<UseScheduleResult>): UseScheduleResult {
+function makeScheduleResult(
+  overrides?: Partial<UseScheduleResult>,
+): UseScheduleResult {
   return {
     schedule: FIXTURE_SCHEDULE,
     loading: false,
@@ -185,12 +194,20 @@ function renderDetail({
 describe('SessionDetailView', () => {
   describe('loading / error states', () => {
     it('shows loading message while schedule is loading', () => {
-      renderDetail({ scheduleResult: { schedule: null, loading: true, error: null } })
+      renderDetail({
+        scheduleResult: { schedule: null, loading: true, error: null },
+      })
       expect(screen.getByText(/loading schedule/i)).toBeInTheDocument()
     })
 
     it('shows error message when schedule fails to load', () => {
-      renderDetail({ scheduleResult: { schedule: null, loading: false, error: new Error('Network error') } as UseScheduleResult })
+      renderDetail({
+        scheduleResult: {
+          schedule: null,
+          loading: false,
+          error: new Error('Network error'),
+        } as UseScheduleResult,
+      })
       expect(screen.getByRole('alert')).toHaveTextContent(/network error/i)
     })
   })
@@ -203,14 +220,18 @@ describe('SessionDetailView', () => {
 
     it('shows back button in not-found state', () => {
       renderDetail({ slotId: 9999 })
-      expect(screen.getByRole('button', { name: /back to schedule/i })).toBeInTheDocument()
+      expect(
+        screen.getByRole('button', { name: /back to schedule/i }),
+      ).toBeInTheDocument()
     })
   })
 
   describe('session details', () => {
     it('renders the session title', () => {
       renderDetail()
-      expect(screen.getByRole('heading', { name: 'Opening Keynote' })).toBeInTheDocument()
+      expect(
+        screen.getByRole('heading', { name: 'Opening Keynote' }),
+      ).toBeInTheDocument()
     })
 
     it('renders time range', () => {
@@ -238,7 +259,9 @@ describe('SessionDetailView', () => {
       // The description must come from talk.description, not talk.topic.
       // talk.topic is a category string like "craft", not the human-readable description.
       renderDetail()
-      expect(screen.getByText('The real talk description from the website.')).toBeInTheDocument()
+      expect(
+        screen.getByText('The real talk description from the website.'),
+      ).toBeInTheDocument()
     })
 
     it('does not render the topic string "craft" as the description', () => {
@@ -247,8 +270,9 @@ describe('SessionDetailView', () => {
       renderDetail()
       // The word "craft" may appear elsewhere (e.g. tags), but it must not appear
       // inside the "About this session" section.
-      const aboutSection = screen.queryByRole('region', { name: /about this session/i })
-        ?? screen.queryByText(/about this session/i)?.closest('section')
+      const aboutSection =
+        screen.queryByRole('region', { name: /about this session/i }) ??
+        screen.queryByText(/about this session/i)?.closest('section')
       if (aboutSection) {
         expect(aboutSection).not.toHaveTextContent(/^craft$/)
       }
@@ -268,8 +292,12 @@ describe('SessionDetailView', () => {
 
     it('renders resource links', () => {
       renderDetail()
-      expect(screen.getByRole('link', { name: /watch video/i })).toHaveAttribute('href', 'https://video.example.com/1001')
-      expect(screen.getByRole('link', { name: /view slides/i })).toHaveAttribute('href', 'https://slides.example.com/1001')
+      expect(
+        screen.getByRole('link', { name: /watch video/i }),
+      ).toHaveAttribute('href', 'https://video.example.com/1001')
+      expect(
+        screen.getByRole('link', { name: /view slides/i }),
+      ).toHaveAttribute('href', 'https://slides.example.com/1001')
     })
 
     it('does not render resources section when no links', () => {
@@ -286,14 +314,20 @@ describe('SessionDetailView', () => {
     it('renders a link to the official session page for a talk', () => {
       renderDetail()
       const link = screen.getByRole('link', { name: /official session page/i })
-      expect(link).toHaveAttribute('href', 'https://craft-conf.com/2026/talk/opening-keynote')
+      expect(link).toHaveAttribute(
+        'href',
+        'https://craft-conf.com/2026/talk/opening-keynote',
+      )
       expect(link).toHaveAttribute('target', '_blank')
     })
 
     it('renders a link to the official session page for a workshop', () => {
       renderDetail({ slotId: 103 })
       const link = screen.getByRole('link', { name: /official session page/i })
-      expect(link).toHaveAttribute('href', 'https://craft-conf.com/2026/workshop/tdd-workshop')
+      expect(link).toHaveAttribute(
+        'href',
+        'https://craft-conf.com/2026/workshop/tdd-workshop',
+      )
     })
   })
 
@@ -310,7 +344,9 @@ describe('SessionDetailView', () => {
       // Session 102 has level: null — no level badge should appear.
       renderDetail({ slotId: 102 })
       // "general", "intermediate", "advanced" should not appear
-      expect(screen.queryByText(/\b(general|intermediate|advanced)\b/i)).not.toBeInTheDocument()
+      expect(
+        screen.queryByText(/\b(general|intermediate|advanced)\b/i),
+      ).not.toBeInTheDocument()
     })
   })
 
@@ -344,7 +380,9 @@ describe('SessionDetailView', () => {
   describe('back button', () => {
     it('renders back button', () => {
       renderDetail()
-      expect(screen.getByRole('button', { name: /back to schedule/i })).toBeInTheDocument()
+      expect(
+        screen.getByRole('button', { name: /back to schedule/i }),
+      ).toBeInTheDocument()
     })
 
     it('calls onClose when back button is clicked', () => {
@@ -359,7 +397,9 @@ describe('SessionDetailView', () => {
     it('shows unbookmarked state when session is not bookmarked', () => {
       const { handle, doc } = makeFakeHandle([])
       renderDetail({ handle, userDoc: doc })
-      const btn = screen.getByRole('button', { name: /add to personal schedule/i })
+      const btn = screen.getByRole('button', {
+        name: /add to personal schedule/i,
+      })
       expect(btn).toBeInTheDocument()
       expect(btn).toHaveAttribute('aria-pressed', 'false')
     })
@@ -367,7 +407,9 @@ describe('SessionDetailView', () => {
     it('shows bookmarked state when session is already bookmarked', () => {
       const { handle, doc } = makeFakeHandle([101])
       renderDetail({ handle, userDoc: doc })
-      const btn = screen.getByRole('button', { name: /remove from personal schedule/i })
+      const btn = screen.getByRole('button', {
+        name: /remove from personal schedule/i,
+      })
       expect(btn).toBeInTheDocument()
       expect(btn).toHaveAttribute('aria-pressed', 'true')
     })
@@ -381,7 +423,9 @@ describe('SessionDetailView', () => {
     it('calls handle.change to add bookmark when clicked while not bookmarked', () => {
       const { handle, doc } = makeFakeHandle([])
       renderDetail({ handle, userDoc: doc })
-      fireEvent.click(screen.getByRole('button', { name: /add to personal schedule/i }))
+      fireEvent.click(
+        screen.getByRole('button', { name: /add to personal schedule/i }),
+      )
       expect(handle.change).toHaveBeenCalledOnce()
       // Verify the mutation logic: slotId 101 should be added
       const callArg = vi.mocked(handle.change).mock.calls[0][0]
@@ -393,7 +437,9 @@ describe('SessionDetailView', () => {
     it('calls handle.change to remove bookmark when clicked while bookmarked', () => {
       const { handle, doc } = makeFakeHandle([101])
       renderDetail({ handle, userDoc: doc })
-      fireEvent.click(screen.getByRole('button', { name: /remove from personal schedule/i }))
+      fireEvent.click(
+        screen.getByRole('button', { name: /remove from personal schedule/i }),
+      )
       expect(handle.change).toHaveBeenCalledOnce()
       const callArg = vi.mocked(handle.change).mock.calls[0][0]
       const mutDoc = makeUserDoc([101])
@@ -405,7 +451,9 @@ describe('SessionDetailView', () => {
   describe('workshop session', () => {
     it('renders workshop title', () => {
       renderDetail({ slotId: 103 })
-      expect(screen.getByRole('heading', { name: 'Hands-on TDD Workshop' })).toBeInTheDocument()
+      expect(
+        screen.getByRole('heading', { name: 'Hands-on TDD Workshop' }),
+      ).toBeInTheDocument()
     })
 
     it('renders workshop speaker', () => {
@@ -424,27 +472,47 @@ describe('SessionDetailView', () => {
       renderDetail()
       // Names should appear as text, not buttons
       expect(screen.getByText('Alice Smith')).toBeInTheDocument()
-      expect(screen.queryByRole('button', { name: /view speaker profile: Alice Smith/i })).not.toBeInTheDocument()
+      expect(
+        screen.queryByRole('button', {
+          name: /view speaker profile: Alice Smith/i,
+        }),
+      ).not.toBeInTheDocument()
     })
 
     it('renders speaker names as buttons when onOpenSpeaker is provided', () => {
       const onOpenSpeaker = vi.fn()
       renderDetail({ onOpenSpeaker })
-      expect(screen.getByRole('button', { name: /view speaker profile: Alice Smith/i })).toBeInTheDocument()
-      expect(screen.getByRole('button', { name: /view speaker profile: Bob Jones/i })).toBeInTheDocument()
+      expect(
+        screen.getByRole('button', {
+          name: /view speaker profile: Alice Smith/i,
+        }),
+      ).toBeInTheDocument()
+      expect(
+        screen.getByRole('button', {
+          name: /view speaker profile: Bob Jones/i,
+        }),
+      ).toBeInTheDocument()
     })
 
     it('calls onOpenSpeaker with the speaker slug when a speaker button is clicked', () => {
       const onOpenSpeaker = vi.fn()
       renderDetail({ onOpenSpeaker })
-      fireEvent.click(screen.getByRole('button', { name: /view speaker profile: Alice Smith/i }))
+      fireEvent.click(
+        screen.getByRole('button', {
+          name: /view speaker profile: Alice Smith/i,
+        }),
+      )
       expect(onOpenSpeaker).toHaveBeenCalledWith('alice-smith')
     })
 
     it('calls onOpenSpeaker with the correct slug for a second speaker', () => {
       const onOpenSpeaker = vi.fn()
       renderDetail({ onOpenSpeaker })
-      fireEvent.click(screen.getByRole('button', { name: /view speaker profile: Bob Jones/i }))
+      fireEvent.click(
+        screen.getByRole('button', {
+          name: /view speaker profile: Bob Jones/i,
+        }),
+      )
       expect(onOpenSpeaker).toHaveBeenCalledWith('bob-jones')
     })
   })

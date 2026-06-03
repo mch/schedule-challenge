@@ -25,14 +25,20 @@ export function useScrollRestoration() {
   // Restore on mount (handles both fresh page loads and back-navigation)
   useEffect(() => {
     const saved = window.history.state?.scrollY
-    window.scrollTo({ top: typeof saved === 'number' ? saved : 0, behavior: 'instant' })
+    window.scrollTo({
+      top: typeof saved === 'number' ? saved : 0,
+      behavior: 'instant',
+    })
   }, [])
 
   // Restore on popstate (back / forward button)
   useEffect(() => {
     function onPopState(e: PopStateEvent) {
       const saved = (e.state as { scrollY?: number } | null)?.scrollY
-      window.scrollTo({ top: typeof saved === 'number' ? saved : 0, behavior: 'instant' })
+      window.scrollTo({
+        top: typeof saved === 'number' ? saved : 0,
+        behavior: 'instant',
+      })
     }
     window.addEventListener('popstate', onPopState)
     return () => window.removeEventListener('popstate', onPopState)
