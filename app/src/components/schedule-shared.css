@@ -333,7 +333,8 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 20px 12px 6px;
+  padding: 20px 0 6px;
+  padding-left: 12px;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -348,7 +349,8 @@
   }
 
   @media (max-width: 600px) {
-    padding: 16px 8px 4px;
+    padding: 16px 0 4px;
+    padding-left: 0;
   }
 }
 
