@@ -169,3 +169,9 @@
 
 - [x] Bug: I have to hit back twice to get back to the session list after clicking into a session.
   - Fixed: `closeSession` and `closeSpeaker` now use `replaceState` instead of `pushState`, so closing a detail view no longer adds a spurious history entry.
+
+- [ ] Project hygiene
+   - [ ] Run `npx eslint --fix` or equivalent across `app/src/` to remove trailing whitespace from all source files. Trailing whitespace on lines like `    })` causes the `edit` tool to fail matching `oldText` because the tool captures trailing spaces but humans don't see them.
+      - macOS `cat -A` doesn't work (Illegal option). Use `sed -n 'N,Mp' file | catvet` to see whitespace, or `grep -P '\s+$' file` to find trailing whitespace.
+   - [ ] Convert any tab-using files to spaces (indent with 2 spaces consistently — matching project convention)
+   - [ ] Consider adding a pre-format hook in `app/` (e.g., ESLint with `prettier` plugin or standalone Biome) to prevent regression
