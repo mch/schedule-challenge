@@ -339,7 +339,6 @@
   top: 0;
   z-index: 10;
   background: var(--bg);
-  border-bottom: 2px solid var(--accent);
 
   &::after {
     content: '';
