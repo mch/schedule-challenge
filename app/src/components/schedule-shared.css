@@ -343,8 +343,8 @@
   &::before {
     content: '';
     flex: 0 0 24px;
-    height: 2px;
-    background: var(--accent);
+    height: 1px;
+    background: var(--accent-border);
     margin-left: -12px;
   }
 
