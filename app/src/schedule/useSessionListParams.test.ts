@@ -157,6 +157,44 @@ describe('useSessionListParams', () => {
     })
   })
 
+  describe('speakersSearch', () => {
+    it('returns empty string for speakersSearch by default', () => {
+      const { result } = renderHook(() => useSessionListParams())
+      expect(result.current.params.speakersSearch).toBe('')
+    })
+
+    it('reads speakersSearch from the URL on mount', () => {
+      window.history.replaceState(null, '', '/?speakersSearch=alice')
+      const { result } = renderHook(() => useSessionListParams())
+      expect(result.current.params.speakersSearch).toBe('alice')
+    })
+
+    it('setSpeakersSearch sets the param in the URL', () => {
+      const { result } = renderHook(() => useSessionListParams())
+      act(() => result.current.setSpeakersSearch('gregor'))
+      expect(result.current.params.speakersSearch).toBe('gregor')
+      expect(window.location.search).toContain('speakersSearch=gregor')
+    })
+
+    it('omits speakersSearch from URL when set to empty string', () => {
+      window.history.replaceState(null, '', '/?speakersSearch=gregor')
+      const { result } = renderHook(() => useSessionListParams())
+      act(() => result.current.setSpeakersSearch(''))
+      expect(result.current.params.speakersSearch).toBe('')
+      expect(window.location.search).not.toContain('speakersSearch')
+    })
+
+    it('preserves other params when setting speakersSearch', () => {
+      window.history.replaceState(null, '', '/?view=speakers&day=1')
+      const { result } = renderHook(() => useSessionListParams())
+      act(() => result.current.setSpeakersSearch('bob'))
+      const sp = new URLSearchParams(window.location.search)
+      expect(sp.get('speakersSearch')).toBe('bob')
+      expect(sp.get('view')).toBe('speakers')
+      expect(sp.get('day')).toBe('1')
+    })
+  })
+
   describe('popstate', () => {
     it('re-reads params when popstate fires', () => {
       const { result } = renderHook(() => useSessionListParams())

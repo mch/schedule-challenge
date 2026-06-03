@@ -6,6 +6,7 @@ import { SessionListView } from './components/SessionListView'
 import { SessionDetailView } from './components/SessionDetailView'
 import { SpeakerDetailView } from './components/SpeakerDetailView'
 import { PersonalScheduleView } from './components/PersonalScheduleView'
+import { SpeakersListView } from './components/SpeakersListView'
 import { useUserDoc } from './automerge/useUserDoc'
 import { useSessionDetailParam } from './schedule/useSessionDetailParam'
 import { useSpeakerParam } from './schedule/useSpeakerParam'
@@ -54,19 +55,26 @@ function App() {
           <button
             className={`app-nav-tab${view === 'schedule' ? ' app-nav-tab--active' : ''}`}
             aria-pressed={view === 'schedule'}
-            onClick={() => { closeSession(); setView('schedule') }}
+            onClick={() => { closeSession(); closeSpeaker(); setView('schedule') }}
           >
             Schedule
           </button>
           <button
             className={`app-nav-tab${view === 'myschedule' ? ' app-nav-tab--active' : ''}`}
             aria-pressed={view === 'myschedule'}
-            onClick={() => { closeSession(); setView('myschedule') }}
+            onClick={() => { closeSession(); closeSpeaker(); setView('myschedule') }}
           >
             My Schedule
             {doc !== null && doc.bookmarks.length > 0 && (
               <span className="app-nav-tab__count">{doc.bookmarks.length}</span>
             )}
+          </button>
+          <button
+            className={`app-nav-tab${view === 'speakers' ? ' app-nav-tab--active' : ''}`}
+            aria-pressed={view === 'speakers'}
+            onClick={() => { closeSession(); closeSpeaker(); setView('speakers') }}
+          >
+            Speakers
           </button>
         </nav>
         <button
@@ -92,6 +100,8 @@ function App() {
           onClose={closeSpeaker}
           onOpenSession={handleOpenSession}
         />
+      ) : view === 'speakers' && sessionId === null ? (
+        <SpeakersListView onOpenSpeaker={handleOpenSpeaker} />
       ) : sessionId !== null ? (
         <SessionDetailView
           slotId={sessionId}

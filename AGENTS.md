@@ -77,3 +77,14 @@ New contributors should run `npm install` from the **repo root** after cloning.
 
 - Environment variables are loaded from `.env` via mise (`_.file = ".env"` in `mise.toml`).
 - `.env` is gitignored.
+
+## Development Process
+
+Use test driven development to implement small, testable changes. When fixing a bug or implementing an improvement or feature, follow this process:
+1. Explore the problem and create a list of tests.
+2. Write one failing test. No production code without a failing test. 
+3. Write just enough code to make the test pass.
+4. Refactor when opprotunities arise.
+5. Repeat from 1, adding any new tests to the list if the need arises, and iterating until all tests are implemented and passing.
+
+

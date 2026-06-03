@@ -16,13 +16,14 @@
 
 import { useCallback, useEffect, useState } from 'react'
 
-export type ScheduleView = 'schedule' | 'myschedule'
+export type ScheduleView = 'schedule' | 'myschedule' | 'speakers'
 
 export interface SessionListParams {
   view: ScheduleView
   day: number
   tag: string
   stage: string
+  speakersSearch: string
 }
 
 export interface UseSessionListParamsResult {
@@ -31,18 +32,23 @@ export interface UseSessionListParamsResult {
   setDay: (day: number) => void
   setTag: (tag: string) => void
   setStage: (stage: string) => void
+  setSpeakersSearch: (q: string) => void
 }
 
 function readParams(search: string): SessionListParams {
   const sp = new URLSearchParams(search)
   const day = parseInt(sp.get('day') ?? '0', 10)
   const rawView = sp.get('view')
-  const view: ScheduleView = rawView === 'myschedule' ? 'myschedule' : 'schedule'
+  const view: ScheduleView =
+    rawView === 'myschedule' ? 'myschedule' :
+    rawView === 'speakers' ? 'speakers' :
+    'schedule'
   return {
     view,
     day: isNaN(day) || day < 0 ? 0 : day,
     tag: sp.get('tag') ?? '',
     stage: sp.get('stage') ?? '',
+    speakersSearch: sp.get('speakersSearch') ?? '',
   }
 }
 
@@ -50,7 +56,7 @@ function buildSearch(current: string, updates: Partial<SessionListParams>): stri
   const sp = new URLSearchParams(current)
   if (updates.view !== undefined) {
     if (updates.view === 'schedule') sp.delete('view')
-    else sp.set('view', updates.view)
+    else sp.set('view', updates.view)  // 'myschedule' | 'speakers'
   }
   if (updates.day !== undefined) {
     if (updates.day === 0) sp.delete('day')
@@ -63,6 +69,10 @@ function buildSearch(current: string, updates: Partial<SessionListParams>): stri
   if (updates.stage !== undefined) {
     if (updates.stage === '') sp.delete('stage')
     else sp.set('stage', updates.stage)
+  }
+  if (updates.speakersSearch !== undefined) {
+    if (updates.speakersSearch === '') sp.delete('speakersSearch')
+    else sp.set('speakersSearch', updates.speakersSearch)
   }
   const s = sp.toString()
   return s ? `?${s}` : ''
@@ -97,6 +107,7 @@ export function useSessionListParams(): UseSessionListParamsResult {
   const setDay = useCallback((day: number) => push({ day }), [push])
   const setTag = useCallback((tag: string) => push({ tag }), [push])
   const setStage = useCallback((stage: string) => push({ stage }), [push])
+  const setSpeakersSearch = useCallback((speakersSearch: string) => push({ speakersSearch }), [push])
 
-  return { params, setView, setDay, setTag, setStage }
+  return { params, setView, setDay, setTag, setStage, setSpeakersSearch }
 }
