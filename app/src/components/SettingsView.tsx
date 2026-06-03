@@ -1,6 +1,7 @@
 import { PassphraseDisplay } from './PassphraseDisplay'
 import { SyncServerSettings } from './SyncServerSettings'
 import type { NetworkAdapterLike } from './SyncServerSettings'
+import { useScrollRestoration } from '../schedule/useScrollRestoration'
 import './SettingsView.css'
 
 interface SettingsViewProps {
@@ -20,6 +21,7 @@ export function SettingsView({
   onSyncServerUrlChange,
   networkAdapter,
 }: SettingsViewProps) {
+  useScrollRestoration()
   return (
     <div className="settings-view">
       <header className="settings-view__header">

@@ -11,6 +11,7 @@
 import { useMemo } from 'react'
 import { useScheduleContext } from '../schedule/ScheduleContext'
 import { useSessionListParams } from '../schedule/useSessionListParams'
+import { useScrollRestoration } from '../schedule/useScrollRestoration'
 import type { Schedule, Speaker } from '../types/schedule'
 import './SpeakersListView.css'
 
@@ -82,6 +83,7 @@ export interface SpeakersListViewProps {
 }
 
 export function SpeakersListView({ onOpenSpeaker }: SpeakersListViewProps) {
+  useScrollRestoration()
   const { schedule, loading, error } = useScheduleContext()
   const { params, setSpeakersSearch } = useSessionListParams()
   const search = params.speakersSearch

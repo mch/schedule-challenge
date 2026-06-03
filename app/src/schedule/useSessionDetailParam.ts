@@ -10,6 +10,7 @@
  */
 
 import { useCallback, useEffect, useState } from 'react'
+import { saveScrollToState } from './useScrollRestoration'
 
 const CHANGE_EVENT = 'session-params-change'
 
@@ -45,6 +46,7 @@ export function useSessionDetailParam(): UseSessionDetailParamResult {
   }, [])
 
   const openSession = useCallback((id: number) => {
+    saveScrollToState()
     const sp = new URLSearchParams(window.location.search)
     sp.set('session', String(id))
     window.history.pushState(null, '', `${window.location.pathname}?${sp.toString()}`)
@@ -52,6 +54,7 @@ export function useSessionDetailParam(): UseSessionDetailParamResult {
   }, [])
 
   const closeSession = useCallback(() => {
+    saveScrollToState()
     const sp = new URLSearchParams(window.location.search)
     sp.delete('session')
     const qs = sp.toString()

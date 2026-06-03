@@ -10,28 +10,15 @@
  * - Scroll position preserved on navigation and refresh
  */
 
-import { useEffect, useRef, useCallback } from 'react'
+import { useRef, useCallback } from 'react'
 import type { DocHandle } from '@automerge/automerge-repo'
 import { useScheduleContext } from '../schedule/ScheduleContext'
+import { useScrollRestoration } from '../schedule/useScrollRestoration'
 import { useSessionListParams } from '../schedule/useSessionListParams'
 import type { UserDocument } from '../types/user-document'
 import type { Day } from '../types/schedule'
 import { DayTabs, Filters } from './ScheduleShared'
 import './SessionListView.css'
-
-// ---------------------------------------------------------------------------
-// Scroll-position preservation
-// ---------------------------------------------------------------------------
-const SCROLL_KEY = 'session-list-scroll'
-
-function saveScroll() {
-  sessionStorage.setItem(SCROLL_KEY, String(window.scrollY))
-}
-
-function restoreScroll() {
-  const y = parseInt(sessionStorage.getItem(SCROLL_KEY) ?? '0', 10)
-  if (y > 0) window.scrollTo({ top: y, behavior: 'instant' })
-}
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -199,26 +186,10 @@ export function SessionListView({ onOpenSession, handle = null, userDoc = null, 
   const { params, setDay, setTag, setStage } = useSessionListParams()
   const listRef = useRef<HTMLDivElement>(null)
 
-  // Restore scroll on mount
-  useEffect(() => {
-    restoreScroll()
-  }, [])
+  useScrollRestoration()
 
-  // Save scroll on unload / visibility change
-  useEffect(() => {
-    window.addEventListener('beforeunload', saveScroll)
-    document.addEventListener('visibilitychange', saveScroll)
-    return () => {
-      window.removeEventListener('beforeunload', saveScroll)
-      document.removeEventListener('visibilitychange', saveScroll)
-    }
-  }, [])
-
-  // Save scroll when switching day / changing filters
   const handleDayChange = useCallback((index: number) => {
-    saveScroll()
     setDay(index)
-    window.scrollTo({ top: 0, behavior: 'instant' })
   }, [setDay])
 
   if (loading) {

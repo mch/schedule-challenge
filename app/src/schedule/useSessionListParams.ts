@@ -15,6 +15,7 @@
  */
 
 import { useCallback, useEffect, useState } from 'react'
+import { saveScrollToState } from './useScrollRestoration'
 
 export type ScheduleView = 'schedule' | 'myschedule' | 'speakers' | 'settings'
 
@@ -99,6 +100,7 @@ export function useSessionListParams(): UseSessionListParamsResult {
   }, [])
 
   const push = useCallback((updates: Partial<SessionListParams>) => {
+    saveScrollToState()
     const next = buildSearch(window.location.search, updates)
     window.history.pushState(null, '', window.location.pathname + next)
     window.dispatchEvent(new Event(CHANGE_EVENT))

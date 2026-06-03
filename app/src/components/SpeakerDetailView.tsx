@@ -14,6 +14,7 @@
  */
 
 import { useScheduleContext } from '../schedule/ScheduleContext'
+import { useScrollRestoration } from '../schedule/useScrollRestoration'
 import type { Day, Slot, Stage, Speaker } from '../types/schedule'
 import './SpeakerDetailView.css'
 
@@ -136,6 +137,7 @@ export function SpeakerDetailView({
   onClose,
   onOpenSession,
 }: SpeakerDetailViewProps) {
+  useScrollRestoration()
   const { schedule, loading, error } = useScheduleContext()
 
   if (loading) {

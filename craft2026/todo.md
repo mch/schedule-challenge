@@ -152,3 +152,5 @@
   - should be reflected in the url
 
 - [x] Improvement: in the schedule item, the session time should be vertically aligned to the title
+
+- [x] Improvement: scroll positions need to be saved before navigating, and restored when navigation back

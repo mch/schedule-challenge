@@ -21,6 +21,7 @@
 import { useCallback } from 'react'
 import type { DocHandle } from '@automerge/automerge-repo'
 import { useScheduleContext } from '../schedule/ScheduleContext'
+import { useScrollRestoration } from '../schedule/useScrollRestoration'
 import { useSessionListParams } from '../schedule/useSessionListParams'
 import type { UserDocument } from '../types/user-document'
 import type { Day, Slot, Stage } from '../types/schedule'
@@ -275,9 +276,10 @@ export function PersonalScheduleView({ userDoc, handle, onOpenSession, nowMs }: 
   const { schedule, loading, error } = useScheduleContext()
   const { params, setDay, setTag, setStage } = useSessionListParams()
 
+  useScrollRestoration()
+
   const handleDayChange = useCallback((index: number) => {
     setDay(index)
-    window.scrollTo({ top: 0, behavior: 'instant' })
   }, [setDay])
 
   if (loading) {

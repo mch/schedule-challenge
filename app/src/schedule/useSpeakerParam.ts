@@ -10,6 +10,7 @@
  */
 
 import { useCallback, useEffect, useState } from 'react'
+import { saveScrollToState } from './useScrollRestoration'
 
 const CHANGE_EVENT = 'session-params-change'
 
@@ -42,6 +43,7 @@ export function useSpeakerParam(): UseSpeakerParamResult {
   }, [])
 
   const openSpeaker = useCallback((slug: string) => {
+    saveScrollToState()
     const sp = new URLSearchParams(window.location.search)
     sp.set('speaker', slug)
     window.history.pushState(null, '', `${window.location.pathname}?${sp.toString()}`)
@@ -49,6 +51,7 @@ export function useSpeakerParam(): UseSpeakerParamResult {
   }, [])
 
   const closeSpeaker = useCallback(() => {
+    saveScrollToState()
     const sp = new URLSearchParams(window.location.search)
     sp.delete('speaker')
     const qs = sp.toString()

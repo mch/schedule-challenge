@@ -22,6 +22,7 @@
 
 import type { DocHandle } from '@automerge/automerge-repo'
 import { useScheduleContext } from '../schedule/ScheduleContext'
+import { useScrollRestoration } from '../schedule/useScrollRestoration'
 import type { UserDocument } from '../types/user-document'
 import type { Day, Slot, Stage } from '../types/schedule'
 import './SessionDetailView.css'
@@ -88,6 +89,7 @@ export interface SessionDetailViewProps {
 }
 
 export function SessionDetailView({ slotId, onClose, handle, userDoc, onOpenSpeaker }: SessionDetailViewProps) {
+  useScrollRestoration()
   const { schedule, loading, error } = useScheduleContext()
   const domain = schedule?.conference.domain ?? 'craft-conf.com'
   const year = schedule?.conference.year ?? 2026
