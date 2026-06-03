@@ -129,3 +129,13 @@
 - [ ] Improvement: Make the sync server configurable
   - allow selecting between my internal one and the public example one
 - [ ] Improvement: Clicking the "Craft 2026" in the top left of any page should take you to the home page and reset the filters
+- [ ] Improvement: The timeslots on the schedule should have some differentiation and should pop a little more 
+  - currently you have to keep an eye on the details within the session listings to see when the time changes 
+  - the user need is that I want to be able to see when I get to a new timeslot when I've already picked the session I want for a slot and am scrolling to the next slot.
+- [x] Improvement: move the passphrase to a separate page available through a hamburger menu 
+- [ ] Improvement: Hide the Craft 2026 header on mobile, or maybe move the tabs below it 
+- [ ] Improvement: Add a speakers list and make it searchable
+
+- [X] Bug: offline mode doesn't seem to be working
+  - opening the PWA when it has been saved to home screen fails
+  - if the app is already loaded when going offline, it seems fine 

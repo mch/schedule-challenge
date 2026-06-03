@@ -1,6 +1,7 @@
+import { useState } from 'react'
 import { useIdentity } from './identity/useIdentity'
 import { IdentitySetup } from './components/IdentitySetup'
-import { PassphraseDisplay } from './components/PassphraseDisplay'
+import { SettingsView } from './components/SettingsView'
 import { SessionListView } from './components/SessionListView'
 import { SessionDetailView } from './components/SessionDetailView'
 import { SpeakerDetailView } from './components/SpeakerDetailView'
@@ -14,6 +15,7 @@ import './App.css'
 
 function App() {
   const { identity, confirm, generateNew } = useIdentity()
+  const [settingsOpen, setSettingsOpen] = useState(false)
   const { params, setView } = useSessionListParams()
   const view = params.view
 
@@ -67,9 +69,24 @@ function App() {
             )}
           </button>
         </nav>
-        <PassphraseDisplay passphrase={identity.passphrase} />
+        <button
+          type="button"
+          className="app-hamburger"
+          aria-label="Open settings"
+          aria-expanded={settingsOpen}
+          onClick={() => setSettingsOpen(true)}
+        >
+          <span className="app-hamburger__bar" />
+          <span className="app-hamburger__bar" />
+          <span className="app-hamburger__bar" />
+        </button>
       </header>
-      {speakerSlug !== null ? (
+      {settingsOpen ? (
+        <SettingsView
+          passphrase={identity.passphrase}
+          onClose={() => setSettingsOpen(false)}
+        />
+      ) : speakerSlug !== null ? (
         <SpeakerDetailView
           speakerSlug={speakerSlug}
           onClose={closeSpeaker}
