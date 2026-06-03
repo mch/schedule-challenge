@@ -40,7 +40,7 @@
 .session-card__bookmark {
   display: flex;
   align-items: flex-start;
-  padding-top: 2px;
+  align-self: start;
   padding-right: 4px;
 }
 

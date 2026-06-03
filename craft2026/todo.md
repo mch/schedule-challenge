@@ -150,3 +150,5 @@
 - [x] Improvement: Make settings a real page that works the same way as schedule, speakers, etc. 
   - replace the hamburger menu with a gear icon 
   - should be reflected in the url
+
+- [x] Improvement: in the schedule item, the session time should be vertically aligned to the title
