@@ -9,7 +9,6 @@ const PASSPHRASE = 'able-acid-aged-also'
 function defaultProps(overrides = {}) {
   return {
     passphrase: PASSPHRASE,
-    onClose: () => {},
     syncServerUrl: PUBLIC_SYNC_SERVER_URL,
     onSyncServerUrlChange: vi.fn(),
     networkAdapter: null,
@@ -28,17 +27,9 @@ describe('SettingsView', () => {
     expect(screen.getByRole('button', { name: /reveal passphrase/i })).toBeInTheDocument()
   })
 
-  it('calls onClose when the close button is clicked', async () => {
-    const user = userEvent.setup()
-    const onClose = vi.fn()
-    render(<SettingsView {...defaultProps({ onClose })} />)
-    await user.click(screen.getByRole('button', { name: /close settings/i }))
-    expect(onClose).toHaveBeenCalledOnce()
-  })
-
-  it('has role="dialog" for accessibility', () => {
+  it('does not render a close button (navigation is used instead)', () => {
     render(<SettingsView {...defaultProps()} />)
-    expect(screen.getByRole('dialog', { name: /settings/i })).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /close settings/i })).not.toBeInTheDocument()
   })
 
   it('renders the sync server settings section', () => {

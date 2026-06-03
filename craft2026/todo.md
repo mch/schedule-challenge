@@ -146,3 +146,7 @@
 
 - [x] Improvement: the styling of "Schedule" and "My Schedule" are subtly different.
   - Extract common styles for reuse
+
+- [x] Improvement: Make settings a real page that works the same way as schedule, speakers, etc. 
+  - replace the hamburger menu with a gear icon 
+  - should be reflected in the url

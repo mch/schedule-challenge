@@ -16,7 +16,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 
-export type ScheduleView = 'schedule' | 'myschedule' | 'speakers'
+export type ScheduleView = 'schedule' | 'myschedule' | 'speakers' | 'settings'
 
 export interface SessionListParams {
   view: ScheduleView
@@ -42,6 +42,7 @@ function readParams(search: string): SessionListParams {
   const view: ScheduleView =
     rawView === 'myschedule' ? 'myschedule' :
     rawView === 'speakers' ? 'speakers' :
+    rawView === 'settings' ? 'settings' :
     'schedule'
   return {
     view,
@@ -56,7 +57,7 @@ function buildSearch(current: string, updates: Partial<SessionListParams>): stri
   const sp = new URLSearchParams(current)
   if (updates.view !== undefined) {
     if (updates.view === 'schedule') sp.delete('view')
-    else sp.set('view', updates.view)  // 'myschedule' | 'speakers'
+    else sp.set('view', updates.view)  // 'myschedule' | 'speakers' | 'settings'
   }
   if (updates.day !== undefined) {
     if (updates.day === 0) sp.delete('day')

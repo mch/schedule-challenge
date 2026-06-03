@@ -195,6 +195,21 @@ describe('useSessionListParams', () => {
     })
   })
 
+  describe('settings view', () => {
+    it('reads view=settings from URL', () => {
+      window.history.replaceState(null, '', '/?view=settings')
+      const { result } = renderHook(() => useSessionListParams())
+      expect(result.current.params.view).toBe('settings')
+    })
+
+    it('sets view=settings in the URL', () => {
+      const { result } = renderHook(() => useSessionListParams())
+      act(() => result.current.setView('settings'))
+      expect(result.current.params.view).toBe('settings')
+      expect(window.location.search).toContain('view=settings')
+    })
+  })
+
   describe('popstate', () => {
     it('re-reads params when popstate fires', () => {
       const { result } = renderHook(() => useSessionListParams())

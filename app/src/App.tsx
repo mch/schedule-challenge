@@ -23,7 +23,6 @@ interface AppProps {
 
 function App({ initialSyncServerUrl, initialNetworkAdapter }: AppProps) {
   const { identity, confirm, generateNew } = useIdentity()
-  const [settingsOpen, setSettingsOpen] = useState(false)
   const [syncServerUrl, setSyncServerUrl] = useState(initialSyncServerUrl)
 
   function handleSyncServerUrlChange(url: string) {
@@ -54,7 +53,7 @@ function App({ initialSyncServerUrl, initialNetworkAdapter }: AppProps) {
     openSession(slotId)
     closeSpeaker()
     // Make sure we're showing the schedule view when a session detail opens
-    if (view !== 'schedule') setView('schedule')
+    if (view !== 'schedule' && view !== 'myschedule') setView('schedule')
   }
 
   function handleOpenSpeaker(slug: string) {
@@ -91,23 +90,19 @@ function App({ initialSyncServerUrl, initialNetworkAdapter }: AppProps) {
           >
             Speakers
           </button>
+          <button
+            className={`app-nav-tab app-nav-tab--gear${view === 'settings' ? ' app-nav-tab--active' : ''}`}
+            aria-pressed={view === 'settings'}
+            aria-label="Settings"
+            onClick={() => { closeSession(); closeSpeaker(); setView('settings') }}
+          >
+            ⚙
+          </button>
         </nav>
-        <button
-          type="button"
-          className="app-hamburger"
-          aria-label="Open settings"
-          aria-expanded={settingsOpen}
-          onClick={() => setSettingsOpen(true)}
-        >
-          <span className="app-hamburger__bar" />
-          <span className="app-hamburger__bar" />
-          <span className="app-hamburger__bar" />
-        </button>
       </header>
-      {settingsOpen ? (
+      {view === 'settings' ? (
         <SettingsView
           passphrase={identity.passphrase}
-          onClose={() => setSettingsOpen(false)}
           syncServerUrl={syncServerUrl}
           onSyncServerUrlChange={handleSyncServerUrlChange}
           networkAdapter={initialNetworkAdapter}
