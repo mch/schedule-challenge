@@ -63,19 +63,17 @@ $DIAGNOSTIC
 
 Instructions:
 - Fix only this one issue. Do not change anything else.
-- After editing, run the following to ensure the issue is gone and the fix doesn't have problems:
-  - \`npm run checkstyle\` (from app/) to verify the issue is gone.
+- After editing, run the following to ensure the issue is gone and the fix doesn\'t have problems:
   - \`npm run build\` (from app/) to verify it still compiles correctly.
   - \`npm run test:run\` (from app/) to verify no unit tests break.
-- If the rule violation cannot be fixed without breaking correctness, add a biome
-  suppression comment (\`// biome-ignore <rule>: <reason>\`) as a last resort.
+- Commit the change.
 EOF
 )
 
   # ── 5. Invoke Pi ────────────────────────────────────────────────────────────
   echo "🤖  Asking Pi to fix: [$CATEGORY] in $FILE_PATH:$START_LINE"
   cd "$APP_DIR"
-  pi --print --no-session "$PROMPT"
+  pi --print "$PROMPT"
 }
 
 # ── Entry point ────────────────────────────────────────────────────────────────
