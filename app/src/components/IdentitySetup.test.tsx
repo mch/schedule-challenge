@@ -69,7 +69,7 @@ describe('IdentitySetup — create screen', () => {
     await user.click(
       screen.getByRole('button', { name: /create new account/i }),
     )
-    expect(screen.getByLabelText(/your passphrase/i)).toHaveTextContent(
+    expect(document.querySelector('code')).toHaveTextContent(
       'able-acid-aged-also',
     )
   })

@@ -211,9 +211,9 @@ describe('SpeakersListView', () => {
     it('shows session count for each speaker', () => {
       renderView()
       // Alice has 2 sessions (Day 1 + Day 2)
-      expect(screen.getByLabelText('2 sessions')).toBeInTheDocument()
+      expect(screen.getByText('2 sessions')).toBeInTheDocument()
       // Bob and Zara each have 1
-      expect(screen.getAllByLabelText('1 session').length).toBe(2)
+      expect(screen.getAllByText('1 session').length).toBe(2)
     })
 
     it('calls onOpenSpeaker with the correct slug when a card is clicked', () => {

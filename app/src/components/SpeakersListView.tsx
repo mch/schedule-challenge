@@ -67,11 +67,7 @@ function SpeakerCard({ speaker, onOpen }: SpeakerCardProps) {
         aria-label={`View ${speaker.name}'s sessions`}
       >
         <span className="speaker-list-card__name">{speaker.name}</span>
-        <span
-          role="img"
-          className="speaker-list-card__count"
-          aria-label={`${speaker.sessionCount} session${speaker.sessionCount !== 1 ? 's' : ''}`}
-        >
+        <span className="speaker-list-card__count">
           {speaker.sessionCount} session{speaker.sessionCount !== 1 ? 's' : ''}
         </span>
       </button>

@@ -15,8 +15,10 @@ describe('PassphraseDisplay', () => {
 
   it('passphrase is blurred by default', () => {
     render(<PassphraseDisplay passphrase={PASSPHRASE} />)
-    const code = screen.getByLabelText(/passphrase hidden/i)
+    // Element is hidden from the accessibility tree when blurred
+    const code = document.querySelector('.passphrase-display__value')
     expect(code).toHaveStyle({ filter: 'blur(6px)' })
+    expect(code).toHaveAttribute('aria-hidden', 'true')
   })
 
   it('copy button is disabled when passphrase is hidden', () => {
@@ -30,8 +32,9 @@ describe('PassphraseDisplay', () => {
     const user = userEvent.setup()
     render(<PassphraseDisplay passphrase={PASSPHRASE} />)
     await user.click(screen.getByRole('button', { name: /reveal passphrase/i }))
-    const code = screen.getByLabelText(/your passphrase/i)
+    const code = document.querySelector('.passphrase-display__value')
     expect(code).toHaveStyle({ filter: 'none' })
+    expect(code).toHaveAttribute('aria-hidden', 'false')
   })
 
   it('clicking reveal enables the copy button', async () => {
@@ -48,8 +51,10 @@ describe('PassphraseDisplay', () => {
     render(<PassphraseDisplay passphrase={PASSPHRASE} />)
     await user.click(screen.getByRole('button', { name: /reveal passphrase/i }))
     await user.click(screen.getByRole('button', { name: /hide passphrase/i }))
-    const code = screen.getByLabelText(/passphrase hidden/i)
+    // Element returns to hidden from the accessibility tree
+    const code = document.querySelector('.passphrase-display__value')
     expect(code).toHaveStyle({ filter: 'blur(6px)' })
+    expect(code).toHaveAttribute('aria-hidden', 'true')
   })
 
   it('clicking copy calls clipboard.writeText with the passphrase', async () => {
