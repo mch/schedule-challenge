@@ -1,6 +1,6 @@
 import { mkdirSync, readFileSync, rmSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { expect, test } from "@playwright/test";
+import { type Page, expect, test } from "@playwright/test";
 import libCoverage from "istanbul-lib-coverage";
 import libReport from "istanbul-lib-report";
 import reports from "istanbul-reports";
@@ -87,95 +87,171 @@ async function writeCoverageReport(
   reports.create("text-summary").execute(context);
 }
 
+// ---------------------------------------------------------------------------
+// Shared page — created once, reused across all tests in this suite.
+// Coverage is started before account setup and written after all tests run.
+// ---------------------------------------------------------------------------
+
 test.describe("app routes", () => {
-  test("hits all routes", async ({ page }) => {
-    await page.coverage.startJSCoverage();
+  test.describe.configure({ mode: "serial" });
 
-    await page.goto("/");
-    await page.getByRole("button", { name: "Create new account" }).click();
-    await page.getByRole("button", { name: /saved it/i }).click();
-    // After confirming, the main app view should appear
+  let sharedPage: Page;
+
+  test.beforeAll(async ({ browser }) => {
+    sharedPage = await browser.newPage();
+    await sharedPage.coverage.startJSCoverage({
+      resetOnNavigation: false,
+    });
+
+    // Create a new account and wait for the main app to be ready.
+    await sharedPage.goto("/");
+    await sharedPage
+      .getByRole("button", { name: "Create new account" })
+      .click();
+    await sharedPage.getByRole("button", { name: /saved it/i }).click();
     await expect(
-      page.getByRole("heading", { name: /craft 2026/i }),
+      sharedPage.getByRole("heading", { name: /craft 2026/i }),
     ).toBeVisible({ timeout: 10_000 });
-
     // Allow async Automerge initialisation to complete
-    await page.waitForTimeout(2_000);
-
-    // The schedule nav tab should be visible — the main app is loaded
+    await sharedPage.waitForTimeout(2_000);
     await expect(
-      page.getByRole("button", { name: /schedule/i }).first(),
+      sharedPage.getByRole("button", { name: /schedule/i }).first(),
     ).toBeVisible({ timeout: 5_000 });
+  });
 
-    // Visit through the URL
-    await page.goto("/?view=schedule"); // Should be the same as /
-    await page.goto("/?view=myschedule");
-    await page.goto("/?view=speakers");
-    await expect(page.getByRole("heading", { name: /Speakers/ })).toBeVisible({
-      timeout: 2_000,
-    });
-    await page.goto("/?view=settings");
-    await expect(page.getByRole("heading", { name: /Settings/ })).toBeVisible({
-      timeout: 2_000,
-    });
-    await page.goto("/?session=616");
-    await expect(
-      page.getByRole("heading", { name: /Slow down to speed up/ }),
-    ).toBeVisible({
-      timeout: 2_000,
-    });
-    await page.goto("/?speaker=gergely-orosz");
-    await expect(
-      page.getByRole("heading", { name: /Gergely Orosz/ }),
-    ).toBeVisible({
-      timeout: 2_000,
-    });
-
-    // Visit the pages by clicking the buttons
-    await page.getByRole("button", { name: "Settings" }).click();
-    await expect(page.getByRole("heading", { name: /Settings/ })).toBeVisible({
-      timeout: 2_000,
-    });
-    await page.getByRole("button", { name: "Speakers" }).click();
-    await page
-      .getByRole("button", { name: "View Aaron Erickson's sessions" })
-      .click();
-    await expect(
-      page.getByRole("heading", { name: /Aaron Erickson/ }),
-    ).toBeVisible({
-      timeout: 2_000,
-    });
-    // Bookmark the first session on Day 1 and verify it appears in My Schedule
-    await page.getByRole("button", { name: "Schedule", exact: true }).click();
-    // Wait for the session list to load
-    const firstCard = page.getByRole("article").first();
-    const firstCardLabel = await firstCard.getAttribute("aria-label");
-    const firstSessionTitle = firstCardLabel?.replace(/^View details for /, "") ?? "";
-    await firstCard
-      .getByRole("button", { name: "Add to personal schedule" })
-      .click();
-    await page.getByRole("button", { name: "My Schedule" }).click();
-    // The bookmarked session should appear on the My Schedule page
-    await expect(
-      page.getByRole("article", {
-        name: `View details for ${firstSessionTitle}`,
-      }),
-    ).toBeVisible({ timeout: 5_000 });
-
-    await page.getByRole("button", { name: "Schedule", exact: true }).click();
-    await page
-      .getByRole("article", {
-        name: "View details for Slow down to speed up",
-        exact: true,
-      })
-      .click();
-    await expect(
-      page.getByRole("heading", { name: /Slow down to speed up/ }),
-    ).toBeVisible({
-      timeout: 2_000,
-    });
-
-    const coverage = await page.coverage.stopJSCoverage();
+  test.afterAll(async () => {
+    const coverage = await sharedPage.coverage.stopJSCoverage();
     await writeCoverageReport(coverage, resolve(process.cwd(), "coverage"));
+    await sharedPage.close();
+  });
+
+  test.describe("Schedule view", () => {
+    test("loads via URL (?view=schedule)", async () => {
+      await sharedPage.goto("/?view=schedule");
+      await expect(
+        sharedPage.getByRole("button", { name: "Schedule", exact: true }),
+      ).toBeVisible({ timeout: 5_000 });
+    });
+
+    test("loads via nav button click", async () => {
+      await sharedPage.goto("/");
+      await sharedPage
+        .getByRole("button", { name: "Schedule", exact: true })
+        .click();
+      await expect(
+        sharedPage.getByRole("button", { name: "Schedule", exact: true }),
+      ).toBeVisible({ timeout: 5_000 });
+    });
+  });
+
+  test.describe("My Schedule view", () => {
+    test("loads via URL (?view=myschedule)", async () => {
+      await sharedPage.goto("/?view=myschedule");
+      await expect(
+        sharedPage.getByRole("button", { name: "My Schedule" }),
+      ).toBeVisible({ timeout: 5_000 });
+    });
+
+    test("loads via nav button click and shows bookmarked session", async () => {
+      // Bookmark a session from the main schedule first
+      await sharedPage.goto("/");
+      await sharedPage
+        .getByRole("button", { name: "Schedule", exact: true })
+        .click();
+      const firstCard = sharedPage.getByRole("article").first();
+      const firstCardLabel = await firstCard.getAttribute("aria-label");
+      const firstSessionTitle =
+        firstCardLabel?.replace(/^View details for /, "") ?? "";
+      await firstCard
+        .getByRole("button", { name: "Add to personal schedule" })
+        .click();
+
+      // Navigate to My Schedule via the nav button
+      await sharedPage.getByRole("button", { name: "My Schedule" }).click();
+      await expect(
+        sharedPage.getByRole("article", {
+          name: `View details for ${firstSessionTitle}`,
+        }),
+      ).toBeVisible({ timeout: 5_000 });
+    });
+  });
+
+  test.describe("Speakers view", () => {
+    test("loads via URL (?view=speakers)", async () => {
+      await sharedPage.goto("/?view=speakers");
+      await expect(
+        sharedPage.getByRole("heading", { name: /Speakers/ }),
+      ).toBeVisible({ timeout: 5_000 });
+    });
+
+    test("loads via nav button click", async () => {
+      await sharedPage.goto("/");
+      await sharedPage.getByRole("button", { name: "Speakers" }).click();
+      await expect(
+        sharedPage.getByRole("heading", { name: /Speakers/ }),
+      ).toBeVisible({ timeout: 5_000 });
+    });
+  });
+
+  test.describe("Settings view", () => {
+    test("loads via URL (?view=settings)", async () => {
+      await sharedPage.goto("/?view=settings");
+      await expect(
+        sharedPage.getByRole("heading", { name: /Settings/ }),
+      ).toBeVisible({ timeout: 5_000 });
+    });
+
+    test("loads via nav button click", async () => {
+      await sharedPage.goto("/");
+      await sharedPage.getByRole("button", { name: "Settings" }).click();
+      await expect(
+        sharedPage.getByRole("heading", { name: /Settings/ }),
+      ).toBeVisible({ timeout: 5_000 });
+    });
+  });
+
+  test.describe("Session detail view", () => {
+    test("loads via URL (?session=616)", async () => {
+      await sharedPage.goto("/?session=616");
+      await expect(
+        sharedPage.getByRole("heading", { name: /Slow down to speed up/ }),
+      ).toBeVisible({ timeout: 5_000 });
+    });
+
+    test("loads via article click from the Schedule view", async () => {
+      await sharedPage.goto("/");
+      await sharedPage
+        .getByRole("button", { name: "Schedule", exact: true })
+        .click();
+      await sharedPage
+        .getByRole("article", {
+          name: "View details for Slow down to speed up",
+          exact: true,
+        })
+        .click();
+      await expect(
+        sharedPage.getByRole("heading", { name: /Slow down to speed up/ }),
+      ).toBeVisible({ timeout: 5_000 });
+    });
+  });
+
+  test.describe("Speaker detail view", () => {
+    test("loads via URL (?speaker=gergely-orosz)", async () => {
+      await sharedPage.goto("/?speaker=gergely-orosz");
+      await expect(
+        sharedPage.getByRole("heading", { name: /Gergely Orosz/ }),
+      ).toBeVisible({ timeout: 5_000 });
+    });
+
+    test("loads via speaker button click from the Speakers view", async () => {
+      await sharedPage.goto("/");
+      await sharedPage.getByRole("button", { name: "Speakers" }).click();
+      await sharedPage
+        .getByRole("button", { name: "View Aaron Erickson's sessions" })
+        .click();
+      await expect(
+        sharedPage.getByRole("heading", { name: /Aaron Erickson/ }),
+      ).toBeVisible({ timeout: 5_000 });
+    });
   });
 });
