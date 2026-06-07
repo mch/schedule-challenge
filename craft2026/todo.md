@@ -110,6 +110,7 @@
 - [ ] Stretch: full text search across speakers, sessions, etc
 
 - [ ] Improvement: Migrate navigation to wouter
+   - [ ] Add e2e tests and confirm they cover the existing routing logic, including checking mutatants
    - [ ] Add `wouter` dependency
    - [ ] Write `AppRouter` integration tests (verify view rendering per URL)
    - [ ] Create `RouterLayer` wrapper component with wouter `<Route>` declarations
@@ -137,19 +138,16 @@
 - [x] Improvement: Add links to the official site for all sessions
 - [x] Improvement: Colours to match the official site, but shifted in some way to make it clear this is not official
 - [x] Improvement: Favicon and pwa icons to match official site better, but also shifted in some way to make it clear this is not official
-- [ ] Improvement: Make it possible to filter by session type (talk vs workshop)
 - [x] Improvement: Make the sync server configurable
   - allow selecting between my internal one and the public example one (wss://sync.automerge.org)
   - allow the user to input their own sync server url 
   - show connection status for the sync server (e.g. green circle if connection is good, red if the server is unreachable in any way)
   - if the public server is selected, show a warning that data is not encrypted and may not be long term durable
   - make the public one the default
-- [ ] Improvement: Clicking the "Craft 2026" in the top left of any page should take you to the home page and reset the filters
 - [x] Improvement: The timeslots on the schedule should have some differentiation and should pop a little more 
   - currently you have to keep an eye on the details within the session listings to see when the time changes 
   - the user need is that I want to be able to see when I get to a new timeslot when I've already picked the session I want for a slot and am scrolling to the next slot.
 - [x] Improvement: move the passphrase to a separate page available through a hamburger menu 
-- [ ] Improvement: Hide the Craft 2026 header on mobile, or maybe move the tabs below it 
 - [x] Improvement: Add a speakers list and make it searchable
 
 - [X] Bug: offline mode doesn't seem to be working
@@ -170,8 +168,22 @@
 - [x] Bug: I have to hit back twice to get back to the session list after clicking into a session.
   - Fixed: `closeSession` and `closeSpeaker` now use `replaceState` instead of `pushState`, so closing a detail view no longer adds a spurious history entry.
 
-- [ ] Project hygiene
+- [ ] Project hygiene to enable the use of smaller models like Qwen 3.6:27b-coding-nvfp4 (which is tripped up by trainling white space in some of the files)
    - [ ] Run `npx eslint --fix` or equivalent across `app/src/` to remove trailing whitespace from all source files. Trailing whitespace on lines like `    })` causes the `edit` tool to fail matching `oldText` because the tool captures trailing spaces but humans don't see them.
       - macOS `cat -A` doesn't work (Illegal option). Use `sed -n 'N,Mp' file | catvet` to see whitespace, or `grep -P '\s+$' file` to find trailing whitespace.
    - [ ] Convert any tab-using files to spaces (indent with 2 spaces consistently — matching project convention)
    - [ ] Consider adding a pre-format hook in `app/` (e.g., ESLint with `prettier` plugin or standalone Biome) to prevent regression
+
+Improvements: 
+- [ ] save the last page viewed in local storage so that returning to the app puts you back in the same place
+- [ ] replace, rather than push, the history entry when searching so that you don't have to click back N times for N searched characters
+- [ ] disable page zoom because it's annoying when i do it by accident
+- [ ] add a splash screen for faster start up feedback
+- [ ] add a share button to share a page when in app mode so i can send it to my friend
+- [ ] Improvement: Hide the Craft 2026 header on mobile, or maybe move the tabs below it 
+- [ ] Improvement: Clicking the "Craft 2026" in the top left of any page should take you to the home page and reset the filters
+- [ ] Improvement: Make it possible to filter by session type (talk vs workshop)
+
+Features: 
+- [ ] Add non-session things to the schedule, lunch, coffee breaks, networking, etc.
+

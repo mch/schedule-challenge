@@ -14,6 +14,8 @@ in to a personal calendar.
   - If the session is already on the personal schedule, the button instead removes the session from the user's personal schedule
 - View personal schedule, including overlapping sessions
 - Responsive: all functionality above works on both desktop and mobile browsers
+- Local first: after the initial load, as much functionality as possible must contuinue to work offline
+- Fast: page transitions should be basically instantaneous, no pointless animations
 
 
 ## Constraints
