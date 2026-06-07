@@ -273,8 +273,7 @@ export function SessionDetailView({
           <h3 className="session-detail-section-title">About this session</h3>
           <div
             className="session-detail-description"
-            // Description is HTML sourced directly from craft-conf.com (no user input)
-            // eslint-disable-next-line react/no-danger
+            // biome-ignore lint/security/noDangerouslySetInnerHtml: Description is HTML sourced directly from craft-conf.com (no user input)
             dangerouslySetInnerHTML={{ __html: description }}
           />
         </section>
