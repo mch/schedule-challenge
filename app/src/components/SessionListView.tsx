@@ -316,16 +316,19 @@ export function SessionListView({
               filteredSessions[idx - 1].startTime !== session.startTime
             if (isNewSlot) {
               nodes.push(
-                <div
+                <section
                   key={`timeslot-${session.startTime}`}
-                  role="separator"
                   aria-label={session.startTime}
                   className="timeslot-separator"
                 >
+                  <hr
+                    aria-label={session.startTime}
+                    className="timeslot-separator__rule"
+                  />
                   <span className="timeslot-separator__time">
                     {session.startTime}
                   </span>
-                </div>,
+                </section>,
               )
             }
             nodes.push(

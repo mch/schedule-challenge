@@ -368,6 +368,10 @@
   }
 }
 
+.timeslot-separator__rule {
+  display: none;
+}
+
 .timeslot-separator__time {
   font-size: 13px;
   font-weight: 700;
