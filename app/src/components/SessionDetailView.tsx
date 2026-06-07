@@ -69,6 +69,7 @@ function BookmarkButton({
 }: BookmarkButtonProps) {
   return (
     <button
+      type="button"
       className={`bookmark-button${isBookmarked ? ' bookmark-button--active' : ''}`}
       onClick={onToggle}
       disabled={disabled}
@@ -132,7 +133,7 @@ export function SessionDetailView({
   if (!found) {
     return (
       <div className="session-detail-not-found" role="alert">
-        <button className="session-detail-back" onClick={onClose}>
+        <button type="button" className="session-detail-back" onClick={onClose}>
           ← Back to schedule
         </button>
         <p>Session not found.</p>
@@ -185,6 +186,7 @@ export function SessionDetailView({
     <div className="session-detail-view" style={stageStyle}>
       {/* Back navigation */}
       <button
+        type="button"
         className="session-detail-back"
         onClick={onClose}
         aria-label="Back to schedule"
@@ -249,6 +251,7 @@ export function SessionDetailView({
               <li key={speaker.slug} className="session-detail-speaker">
                 {onOpenSpeaker ? (
                   <button
+                    type="button"
                     className="session-detail-speaker-link"
                     onClick={() => onOpenSpeaker(speaker.slug)}
                     aria-label={`View speaker profile: ${speaker.name}`}

@@ -266,6 +266,7 @@ function BookmarkedSessionCard({
 
       <div className="session-card__actions">
         <button
+          type="button"
           className="session-card__remove"
           aria-label="Remove from personal schedule"
           disabled={removeDisabled}

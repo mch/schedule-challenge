@@ -71,6 +71,7 @@ function App({ initialSyncServerUrl, initialNetworkAdapter }: AppProps) {
         <h1>Craft 2026</h1>
         <nav className="app-nav" aria-label="Main navigation">
           <button
+            type="button"
             className={`app-nav-tab${view === 'schedule' ? ' app-nav-tab--active' : ''}`}
             aria-pressed={view === 'schedule'}
             onClick={() => {
@@ -82,6 +83,7 @@ function App({ initialSyncServerUrl, initialNetworkAdapter }: AppProps) {
             Schedule
           </button>
           <button
+            type="button"
             className={`app-nav-tab${view === 'myschedule' ? ' app-nav-tab--active' : ''}`}
             aria-pressed={view === 'myschedule'}
             onClick={() => {
@@ -96,6 +98,7 @@ function App({ initialSyncServerUrl, initialNetworkAdapter }: AppProps) {
             )}
           </button>
           <button
+            type="button"
             className={`app-nav-tab${view === 'speakers' ? ' app-nav-tab--active' : ''}`}
             aria-pressed={view === 'speakers'}
             onClick={() => {
@@ -107,6 +110,7 @@ function App({ initialSyncServerUrl, initialNetworkAdapter }: AppProps) {
             Speakers
           </button>
           <button
+            type="button"
             className={`app-nav-tab app-nav-tab--gear${view === 'settings' ? ' app-nav-tab--active' : ''}`}
             aria-pressed={view === 'settings'}
             aria-label="Settings"

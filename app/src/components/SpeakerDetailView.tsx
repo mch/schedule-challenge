@@ -85,6 +85,7 @@ function SessionCard({ session, onOpen }: SessionCardProps) {
   return (
     <li className="speaker-session-card" style={stageStyle}>
       <button
+        type="button"
         className="speaker-session-card__inner"
         onClick={() => onOpen(slot.id)}
         aria-label={`View session: ${title}`}
@@ -161,7 +162,7 @@ export function SpeakerDetailView({
   if (!speaker) {
     return (
       <div className="speaker-detail-not-found" role="alert">
-        <button className="speaker-detail-back" onClick={onClose}>
+        <button type="button" className="speaker-detail-back" onClick={onClose}>
           ← Back
         </button>
         <p>Speaker not found.</p>
@@ -175,6 +176,7 @@ export function SpeakerDetailView({
     <div className="speaker-detail-view">
       {/* Back navigation */}
       <button
+        type="button"
         className="speaker-detail-back"
         onClick={onClose}
         aria-label="Back"

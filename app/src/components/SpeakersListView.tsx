@@ -61,6 +61,7 @@ function SpeakerCard({ speaker, onOpen }: SpeakerCardProps) {
   return (
     <li className="speaker-list-card">
       <button
+        type="button"
         className="speaker-list-card__btn"
         onClick={() => onOpen(speaker.slug)}
         aria-label={`View ${speaker.name}'s sessions`}

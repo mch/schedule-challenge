@@ -27,6 +27,7 @@ export function DayTabs({
     <div className="day-tabs" role="tablist" aria-label="Conference days">
       {days.map((day, i) => (
         <button
+          type="button"
           key={day.id}
           role="tab"
           aria-selected={i === selectedIndex}
@@ -127,6 +128,7 @@ export function Filters({
 
       {(selectedTag || selectedStage) && (
         <button
+          type="button"
           className="filter-clear"
           onClick={() => {
             onTagChange('')

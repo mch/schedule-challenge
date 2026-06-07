@@ -174,6 +174,7 @@ function SessionCard({
 
       <div className="session-card__bookmark">
         <button
+          type="button"
           className={`session-card__bookmark-btn${isBookmarked ? ' session-card__bookmark-btn--active' : ''}`}
           aria-label={
             isBookmarked
