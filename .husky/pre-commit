@@ -1,1 +1,1 @@
-cd app && npm run build && npm run test:run
+cd app && npm run pretty && npm run build && npm run test:run
