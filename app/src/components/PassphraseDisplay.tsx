@@ -22,6 +22,7 @@ export function PassphraseDisplay({ passphrase }: PassphraseDisplayProps) {
     <div className="passphrase-display">
       <span className="passphrase-display__label">Your passphrase:</span>
       <code
+        role="img"
         className="passphrase-display__value"
         aria-label={revealed ? 'Your passphrase' : 'Passphrase hidden'}
         style={{

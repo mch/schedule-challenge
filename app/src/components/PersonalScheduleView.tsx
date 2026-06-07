@@ -255,6 +255,7 @@ function BookmarkedSessionCard({
 
           {session.overlaps && (
             <span
+              role="img"
               className="session-card__overlap-badge"
               aria-label="Overlaps with another bookmarked session"
             >

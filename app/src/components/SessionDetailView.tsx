@@ -293,6 +293,7 @@ export function SessionDetailView({
                 {tag.name}
                 {tag.is_trending && (
                   <span
+                    role="img"
                     className="session-tag-trending-mark"
                     aria-label="Trending"
                   >

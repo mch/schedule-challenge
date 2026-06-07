@@ -86,7 +86,7 @@ export function IdentitySetup({ onConfirm, generateNew }: IdentitySetupProps) {
             browser data.
           </p>
           <div className="identity-setup__passphrase">
-            <code aria-label="Your passphrase">{generatedPassphrase}</code>
+            <code role="img" aria-label="Your passphrase">{generatedPassphrase}</code>
             <button
               type="button"
               onClick={handleCopy}
