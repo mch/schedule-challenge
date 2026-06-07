@@ -145,7 +145,23 @@ test.describe("app routes", () => {
     ).toBeVisible({
       timeout: 2_000,
     });
+    // Bookmark the first session on Day 1 and verify it appears in My Schedule
+    await page.getByRole("button", { name: "Schedule", exact: true }).click();
+    // Wait for the session list to load
+    const firstCard = page.getByRole("article").first();
+    const firstCardLabel = await firstCard.getAttribute("aria-label");
+    const firstSessionTitle = firstCardLabel?.replace(/^View details for /, "") ?? "";
+    await firstCard
+      .getByRole("button", { name: "Add to personal schedule" })
+      .click();
     await page.getByRole("button", { name: "My Schedule" }).click();
+    // The bookmarked session should appear on the My Schedule page
+    await expect(
+      page.getByRole("article", {
+        name: `View details for ${firstSessionTitle}`,
+      }),
+    ).toBeVisible({ timeout: 5_000 });
+
     await page.getByRole("button", { name: "Schedule", exact: true }).click();
     await page
       .getByRole("article", {
