@@ -77,7 +77,7 @@ export function Filters({
   const stageId = `${idPrefix}stage-filter`
 
   return (
-    <div className="session-filters" role="group" aria-label="Session filters">
+    <fieldset className="session-filters" aria-label="Session filters">
       <label className="filter-label" htmlFor={tagId}>
         Tag
         <select
@@ -138,6 +138,6 @@ export function Filters({
           Clear filters
         </button>
       )}
-    </div>
+    </fieldset>
   )
 }
