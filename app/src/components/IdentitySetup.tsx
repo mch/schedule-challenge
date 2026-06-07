@@ -86,7 +86,9 @@ export function IdentitySetup({ onConfirm, generateNew }: IdentitySetupProps) {
             browser data.
           </p>
           <div className="identity-setup__passphrase">
-            <span className="identity-setup__passphrase-label">Your passphrase</span>
+            <span className="identity-setup__passphrase-label">
+              Your passphrase
+            </span>
             <code>{generatedPassphrase}</code>
             <button
               type="button"

@@ -31,14 +31,18 @@ describe('IdentitySetup — layout', () => {
   it('uses a semantic <main> element on the create screen', async () => {
     const user = userEvent.setup()
     render(<IdentitySetup {...makeProps()} />)
-    await user.click(screen.getByRole('button', { name: /create new account/i }))
+    await user.click(
+      screen.getByRole('button', { name: /create new account/i }),
+    )
     expect(screen.getByRole('main').tagName).toBe('MAIN')
   })
 
   it('uses a semantic <main> element on the recover screen', async () => {
     const user = userEvent.setup()
     render(<IdentitySetup {...makeProps()} />)
-    await user.click(screen.getByRole('button', { name: /enter existing passphrase/i }))
+    await user.click(
+      screen.getByRole('button', { name: /enter existing passphrase/i }),
+    )
     expect(screen.getByRole('main').tagName).toBe('MAIN')
   })
 })
