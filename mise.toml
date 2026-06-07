@@ -1,6 +1,7 @@
 [tools]
 "aqua:npryce/adr-tools" = "latest"
 caddy = "latest"
+"github:Dicklesworthstone/beads_rust" = "latest"
 node = "24"
 "ubi:grafana/k6" = "latest"
 
