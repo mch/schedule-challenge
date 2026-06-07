@@ -649,7 +649,8 @@ describe('SessionListView', () => {
 
     it('renders the separator before its first session', () => {
       renderViewWithResult()
-      const list = document.querySelector('.session-list')!
+      const list = document.querySelector('.session-list')
+      if (!list) throw new Error('.session-list element not found')
       const children = Array.from(list.children)
       // First child should be the 09:30 separator
       expect(children[0]).toHaveAttribute('aria-label', '09:30')

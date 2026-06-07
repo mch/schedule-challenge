@@ -151,7 +151,8 @@ function buildDayGroups(
     const src = slot.talk ?? slot.workshop
     if (!src) continue
 
-    const group = groupMap.get(day.id)!
+    const group = groupMap.get(day.id)
+    if (!group) continue
     group.sessions.push({
       slotId,
       title: src.title,

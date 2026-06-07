@@ -20,7 +20,9 @@ Automerge.initializeWasm(wasmUrl).then(() => {
   const initialSyncUrl = loadSyncServerUrl() ?? PUBLIC_SYNC_SERVER_URL
   const { repo, networkAdapter } = createRepo(initialSyncUrl)
 
-  createRoot(document.getElementById('root')!).render(
+  const rootEl = document.getElementById('root')
+  if (!rootEl) throw new Error('Root element #root not found in document')
+  createRoot(rootEl).render(
     <StrictMode>
       <RepoProvider repo={repo}>
         <ScheduleProvider>
