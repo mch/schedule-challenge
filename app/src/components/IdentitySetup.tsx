@@ -56,7 +56,7 @@ export function IdentitySetup({ onConfirm, generateNew }: IdentitySetupProps) {
   if (mode === 'choose') {
     return (
       <div className="identity-setup-page">
-        <div className="identity-setup" role="main">
+        <main className="identity-setup">
           <h1>Welcome to Craft 2026</h1>
           <p>
             Your personal schedule is stored locally and synced privately using
@@ -70,7 +70,7 @@ export function IdentitySetup({ onConfirm, generateNew }: IdentitySetupProps) {
               Enter existing passphrase
             </button>
           </div>
-        </div>
+        </main>
       </div>
     )
   }
@@ -78,7 +78,7 @@ export function IdentitySetup({ onConfirm, generateNew }: IdentitySetupProps) {
   if (mode === 'create') {
     return (
       <div className="identity-setup-page">
-        <div className="identity-setup" role="main">
+        <main className="identity-setup">
           <h1>Your passphrase</h1>
           <p>
             This is your unique passphrase. Write it down — you&apos;ll need it
@@ -107,7 +107,7 @@ export function IdentitySetup({ onConfirm, generateNew }: IdentitySetupProps) {
               Back
             </button>
           </div>
-        </div>
+        </main>
       </div>
     )
   }
@@ -115,7 +115,7 @@ export function IdentitySetup({ onConfirm, generateNew }: IdentitySetupProps) {
   // mode === 'recover'
   return (
     <div className="identity-setup-page">
-      <div className="identity-setup" role="main">
+      <main className="identity-setup">
         <h1>Enter your passphrase</h1>
         <form onSubmit={handleRecover}>
           <label htmlFor="passphrase-input">Passphrase</label>
@@ -148,7 +148,7 @@ export function IdentitySetup({ onConfirm, generateNew }: IdentitySetupProps) {
             </button>
           </div>
         </form>
-      </div>
+      </main>
     </div>
   )
 }
