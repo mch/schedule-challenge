@@ -1,4 +1,2 @@
-# Beads Project Configuration
-# issue_prefix: sc
-# default_priority: 2
-# default_type: task
+prefix: sc
+issue_prefix: sc
