@@ -67,13 +67,9 @@ export function useUserDoc(docId: AutomergeUrl | null): UseUserDocResult {
             DEFAULT_USER_DOCUMENT.hidePastEvents
         }) as A.Doc<UserDocument>
         const binary = A.save(emptyDoc)
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ;(repo as any).import(binary, { docId: documentId })
+        repo.import<UserDocument>(binary, { docId: documentId })
         // After import, find the now-ready handle
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const readyHandle = (await (repo as any).find(
-          docId,
-        )) as DocHandle<UserDocument>
+        const readyHandle = await repo.find<UserDocument>(resolvedDocId)
         if (cancelled) return
         handleRef.current = readyHandle
         setDoc(readyHandle.doc())
