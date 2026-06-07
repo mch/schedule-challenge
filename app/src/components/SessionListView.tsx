@@ -70,7 +70,7 @@ function collectTags(day: Day): string[] {
   for (const stage of day.stages) {
     for (const slot of stage.slots) {
       const src = slot.talk ?? slot.workshop
-      if (src) src.tags.forEach((t) => tags.add(t.name))
+      if (src) for (const t of src.tags) tags.add(t.name)
     }
   }
   return Array.from(tags).sort()

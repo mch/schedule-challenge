@@ -510,7 +510,7 @@ describe('SessionListView', () => {
     it('bookmark button is disabled when no handle provided', () => {
       renderViewWithResult()
       const btns = screen.getAllByRole('button', { name: /personal schedule/i })
-      btns.forEach((btn) => expect(btn).toBeDisabled())
+      for (const btn of btns) expect(btn).toBeDisabled()
     })
 
     it('calls handle.change to add bookmark when clicked on unbookmarked session', () => {

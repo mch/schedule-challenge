@@ -77,7 +77,7 @@ function timesOverlap(
 /** Collect unique sorted tag names from a list of bookmarked sessions. */
 function collectTagsFromSessions(sessions: BookmarkedSession[]): string[] {
   const tags = new Set<string>()
-  for (const s of sessions) s.tags.forEach((t) => tags.add(t))
+  for (const s of sessions) for (const t of s.tags) tags.add(t)
   return Array.from(tags).sort()
 }
 

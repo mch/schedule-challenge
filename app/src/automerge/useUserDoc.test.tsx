@@ -29,7 +29,7 @@ function makeFakeHandle(initialDoc: UserDocument | undefined) {
       if (idx !== -1) listeners.splice(idx, 1)
     }),
     // Expose for tests to simulate incoming remote changes
-    _emit: (doc: UserDocument) => listeners.forEach((l) => l({ doc })),
+    _emit: (doc: UserDocument) => { for (const l of listeners) l({ doc }) },
   }
 }
 
