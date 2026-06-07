@@ -26,3 +26,6 @@ test-results
 *.njsproj
 *.sln
 *.sw?
+
+# Coverage output
+coverage
