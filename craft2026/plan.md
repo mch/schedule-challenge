@@ -168,8 +168,4 @@ Small, testable changes:
   - Call `saveScrollToState()` in each `navigate()` call wrapper
   - OR update `useScrollRestoration` to auto-save on `pushState`/`replaceState` via the monkey-patching that wouter itself does
 
-## Todo improvements for this project
 
-- [ ] Remove trailing whitespace from all files (the `})` pattern with trailing spaces makes edits harder to match)
-- [ ] Consider using `npm run pretty` (Biome) consistently for `server/`-side files
-- [ ] Consider adding a pre-commit hook in the `app/` directory too (currently only `server/` uses Biome; `app/` uses ESLint which doesn't auto-format)
