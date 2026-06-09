@@ -1,171 +1,128 @@
 # Wouter Migration — Plan
 
-## Task
+> **Tracking:** Epic `sc-wouter-migration-u6d` in beads. Sub-issues `sc-wouter-migration-u6d.1` through `.11`.
 
-Replace the current query-param-based navigation (`?view=`, `?session=`, `?speaker=`) with path-based routing using **wouter** v3.
+## Goal
+
+Replace the current query-param-based navigation (`?view=`, `?session=`, `?speaker=`) with path-based routing using **wouter** v3. Every commit is deployable — users never notice the migration happening.
 
 ## Route Map
 
-| Current URL param                       | New path            | Purpose                    |
-|-----------------------------------------|---------------------|---------------------------|
-| `/` (no param or `?view=schedule`)     | `/`                 | SessionListView           |
-| `/?view=myschedule`                    | `/myschedule`       | PersonalScheduleView      |
-| `/?view=speakers`                      | `/speakers`         | SpeakersListView          |
-| `/?view=settings`                      | `/settings`         | SettingsView              |
-| `/?session=<slotId>`                   | `/session/:id`      | SessionDetailView         |
-| `/?speaker=<slug>`                     | `/speaker/:slug`    | SpeakerDetailView         |
+| Current URL                         | New path            | View component       |
+|-------------------------------------|---------------------|----------------------|
+| `/` (no param or `?view=schedule`) | `/`                 | SessionListView      |
+| `/?view=myschedule`                | `/myschedule`       | PersonalScheduleView |
+| `/?view=speakers`                  | `/speakers`         | SpeakersListView     |
+| `/?view=settings`                  | `/settings`         | SettingsView         |
+| `/?session=<slotId>`               | `/session/:id`      | SessionDetailView    |
+| `/?speaker=<slug>`                 | `/speaker/:slug`    | SpeakerDetailView    |
 
-**Query params preserved:** `?day=`, `?tag=`, `?stage=`, `?speakersSearch=` continue to be managed by `useSessionListParams` for filter state. They are NOT changed by the router migration.
+**Filter params unchanged:** `?day=`, `?tag=`, `?stage=`, `?speakersSearch=` remain managed by `useSessionListParams`.
 
-## Current Architecture
+## Guiding Principles
 
-### Navigation hooks (to be removed)
+- **Every commit is deployable.** The app must work for users at every step.
+- **New routes appear before old routes are removed.** We add a path, prove it works, then later remove the old param.
+- **E2e test first (red → green).** Write a failing test, then implement, then commit.
+- **Old URLs keep working** until explicit "decision point" steps remove them.
+- **No big-bang refactors.** Each step changes one thing.
 
-**`useSessionListParams`** — manages `?view=`, `?day=`, `?tag=`, `?stage=`, `?speakersSearch=`
-- Currently the `view` param (schedule/myschedule/speakers/settings) is managed here
-- After migration: `view` is removed; only day/tag/stage/speakersSearch remain
-- Uses `pushState` + custom `session-params-change` event for re-renders
+## Migration Sequence
 
-**`useSessionDetailParam`** — manages `?session=<slotId>`
-- `openSession(id)` → pushState with `?session=id`
-- `closeSession()` → replaceState removing `?session=`
-- After migration: replaced by `/session/:id` path routed by wouter's `Switch`
+Steps are tracked as beads issues. Each step is a single deployable commit.
 
-**`useSpeakerParam`** — manages `?speaker=<slug>`
-- `openSpeaker(slug)` → pushState with `?speaker=slug`
-- `closeSpeaker()` → replaceState removing `?speaker=`
-- After migration: replaced by `/speaker/:slug` path routed by wouter
+| Step | Issue | Description | Type |
+|------|-------|-------------|------|
+| 1 | `sc-wouter-migration-u6d.1` | Install wouter | chore |
+| 2 | `sc-wouter-migration-u6d.2` | E2e test (red): `/myschedule` | test |
+| 3 | `sc-wouter-migration-u6d.3` | Serve `/myschedule` alongside `?view=myschedule` | green |
+| 4 | `sc-wouter-migration-u6d.4` | Serve `/speakers` and `/settings` | feature |
+| 5 | `sc-wouter-migration-u6d.5` | Serve `/session/:id` | feature |
+| 6 | `sc-wouter-migration-u6d.6` | Serve `/speaker/:slug` | feature |
+| 7 ⚑ | `sc-wouter-migration-u6d.7` | Nav bar navigates to new paths | **decision** |
+| 8 ⚑ | `sc-wouter-migration-u6d.8` | Redirect legacy params to canonical paths | **decision** |
+| 9 | `sc-wouter-migration-u6d.9` | Extract `AppRouter.tsx` (pure refactor) | refactor |
+| 10 ⚑ | `sc-wouter-migration-u6d.10` | Delete legacy nav hooks | **decision** |
+| 11 | `sc-wouter-migration-u6d.11` | Post-migration cleanup | chore |
 
-### App.tsx (to be refactored)
+Steps marked ⚑ are explicit decision points — moments where user-visible URLs change or legacy code is removed. These should be reviewed before proceeding.
 
-Currently a big conditional render:
-```
-switch (view / sessionId / speakerSlug) {
-  case 'settings': SettingsView
-  case speakerSlug != null: SpeakerDetailView
-  case view === 'speakers': SpeakersListView
-  case sessionId != null: SessionDetailView
-  case 'myschedule': PersonalScheduleView
-  default: SessionListView
-}
-```
-Navigation callbacks are passed as props down through the component tree.
+## Architecture: Before → After
 
-### Target Architecture
+### Before (current `App.tsx`)
 
 ```
-<main>
-  <OfflineBanner />
-  <header>...</header>
-  <AppRouter ... />
-</main>
+useSessionListParams()  → ?view=, ?day=, ?tag=, ?stage=, ?speakersSearch=
+useSessionDetailParam() → ?session=<slotId>
+useSpeakerParam()       → ?speaker=<slug>
 
-AppRouter = <Router><Switch>
-  <Route path="/session/:id">   <SessionDetailPage />
-  <Route path="/speaker/:slug"> <SpeakerDetailPage />
-  <Route path="/myschedule">    <PersonalSchedulePage />
-  <Route path="/speakers">      <SpeakersListPage />
-  <Route path="/settings">      <SettingsPage />
-  <Route path="/">              <SchedulePage />
-</Switch></Router>
+App renders a big conditional:
+  if view=settings  → <SettingsView>
+  if speakerSlug    → <SpeakerDetailView>
+  if view=speakers  → <SpeakersListView>
+  if sessionId      → <SessionDetailView>
+  if view=myschedule → <PersonalScheduleView>
+  else              → <SessionListView>
 ```
 
-Each `<Page>` wrapper is a thin component that:
-1. Calls `useLocation()` to get the wouter `navigate` function
-2. Calls `useUserDocContext()` to get `doc`/`handle`
-3. Renders the view component passing navigation callbacks as props (existing component APIs unchanged)
+### After (target)
 
-## What We Learned (Session 1 — Wed Jun 3, 2026)
+```
+<Router>
+  <Switch>
+    <Route path="/session/:id">  → <SessionDetailView>
+    <Route path="/speaker/:slug"> → <SpeakerDetailView>
+    <Route path="/myschedule">   → <PersonalScheduleView>
+    <Route path="/speakers">     → <SpeakersListView>
+    <Route path="/settings">     → <SettingsView>
+    <Route path="/">             → <SessionListView>
+  </Switch>
+</Router>
 
-### Wouter v3 API specifics
+useSessionListParams() → ?day=, ?tag=, ?stage=, ?speakersSearch= (view removed)
+useSessionDetailParam, useSpeakerParam → deleted
+```
 
-- **`useNavigate` does NOT exist in wouter v3.** Use `const [path, navigate] = useLocation()` instead.
-  - `navigate(-1)` → go back (equivalent to `history.back()`)
-  - `navigate('/path')` → push navigation
+## Key Technical Notes
 
-- **`useRoute(pattern)` returns `[match, params]`** — a tuple. In wouter v3 under jsdom/Vitest, the first element (`match`) is coerced in some contexts. The reliable pattern is:
-  ```jsx
-  const [, params] = useRoute('/speaker/:slug')  // skip match, keep params
+### wouter v3 API
+
+- **No `useNavigate`.** Use `const [, navigate] = useLocation()`.
+  - `navigate('/path')` — push
+  - `navigate(-1)` — go back (history.back())
+- **`useRoute(pattern)` → `[matched, params]` tuple:**
+  ```tsx
+  const [, params] = useRoute('/speaker/:slug')
   const slug = params?.slug ?? ''
   ```
+- **`<Router>` must wrap** everything that uses wouter hooks.
+- **Wouter matches only the path**, not search params — `/?day=1` correctly matches `/`.
 
-- **`<Router>` must wrap `<Switch>`** for wouter hooks to work correctly. Without it, `useLocation()` returns `undefined`.
+### Scroll Restoration
 
-### Tool quirks in this environment
+`useScrollRestoration` hooks into `popstate`. When replacing `openSession()` / `openSpeaker()` with `navigate()`, call `saveScrollToState()` first — exactly as the old hooks did.
 
-- **`cat -A` doesn't work** (illegal option error on macOS). Use `sed -n 'N,Mp' file | cat -e` to inspect trailing whitespace and line endings, or use the `read` tool directly.
+### Coexistence Pattern (Steps 1–6)
 
-- **`edit` tool whitespace sensitivity:** The `oldText` field must match exactly including all whitespace. The leading spaces before `})` are tricky — use `sed -n` to inspect the exact bytes when edits keep failing.
+During the incremental migration, both URL forms work simultaneously:
 
-- **Vitest test filtering:** `npx vitest run <file> -t "<test name>"` works for isolating single tests.
+```tsx
+const [isMySchedulePath] = useRoute('/myschedule')
+const showMySchedule = view === 'myschedule' || isMySchedulePath
+```
 
-### Existing test infrastructure
+This coexistence code is removed in Step 10.
 
-- **25 test files, 312 tests** — all passing at start of migration
-- Tests use jsdom environment (configured in `vitest.config.ts`)
-- Test setup file `src/test/setup.ts` only imports `@testing-library/jest-dom`
-- Components tested in isolation using context providers directly (no full app tree)
-- `useScrollRestoration` is called by most view components; we need to keep this working after migration
+## Files Changed
 
-### Migration strategy
-
-1. ⬜ Add `wouter` dependency
-2. ⬜ Create `UserDocContext` to avoid prop-drilling `doc`/`handle` through AppRouter page wrappers
-3. ⬜ Create `AppRouter.tsx` with page wrapper components
-4. ⬜ Create `AppRouter.test.tsx` integration tests (11 tests covering all route paths)
-5. ⬜ Refactor `App.tsx` to use `AppRouter` instead of conditional rendering
-6. ⬜ Simplify `useSessionListParams` (remove `view` param handling)
-7. ⬜ Delete `useSessionDetailParam.ts` and `useSpeakerParam.ts`
-8. ⬜ Update nav bar in App.tsx to use wouter `<Link>` components or `useNavigate`
-9. ⬜ Update all component unit tests that depend on the old navigation pattern
-10. ⬜ Verify all 312+ tests still pass
-11. ⬜ Verify e2e tests still pass
-12. ⬜ Handle scroll restoration compatibility (wouter navigations call `pushState`/`replaceState` through the browser, which triggers `popstate` on back — scroll restoration should work)
-
-### Open questions
-
-- **Nav bar:** Should the nav bar tabs (`Schedule`, `My Schedule`, `Speakers`, `⚙`) use wouter `<Link>` components or `useNavigate`? `<Link>` is more semantic but requires updating the button-based nav to anchors. Decision: use `<Link>` for semantic correctness and consistency.
-- **Session detail `/session/:id` fallback:** When the session is not found, we currently show "← Back to schedule". With wouter, `navigate(-1)` goes back in history. This is more correct than the previous behavior.
-- **Speaker detail `/speaker/:slug` fallback:** Similarly, `navigate(-1)` for "← Back".
-- **Root `/` route with query params:** Need to ensure `/?day=1&tag=tdd` still matches the root route. Wouter matches only the path (not search), so this is automatic.
-
-## Implementation order
-
-Small, testable changes:
-
-1. **`UserDocContext`** — already created, needs integration into the test setup and eventually `main.tsx`
-2. **`AppRouter` + tests** — AppRouter created, tests need the not-found text assertions fixed (minor)  
-3. **`App.tsx` refactor** — replace conditional rendering with `<AppRouter />`
-4. **Nav bar** — replace button-based nav with wouter `<Link>` components
-5. **`useSessionListParams` simplification** — remove `view` handling, keep `day`/`tag`/`stage`/`speakersSearch`
-6. **Delete old hooks** — `useSessionDetailParam.ts`, `useSpeakerParam.ts` (and their tests)
-7. **Update component tests** — any test that mocks `onOpenSession`/`onOpenSpeaker` callbacks may need updates
-8. **Run full test suite** — verify all tests pass
-9. **Run e2e tests** — Playwright integration tests
-
-## Files to create/modify
-
-| File | Action | Purpose |
-|------|--------|---------|
-| `app/src/automerge/UserDocContext.tsx` | Created ✅ | Context for `doc`/`handle` |
-| `app/src/AppRouter.tsx` | Created ✅ | Wouter route definitions |
-| `app/src/AppRouter.test.tsx` | Created ✅ | Integration tests for routing |
-| `app/src/App.tsx` | Modify | Replace conditional rendering, add nav bar with `<Link>` |
-| `app/src/schedule/useSessionListParams.ts` | Modify | Remove `view` param, simplify |
-| `app/src/schedule/useSessionDetailParam.ts` | Delete | Replaced by wouter |
-| `app/src/schedule/useSpeakerParam.ts` | Delete | Replaced by wouter |
-| `app/src/schedule/useSessionDetailParam.test.ts` | Delete | Component no longer exists |
-| `app/src/schedule/useSpeakerParam.test.ts` | Delete | Component no longer exists |
-| `app/src/main.tsx` | Modify | Wrap `App` with `<UserDocProvider>` |
-| Various `*.test.tsx` | Modify | Update test fixtures if needed |
-
-## Notes
-
-- **wouter is lightweight** — no browser needed for most routes. It works well with jsdom.
-- **`<Router>` wraps everything** — in production (`main.tsx`), the `App` component wraps children in `<UserDocProvider>` → `<ScheduleProvider>` → `<App>`. The `<Router>` is inside `<AppRouter>`.
-- **Scroll restoration** is handled by `useScrollRestoration` which listens to `popstate`. Wouter's `navigate()` uses `history.pushState`/`replaceState` internally, so `popstate` fires correctly on browser back/forward.
-- **`useScrollRestoration` + `saveScrollToState`**: Before migrating `App.tsx`, verify that the old navigation hooks (`openSession`, `openSpeaker`, `closeSession`, etc.) that called `saveScrollToState()` are properly replaced. The new wouter `navigate()` calls browser `history.pushState` directly, so scroll position is NOT automatically saved. We need to either:
-  - Call `saveScrollToState()` in each `navigate()` call wrapper
-  - OR update `useScrollRestoration` to auto-save on `pushState`/`replaceState` via the monkey-patching that wouter itself does
-
-
+| File | Change |
+|------|--------|
+| `app/src/App.tsx` | Incrementally modified (steps 3–10) |
+| `app/src/AppRouter.tsx` | Created (step 9) |
+| `app/src/AppRouter.test.tsx` | Created (step 9) |
+| `app/src/automerge/UserDocContext.tsx` | Created if needed (step 9) |
+| `app/src/schedule/useSessionListParams.ts` | Remove `view` param (step 10) |
+| `app/src/schedule/useSessionDetailParam.ts` | **Deleted** (step 10) |
+| `app/src/schedule/useSpeakerParam.ts` | **Deleted** (step 10) |
+| `app/e2e/new-routes.spec.ts` | Created (step 2), merged into `routes.spec.ts` (step 11) |
+| `app/e2e/routes.spec.ts` | Updated (steps 7–8, 11) |
